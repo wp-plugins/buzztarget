@@ -6,11 +6,11 @@ define('BUZZTARTGET_USE_LIVE_API', true);
 
 /*
     Plugin Name: BuzzTarget
-    Plugin URI: fcmre.com
-    Description: A real estate property listing plugin for WordPress
+    Plugin URI: www.buzztarget.com
+    Description: A Commercial Real Estate Property Listing plugin for WordPress
     Version: 1.1.0
-    Author: FCMRE
-    Author URI: fcmre.com
+    Author: BuzzTarget
+    Author URI: www.buzztarget.com
     License: GPLv2 or later
 */
     
