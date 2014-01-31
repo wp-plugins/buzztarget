@@ -1,0 +1,77 @@
+/*
+    Theme Options Tab CSS
+*/
+
+/* Theme options form */
+form#saveThemeOptions
+{
+    padding: 10px 0px 10px 10px;
+}
+
+/* Theme options content heading */
+strong#bt-theme-options-sub-head
+{
+    font-size: 14px;
+}
+
+/* Description accompanying content heading */
+p#bt-theme-options-sub-head-desc
+{
+    margin: 2px 0px 10px 0px;
+    font-style: italic;
+}
+
+/* Container for the options, except submit button, heading and description */
+div#bt-theme-options
+{
+    padding: 15px 0px 40px 30px;
+}
+
+/* Space between colors and advanced search */
+div.bt-theme-options-clear
+{
+    margin: 5%;
+}
+
+/* Affects all theme options tables */
+table.bt-theme-options-table
+{
+    margin-bottom: 10px;
+}
+
+/* Theme colors table */
+table#bt-theme-colors-table
+{
+
+}
+
+/* Advanced search status table (ON/OFF) select element */
+table#bt-advanced-search-status-table tr td select
+{
+    margin-left: 100px;
+}
+
+/* Advanced Search CSS Colors Table */
+table#bt-advanced-search-css-table
+{
+    padding-left: 45px;
+    margin-bottom: 20px;
+}
+
+/* Map View Select Element */
+table#bt-map-view-table tr td select
+{
+    margin-left: 143px;
+}
+
+/*
+    Firefox specific css
+*/
+@-moz-document url-prefix()
+{
+    /* Map View Select Element */
+    table#bt-map-view-table tr td select
+    {
+        margin-left: 149px;
+    }
+}

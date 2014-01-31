@@ -1,0 +1,55 @@
+<div class="wrap">
+    <div id="icon-generic" class="icon32">
+        <!-- -->
+    </div>
+    <h2>
+        {{ api_settings_page_heading }}
+    </h2>
+    {% if save_api_settings_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ save_api_settings_result }}</strong>
+            </p>
+        </div>
+    {% endif %}
+    <p>
+        {{ api_settings_page_desc }}
+    </p>
+    <div class="bt-api-settings-clear"></div>
+    <h3 id="bt-api-settings-sub-head">
+        {{ api_settings_page_sub_heading }}
+    </h3>
+    <form method="POST" action="#">
+        <table id="bt-api-settings-table">
+            <tr>
+                <td>{{api_settings_page_api_key}}</td>
+                <td>
+                    {% set api_key = api_options['api_key'] %}
+                    <input type="text" name="api_key" value="{{api_key}}" />
+                </td>
+            </tr>
+            <tr>
+                <td>{{api_settings_page_api_secret_key}}</td>
+                <td>
+                    {% set api_secret_key = api_options['api_secret_key'] %}
+                    <input type="text" name="api_secret_key" value="{{api_secret_key}}" />
+                </td>
+            </tr>
+            <tr>
+                <td>{{api_settings_page_api_user}}</td>
+                <td>
+                    {% set api_user = api_options['api_user'] %}
+                    <input type="text" name="api_user" value="{{api_user}}" />
+                </td>
+            </tr>
+            <tr>
+                <td>{{api_settings_page_api_user_token}}</td>
+                <td>
+                    {% set api_user_token = api_options['api_user_token'] %}
+                    <input type="text" name="api_user_token" value="{{api_user_token}}" />
+                </td>
+            </tr>
+        </table>
+        <input type="submit" name="save_api_settings" class="button-primary" value="{{api_settings_page_save_changes}}" />
+    </form>
+</div>

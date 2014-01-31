@@ -1,0 +1,43 @@
+{# ONLY show pagination if there is more than 1 page for now #}
+{% if pagination.total_pages is not sameas(1) %}
+    {# Pagination #}
+    <div id="bt-pagination">
+        {# Next and Previous Page URLs #}
+        {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page %}
+
+        {# Prev page no #}
+        {% set previousPage = pagination.current_page - 1 %}
+
+        {# Display previous page if it exists #}
+        {% if previousPage is not sameas(0) %}
+            <a href="{{previousPageURL}}" class="bt-white-button">{{previousPage}}</a>
+        {% endif %}
+
+        {# Current page #}
+        {% set currentPageURL = pagination.listings_current_page_url ~ pagination.current_page %}
+        <a href="{{currentPageURL}}" class="bt-blue-button">{{ pagination.current_page }}</a>
+
+        {# Next page pages #}
+        {% if previousPage is not sameas(0) %}
+            {% set end = 3 %}
+        {% else %}
+            {% set end = 4 %}
+        {% endif %}
+
+        {% for i in 1..end %}
+            {% set nextPage = pagination.current_page + i %}
+            {% set nextPageURL = pagination.listings_current_page_url ~ nextPage %}
+            {% if nextPage <= pagination.total_pages %}
+                <a href="{{nextPageURL}}" class="bt-white-button">{{nextPage}}</a>
+            {% endif %}
+        {% endfor %}
+
+        {# Previous URL #}
+        {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page %}
+        <a href="{{previousPageURL}}" id="bt-pagination-lt" class="bt-white-button"><</a>
+
+        {# Next URL #}
+        {% set nextPageURL = pagination.listings_current_page_url ~ pagination.next_page %}
+        <a href="{{nextPageURL}}" id="bt-pagination-gt" class="bt-white-button">></a>
+    </div>
+{% endif %}
