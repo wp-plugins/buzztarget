@@ -188,11 +188,16 @@ class Listings
                 delete_option('repl_listings');
             }
 
+            if (get_option('repl_properties') !== false)
+            {
+                delete_option('repl_properties');
+            }
+
             add_option('repl_listings', $listings);
 
-            unset($listing);
-
             add_option('repl_properties', $properties);
+
+            unset($listing);
 
             flush_rewrite_rules();
 
