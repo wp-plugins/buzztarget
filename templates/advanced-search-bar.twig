@@ -4,7 +4,7 @@
     <div id="bt-advanced-search">
         <h2 {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.property_search}}</h2>
         {# Keyword & Address #}
-        <form method="POST" action="{{ url }}?{% if map_view %}map_view=true&{% endif %}search=true">
+        <form id="bt_adv_search_form" method="POST" action="{{ url }}?{% if map_view %}map_view=true&{% endif %}search=true">
             <div id="bt-keyword-address" class="bt-left-float">
                 <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.keyword}}</strong>
                 <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
@@ -62,6 +62,9 @@
         <script type="text/javascript">
             var showAdvancedSearchImg = {{ show_advanced_search_image|json_encode()|raw }},
             hideAdvancedSearchImg = {{ hide_advanced_search_image|json_encode()|raw }};
+            $("#bt_adv_search_form input[type=reset]").on('click', function(){
+                $("#bt_adv_search_form input:not([type=submit]):not([type=reset])").val("").removeAttr('checked');
+            });
         </script>
     </div>
 
