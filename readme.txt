@@ -4,7 +4,7 @@ Donate link: http://www.buzztarget.com
 Tags: real estate listings, commercial real estate listings, commercial listing marketing, CRE
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: trunk
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ please send your inquires to support@buzztarget.com
 3. Listing Admin page
 
 == Changelog ==
+
+= 1.0.1 =
+* Bug Fixes
 
 = 1.0.0 =
 * Initial version
