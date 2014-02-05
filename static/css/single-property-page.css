@@ -1,0 +1,279 @@
+/* Single property page container */
+div#bt-single-property {
+    overflow: hidden;
+    width: 98%;
+}
+
+/* Images, attachments, map */
+div#bt-single-property-left-side {
+    float: left;
+    width: 40%;
+}
+
+/* jQuery Image Dialog */
+/* Container */
+div.bt-property-image-dialog {
+    top: 10% !important;
+}
+/* Close dialog container */
+div#bt-property-close-dialog {
+
+}
+/* Close dialog */
+div#bt-property-close-dialog > a {
+    background-image: url('images/close-property-image-dialog.png');
+    height: 33px;
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    top: -18px;
+    right: -12px;
+    bottom: 0px;
+    z-index: 9999;
+}
+/* Dialog image */
+div.bt-property-image-dialog > img {
+    margin-bottom: 2%;
+}
+
+
+/* Dark blue bar */
+div.bt-single-property-image-bar {
+    background-color: #073863;
+    height: 30px;
+    padding: 0px 10px 0px 10px;
+}
+
+/* Top blue bar text */
+div#bt-single-property-image-top-bar > p {
+    line-height: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Images container */
+div#bt-single-property-image {
+    /*border: 3px solid #000000;*/
+}
+
+/* Image */
+div#bt-single-property-image img {
+    width: 100%;
+}
+
+
+/* Bottom blue bar */
+div#bt-single-property-image-bottom-bar > p {
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+/* Bottom bar text */
+div#bt-single-property-image-bottom-bar > p > a  {
+    color: white;
+}
+/* Less than symbol */
+div#bt-single-property-image-bottom-bar > p:first-child {
+    float: left;
+}
+/* Greater than symbol */
+div#bt-single-property-image-bottom-bar > p:nth-child(2) {
+    float: right;
+}
+
+/*
+ * Attachments
+ */
+
+div#bt-single-property-attachments {
+}
+
+div#bt-single-property-attachments > strong {
+    color: #073863;
+}
+div#bt-single-property-attachments > p {
+    margin: 0px 0px 0px 10px;
+}
+
+/*
+ * Google Map
+ */
+
+/* Container */
+div#bt-single-property-googlemap {
+    width: 100%;
+    border: 1px solid black;
+}
+/* Map canvas */
+div#bt-single-property-map-canvas {
+    width: 100%;
+    height: 300px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/*
+ * Request a Call
+ */
+
+/* Request a call container */
+div#bt-single-property-request-call {
+
+}
+/* Image container */
+div#bt-single-property-request-call > div:first-child {
+    float: left;
+}
+/* request a call */
+div#bt-single-property-request-call > div:nth-child(2) > strong {
+    font-size: 14px;
+    color: #073863;
+}
+/* number */
+div#bt-single-property-request-call > div:nth-child(2) > p {
+
+}
+
+/*
+ * Overview/Details (right-side)
+ */
+
+/* Right side container */
+div#bt-single-property-right-side {
+    float: left;
+    width: 58%;
+    margin-left: 2%;
+}
+
+/* Details container */
+div#bt-single-property-details {
+
+}
+
+div#bt-single-property-details > p > strong {
+    font-size: 20px;
+    color: #073863;
+}
+
+/* Details vertical bar */
+div#bt-single-property-vertical-bar {
+    background-color: #073863;
+    width: 10px;
+    height: 100px;
+    float: left;
+    margin: 0px 5px 0px 0px;
+}
+
+/* Type and address container */
+div#bt-single-property-address {
+    float: left;
+}
+
+/* Name */
+div#bt-single-property-address > p:first-child > strong {
+    font-size: 14px;
+    color: #073863;
+}
+/* Address & Type details */
+div#bt-single-property-type-details > p,
+div#bt-single-property-type-details-values > p,
+div#bt-single-property-address > p {
+    margin-bottom: 2px;
+}
+
+/* Type detail labels */
+div#bt-single-property-type-details {
+    margin-left: 20%;
+    float: left;
+}
+/* Typed detail values */
+div#bt-single-property-type-details-values {
+    float: right;
+}
+
+
+/*
+ * Property Information
+ */
+/* Container */
+div#bt-single-property-information {
+    margin-bottom: 5px;
+}
+/* table */
+table#bt-single-property-information-table {
+    height: 200px;
+    margin-left: 10px;
+    width: 300px;
+}
+
+/*
+ * Additional Information
+ */
+ /* Container */
+div#bt-single-property-additional-info {
+
+}
+/* Descriptions */
+div#bt-single-property-additional-info > p {
+    margin-left: 10px;
+    white-space: pre-line;
+}
+
+/*
+ * Spaces for lease
+ */
+/* Container */
+div#bt-single-property-spaces {
+
+}
+div#bt-single-property-spaces > table {
+    width: 100%;
+    margin-left: 10px;
+}
+/*div#bt-single-property-spaces > table tr:nth-child(even) {
+    background-color: #76a5af;
+}*/
+div#bt-single-property-spaces > table tr td {
+    padding: 10px;
+    color: black;
+}
+
+/*
+ * Contact
+ */
+div#bt-single-property-contact {
+
+}
+
+div#bt-single-property-contact address {
+    margin-left: 10px;
+}
+/*
+ * Misc
+ */
+
+/* The strong headings: Attachments, Information, Additional Information etc */
+strong.bt-single-property-strong-head {
+    color: #073863;
+}
+
+/* Clear */
+div.bt-single-property-clear {
+    clear: both;
+    margin: 2%;
+}
+
+/* Smaller clear */
+div.bt-single-property-sml-clear {
+    clear: both;
+    margin: 0.5%;
+}
+
+/* Horizontal line */
+hr.bt-single-property-hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    margin: 10px 0px 10px 0px;
+    background-color: #073863;
+}

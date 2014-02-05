@@ -1,0 +1,320 @@
+/* Container for entire advanced search contents */
+div#bt-advanced-search {
+    overflow: hidden;
+    margin: 10px 0px 10px 0px;
+    background-color: rgb(217, 217, 217);
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+div#bt-advanced-search > h2 {
+    margin: 0 0 30px 0;
+    color: #073863;
+}
+
+img#bt-toggle-advanced-search {
+    float: left;
+    padding-top: 3px;
+}
+
+/* For any containers that should be floated left */
+div.bt-left-float {
+    float: left;
+}
+
+#bt-listing-property-types > label {
+    white-space: nowrap;
+}
+
+/* Container for keyword and address */
+div#bt-keyword-address,
+/* Container for size and price */
+div#bt-size-price {
+    width: 28%;
+}
+
+/* Container for listing and property types */ 
+div#bt-listing-property-types {
+    width: 28%;
+}
+
+/* Container separators. */
+div#bt-keyword-address-listing-property-separator,
+div#bt-listing-property-size-price-separator {
+    width: 5%;
+    height: 1px;
+}
+
+/* Advanced search horiziontal line */
+hr.bt-hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    margin: 10px 0px 10px 0px;
+    background-color: #073863;
+}
+
+/* Decreases size of advanced search keyword-address input controls */
+div#bt-keyword-address input {
+    width: 94%;
+    line-height: normal;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: inherit;
+    padding: 3%;
+    margin: 3px 0;
+}
+
+div#bt-size-price input[type=text] {
+    display: inline;
+    width: 50px;
+    line-height: normal;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: inherit;
+    padding: 3%;
+    margin: 3px 0;
+}
+div#bt-size-price input[type=submit]{
+    background: #fc6440;
+    color: #fff;
+    font-size: 13px;
+}
+div#bt-size-price input[type=reset]{
+    font-size: 13px;
+}
+
+/* Small space - Used between advanced search fields */
+div.bt-sml-clear {
+    margin: 2%;
+    clear: both;
+}
+
+/* Advanced search address input controls */
+input.bt-address-input {
+    margin-bottom: 5px;
+}
+
+/* White and blue buttons */
+input.bt-white-button,
+input.bt-blue-button,
+button.bt-white-button,
+button.bt-blue-button,
+a.bt-white-button,
+a.bt-blue-button {
+    color: black;
+    font-weight: normal;
+    box-shadow: 0px 0px 2px #000000;
+    width: 70px;
+    border: 1px solid black;
+    height: 26px;
+    padding: 6px 10px 5px 10px;
+}
+a.bt-white-button,
+.bt-white-button {
+    background-color: white !important;
+}
+
+a.bt-blue-button,
+.bt-blue-button {
+    background-color: #93bbf2 !important;
+}
+
+/* 
+    Search and reset buttons specific css
+    They also inherit the bt-blue or bt-white button class
+*/
+input[type=submit]#bt-submit {
+    padding: 5px 10px 5px 10px;
+    float: none;
+    margin-left: 10px;
+}
+
+input[type=reset]#bt-reset {
+}
+
+/* Advanced Search Bar below advanced search fields */
+div#bt-advanced-search-bar {
+    background-color: #073863;
+    height: 40px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+div#bt-advanced-search-bar p {
+    line-height: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* All listings container */
+div#bt-listings {
+
+}
+
+/* Container for list & map view buttons */
+div#bt-list-map-view {
+    float: right;
+    margin: 10px 0px 0px 0px;
+}
+
+/* Map and list view button css */
+button#bt-list-view,
+button#bt-map-view {
+    width: 100px;
+}
+
+/* List view specific css */
+button#bt-list-view {
+    margin-right: 10px;
+}
+
+button#bt-list-view:hover,
+button#bt-map-view:hover {
+    background-color: #aaa !important;
+}
+
+/* Container for all properties */
+div#bt-properties
+{
+    overflow: hidden;
+}
+
+/* Individual properties */
+div.bt-property
+{
+    float: left;
+    width: 32%;
+    margin-right:2%;
+    margin-bottom: 5%;
+}
+
+/* Every third property */
+div.bt-property:nth-child(3n+3)
+{
+    margin-right:0px;
+}
+
+/* Each property image container */
+div.bt-property-image
+{
+    max-height: 200px;
+    min-height: 200px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px;
+    margin-bottom: 10px;
+}
+
+/* Property image */
+div.bt-property-image img
+{
+    padding: 2%;
+    max-width: 96%;
+    height: 187px;
+    width: 292px;
+}
+
+/* The properties listing type displayed under image */
+p.bt-property-listing-type
+{
+    float: right;
+    margin-bottom: 5px;
+}
+
+/* The properties details container and content */
+div.bt-property-details {
+    clear: right;
+}
+div.bt-property-details p {
+    margin-bottom: 5px;
+    line-height: 15px;
+}
+
+/* Pagination container */
+div#bt-pagination {
+    float: right;
+}
+
+/* The pagination less than & greater than symbols / arrow characters */
+a#bt-pagination-lt,
+a#bt-pagination-gt {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Container for search errors */
+div#bt-search-error {
+
+}
+div#bt-search-error p {
+    color: #990000;
+    text-align: center;
+}
+
+/*
+ * Map View
+ */
+
+/* Listings map container */
+div#bt-listings-map {
+    /*border: 3px solid #073863;*/
+}
+
+/*
+ * Google Maps
+ */
+
+/* Close button fix */
+img[src*="gstatic.com/"], img[src*="googleapis.com/"] {
+    max-width: none;
+}
+
+/* Window container */
+div.bt-gm-property-window {
+
+}
+
+/* Property type */
+div.bt-gm-property-window > p {
+    float: right;
+}
+
+/* Property container (image and downwards) */
+div.bt-gm-property {
+}
+
+/* Property image container */
+div.bt-gm-property-image {
+    clear: both;
+    border: 1px solid #ccc;
+    clear: both;
+    background-color: white;
+    max-height:200px;
+    min-height:200px;
+    margin-bottom: 5px;
+}
+
+/* Property image */
+div.bt-gm-property-image img {
+    padding: 2%;
+    max-width: 96%;
+    height: 187px;
+    width: 292px;
+}
+
+/* Property details container */
+div.bt-gm-property-details {
+
+}
+
+/* Property details */
+div.bt-gm-property-details > p {
+    margin: 0px;
+}
+
+/* Property name and details link */
+a.bt-gm-link {
+    color: #1c52db;
+}
+
