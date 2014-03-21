@@ -24,7 +24,7 @@ $currentImage = 1;
 $imagesCount = count($otherImages);
 ?>
 
-<div class="container">
+<div id="buzz-target-plugin" class="container">
     <?php
         if ($listingDetailStyle == 'style1'){
     ?>
