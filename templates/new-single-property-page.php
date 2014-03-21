@@ -23,12 +23,11 @@ endforeach;
 $currentImage = 1;
 $imagesCount = count($otherImages);
 ?>
-
-<div id="buzz-target-plugin" class="container">
+<div id="buzz-target-plugin">
+<div class="container">
     <?php
         if ($listingDetailStyle == 'style1'){
     ?>
-        <div class="container">
             <section class="image">
                 <img src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
                 <div class="darken-bg"></div>
@@ -165,32 +164,31 @@ $imagesCount = count($otherImages);
 <!--            <section class="content">-->
 <!--                <a href="search-list.html">Back to Search Results</a>-->
 <!--            </section>-->
-        </div>
 
-        <!-- Pop-up -->
-        <div class="modal" id="pop-up1">
-            <div class="pop-up-bg"></div>
-            <div class="pop-up-wrap">
-                <div class="pop-up-close"></div>
-                <div class="image-slider">
-                    <div class="slider-main-image">
-                        <img src="http://placehold.it/750x350">
-                        <div class="slider-arrows">
-                            <div class="arrow left"><span><</span></div>
-                            <div class="arrow right"><span>></span></div>
-                        </div>
-                    </div>
-                    <div class="slider-pagination">
-                        <?php foreach ($otherImages as $src) {?>
-                        <div class="pagination-item">
-                            <img src="<?= $src?>">
-                        </div>
-                        <? } ?>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<!--        <!-- Pop-up -->-->
+<!--        <div class="modal" id="pop-up1">-->
+<!--            <div class="pop-up-bg"></div>-->
+<!--            <div class="pop-up-wrap">-->
+<!--                <div class="pop-up-close"></div>-->
+<!--                <div class="image-slider">-->
+<!--                    <div class="slider-main-image">-->
+<!--                        <img src="http://placehold.it/750x350">-->
+<!--                        <div class="slider-arrows">-->
+<!--                            <div class="arrow left"><span><</span></div>-->
+<!--                            <div class="arrow right"><span>></span></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="slider-pagination">-->
+<!--                        --><?php //foreach ($otherImages as $src) {?>
+<!--                        <div class="pagination-item">-->
+<!--                            <img src="--><?//= $src?><!--">-->
+<!--                        </div>-->
+<!--                        --><?// } ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!---->
+<!--            </div>-->
+<!--        </div>-->
 
 
         <!-- JS -->
@@ -486,7 +484,7 @@ $imagesCount = count($otherImages);
     </div>
 </div>
 
-
+</div>
 
 <script>
     jQuery('.pop-up-btn').on('click', function () {
