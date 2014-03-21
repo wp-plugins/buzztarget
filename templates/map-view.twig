@@ -16,7 +16,7 @@
     {% set propertyURLDashed = property_url ~ '/' ~ property.Property.PropertyName|replace(' ', '-') %}
     {%
         set mapProperties = mapProperties|merge([key,
-        {   
+        {
                 propertyLat : property.Lat|e,
                 propertyLon : property.Lon,
                 propertyAddress : property.Property.Address.Address,
@@ -45,7 +45,7 @@
                 map, 
                 markers = [], 
                 propertyWindow = new google.maps.InfoWindow({
-                    content: '',
+                    content: ''
                 });
 
                 for (var i = 0; i < properties.length; i++)

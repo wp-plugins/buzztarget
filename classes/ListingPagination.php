@@ -20,10 +20,8 @@ class ListingPagination
      *
      * @return array The current page's listing(s).
      */
-    public function getCurrentPageListings(array $listings)
+    public function getCurrentPageListings(array $listings, $limit = 9)
     {
-        // Properties per page
-        $limit = 9;
 
         $listingsCount = count($listings);
 

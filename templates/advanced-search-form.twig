@@ -1,0 +1,85 @@
+{% set advancedSearchStatus = theme_options['advanced_search']['status'] %}
+{# Advanced Search #}
+{% if advancedSearchStatus is sameas('on') %}
+    <div class="search-filter theme-bg">
+        <form id="adv_search_form" method="POST" action="{{ url }}?search=true">
+            <h4 class="title info" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>Filter By:</h4>
+            <div class="clearfix">
+                {% if show_listing_type is sameas('on') %}
+                    <div class="input-group half">
+                        <input type="checkbox"  id="forLease" name="listing_types[]" {% if 'forlease' in saved.listing_types %} checked="checked" {% endif %} value="forlease" />
+                        <label for="forLease">For Lease</label>
+                    </div>
+                    <div class="input-group half">
+                        <input type="checkbox" id="forSale"  name="listing_types[]" {% if 'forsale' in saved.listing_types %} checked="checked" {% endif %} value="forsale" />
+                        <label for="forSale">For Sale</label>
+                    </div>
+                {% endif %}
+                {% if show_street is sameas('on') %}
+                    <div class="input-group">
+                        <input type="text" placeholder="Street" id="street" name="address_line_1" value="{% if saved.address_line_1 %}{{ saved.address_line_1 }}{% endif %}" />
+                    </div>
+                {% endif %}
+                {% if show_city is sameas('on') %}
+                    <div class="input-group">
+                        <input type="text" placeholder="City (separated by commas)" id="city" name="address_line_2" value="{% if saved.address_line_2 %}{{ saved.address_line_2 }}{% endif %}" />
+                    </div>
+                {% endif %}
+                {% if show_county is sameas('on') %}
+                <div class="input-group">
+                    <input type="text" placeholder="County" id="county"  name="county" value="{% if saved.county %}{{ saved.county }}{% endif %}" />
+                </div>
+                {% endif %}
+                {% if show_zip is sameas('on') %}
+                    <div class="input-group">
+                        <input type="text" placeholder="ZIP" id="zip" name="address_zip_state" value="{% if saved.address_zip_state %}{{ saved.address_zip_state }}{% endif %}" />
+                    </div>
+                {% endif %}
+            </div>
+            {% if show_property_type is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group">
+                        <select name="property_types[]" id="propertyType">
+                            <option {% if 'retail' in saved.property_types %} selected="selected" {% endif %} value="retail">Retail</option>
+                            <option {% if 'office' in saved.property_types %} selected="selected" {% endif %} value="office">Office</option>
+                            <option {% if 'industrial' in saved.property_types %} selected="selected" {% endif %} value="industrial">Industrial</option>
+                            <option {% if 'mixeduse' in saved.property_types %} selected="selected" {% endif %} value="mixeduse">Mixed Use</option>
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+            {% if show_size_range is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group half">
+                        <input type="text" placeholder="Size From" id="sizeFrom" name="size_from" value="{% if saved.size_from %}{{ saved.size_from }}{% endif %}" />
+                    </div>
+                    <div class="input-group half">
+                        <input type="text" placeholder="Size To" id="sizeTo" name="size_to" value="{% if saved.size_to %}{{ saved.size_to }}{% endif %}" />
+                    </div>
+                </div>
+            {% endif %}
+            {% if show_price_range is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group half">
+                        <input type="text" placeholder="Price From" id="priceFrom" name="price_from" value="{% if saved.price_from %}{{ saved.price_from }}{% endif %}" />
+                    </div>
+                    <div class="input-group half">
+                        <input type="text" placeholder="Price To" id="priceTo" name="price_to" value="{% if saved.price_to %}{{ saved.price_to }}{% endif %}" />
+                    </div>
+                </div>
+            {% endif %}
+            {% if show_keyword is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group">
+                        <input type="text" placeholder="Keyword" name="keyword" id="keyword" value="{% if saved.keyword %}{{ saved.keyword }}{% endif %}" />
+                    </div>
+                </div>
+            {% endif %}
+            <div class="clearfix">
+                <div class="input-group">
+                    <input type="submit" class="btn" name="advanced_search_submit" value="Filter" />
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}

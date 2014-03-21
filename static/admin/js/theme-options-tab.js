@@ -3,13 +3,13 @@ jQuery(document).ready(function($)
     // Initially check the value of the advanced search
     // and send off to be checked to see if the css colors table
     // needs to be hidden or displayed.
-    var status = $('select[id=bt-advanced-search]').val();
+    var status = $('input[name="advanced_search[status]"]:checked').val();
     handleFieldsForStatus(status);
 
     /*
         When the advanced search status changes
     */
-    $('select[id=bt-advanced-search]').change(function()
+    $('input[name="advanced_search[status]"]').change(function()
     {
         var status = this.value;
 
@@ -22,8 +22,7 @@ jQuery(document).ready(function($)
     */
     function handleFieldsForStatus(status)
     {
-        var advancedSearchButtonCSSTable = 'table[id=bt-advanced-search-css-table]';
-
+        var advancedSearchButtonCSSTable = 'table.advanced-search-fields';
         if (status === 'on')
         {
             toggleElement(advancedSearchButtonCSSTable, 'show');

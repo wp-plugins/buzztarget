@@ -10,13 +10,15 @@ class Shortcodes
     protected $twig;
     protected $text;
     protected $listingPagination;
+    protected $listingSort;
 
-    public function __construct(Config $config, Twig_Environment $twig, Text $text, ListingPagination $listingPagination, Request $request)
+    public function __construct(Config $config, Twig_Environment $twig, Text $text, ListingPagination $listingPagination, Request $request, ListingSort $listingSort)
     {
         $this->config = $config;
         $this->twig = $twig;
         $this->text = $text;
         $this->listingPagination = $listingPagination;
+        $this->listingSort = $listingSort;
         $this->request = $request;
 
         add_shortcode('for-sale', array($this, 'showForSaleListings'));
@@ -221,6 +223,7 @@ class Shortcodes
             'listings_count'                        => count($repl_listings),
             'for_sale_listings_title_color'         => (isset($options['for_sale_title_color'])) ? $options['for_sale_title_color'] : '#4089ac',
             'property_url'                          => site_url() . '/property',
+            'properties_url'                        => site_url() . '/properties',
             'listings_image'                        => $this->config->getValue('static_url') . 'images/listings',
             'read_more'                             => $this->text->__('PUBLIC_LISTINGS_READ_MORE'),
             'price'                                 => $this->text->__('PUBLIC_LISTINGS_PRICE'),
@@ -323,6 +326,7 @@ class Shortcodes
             'listings_count'                        => count($repl_listings),
             'for_lease_listings_title_color'        => (isset($options['for_lease_title_color'])) ? $options['for_lease_title_color'] : '#4089ac',
             'property_url'                          => site_url() . '/property',
+            'properties_url'                        => site_url() . '/properties',
             'listings_image'                        => $this->config->getValue('static_url') . 'images/listings',
             'read_more'                             => $this->text->__('PUBLIC_LISTINGS_READ_MORE'),
             'rental_rate_label'                     => $this->text->__('PUBLIC_LISTINGS_LEASE_RENTAL_RATE'),

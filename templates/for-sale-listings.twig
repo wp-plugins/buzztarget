@@ -25,7 +25,7 @@
                 <div class="bt-property">
 
                     {# URL to property page #}
-                    {% set propertyURLDashed = property_url ~ '/' ~ property.Property.PropertyName|replace(' ', '-') %}
+                    {% set propertyURLDashed = properties_url ~ '/' ~ property.Property.PropertyName|replace(' ', '-') ~ '/' ~ property.ListingId %}
 
                     {# Property Image #}
                     <div class="bt-property-image">

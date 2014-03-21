@@ -335,6 +335,7 @@ if (isset($_GET['map_view']))
         'theme_color' => $themeOptions['theme_color'],
         'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
         'property_url' => site_url() . '/property',
+        'properties_url'             => site_url() . '/properties',
         'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
         'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
         //'saved' => $savedSearchValues,
@@ -392,6 +393,8 @@ if (isset($_GET['map_view']))
     // otherwise just return the listings for the current page only.
     $listings = ($_POST['advanced_search_submit']) ? $search_listings : $listings;
 
+
+
     if(count($listings)){
         foreach($listings as $key => $val){
             $draft_page = get_post($listings[$key]['wp_page_id']);
@@ -401,9 +404,42 @@ if (isset($_GET['map_view']))
         }
     }
 
-    $listings = $this->listingPagination->getCurrentPageListings(array_values($listings));
-
     $themeOptions = get_option('buzztarget_theme_options');
+    $is_limit_changed = 'false';
+    if(isset($_GET['limit_per_page'])){
+        $is_limit_changed = 'true';
+        $listing_per_page = $_GET['limit_per_page'];
+    }
+    else{
+        $listing_per_page = $themeOptions['default_listing_per_page'];
+    }
+    $allow_listing_per_page_change = $themeOptions['allow_listing_per_page_change'];
+
+    $show_filter_form = $themeOptions['advanced_search']['status'];
+    $show_listing_type = $themeOptions['advanced_search']['listing_type'];
+    $show_street = $themeOptions['advanced_search']['street'];
+    $show_city = $themeOptions['advanced_search']['city'];
+    $show_county = $themeOptions['advanced_search']['county'];
+    $show_zip = $themeOptions['advanced_search']['zip'];
+    $show_property_type = $themeOptions['advanced_search']['property_type'];
+    $show_broker = $themeOptions['advanced_search']['broker'];
+    $show_keyword = $themeOptions['advanced_search']['keyword'];
+    $show_size_range = $themeOptions['advanced_search']['size_range'];
+    $show_price_range = $themeOptions['advanced_search']['price_range'];
+
+    $show_sort_by = $themeOptions['show_sort_by'];
+    $is_sort_by_changed = 'false';
+    if(isset($_GET['sort_by'])){
+        $is_sort_by_changed = 'true';
+        $default_sort_by = $_GET['sort_by'];
+    }
+    else{
+        $default_sort_by = $themeOptions['default_sort_by'];
+    }
+    //$listings = $this->listingSort->getSortListings(array_values($listings), $default_sort_by);
+
+    $listings = $this->listingPagination->getCurrentPageListings(array_values($listings), $listing_per_page);
+
 
     $vars = array(
         'list_view' => true,
@@ -438,6 +474,24 @@ if (isset($_GET['map_view']))
         'theme_color' => $themeOptions['theme_color'],
         'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
         'property_url' => site_url() . '/property',
+        'properties_url'             => site_url() . '/properties',
+        'listing_per_page' => $listing_per_page,
+        'allow_listing_per_page_change' => $allow_listing_per_page_change,
+        'show_sort_by' => $show_sort_by,
+        'default_sort_by' => $default_sort_by,
+        'is_limit_changed' => $is_limit_changed,
+        'is_sort_by_changed' => $is_sort_by_changed,
+        'show_filter_form' => $show_filter_form,
+        'show_listing_type' => $show_listing_type,
+        'show_street' => $show_street,
+        'show_city' => $show_city,
+        'show_county' => $show_county,
+        'show_zip' => $show_zip,
+        'show_property_type' => $show_property_type,
+        'show_broker' => $show_broker,
+        'show_keyword' => $show_keyword,
+        'show_size_range' => $show_size_range,
+        'show_price_range' => $show_price_range,
         'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
         'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
         // Saved search values

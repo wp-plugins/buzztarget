@@ -75,39 +75,83 @@ class BackEndController
 
                 // $_POST keys
                 $postKeys = array(
-                    'theme_color', 'theme_color_overlay_text', 
-                    'advanced_search', 
+                    'listing_style',
+                    'listing_detail_style',
+                    'advanced_search',
+                    'allow_listing_per_page_change',
+                    'default_listing_per_page',
+                    'show_sort_by',
+                    'default_sort_by',
                     'map_view_status',
                 );
 
-                list($themeColor, $themeColorOverlayText, $advancedSearch, $mapViewStatus) = $this->request->getPostValues($postKeys);
+                list($listingStyle, $listingDetailStyle, $advancedSearch, $allow_listing_per_page_change, $default_listing_per_page, $show_sort_by, $default_sort_by, $mapViewStatus) = $this->request->getPostValues($postKeys);
 
-
-                if (!preg_match('/^#[\w]+$/', $themeColor))
-                    $themeColor = '';
-
-                if (!preg_match('/^#[\w]+$/', $themeColorOverlayText))
-                    $themeColorOverlayText = '';
+                $listingStyle = ($listingStyle === 'style1' || $listingStyle === 'style2') ? $listingStyle : 'style1';
+                $listingDetailStyle = ($listingDetailStyle === 'style1' || $listingDetailStyle === 'style2') ? $listingDetailStyle : 'style1';
 
                 $advancedSearchStatus = (isset($advancedSearch['status']) 
                     && ($advancedSearch['status'] === 'on' || $advancedSearch['status'] === 'off')) ? $advancedSearch['status'] : 'on';
 
-                $advancedSearchSearchButtonCSS = (isset($advancedSearch['search_button_css']) 
-                    && preg_match('/^#[\w]+$/', $advancedSearch['search_button_css'])) ? $advancedSearch['search_button_css'] : '';
+                $advancedSearchListingType = (isset($advancedSearch['listing_type'])
+                    && ($advancedSearch['listing_type'] === 'on' || $advancedSearch['listing_type'] === 'off')) ? $advancedSearch['listing_type'] : 'on';
 
-                $advancedSearchResetButtonCSS = (isset($advancedSearch['reset_button_css']) 
-                    && preg_match('/^#[\w]+$/', $advancedSearch['reset_button_css'])) ? $advancedSearch['reset_button_css'] : '';
+                $advancedSearchStreet = (isset($advancedSearch['street'])
+                    && ($advancedSearch['street'] === 'on' || $advancedSearch['street'] === 'off')) ? $advancedSearch['street'] : 'on';
+
+                $advancedSearchCity = (isset($advancedSearch['city'])
+                    && ($advancedSearch['city'] === 'on' || $advancedSearch['city'] === 'off')) ? $advancedSearch['city'] : 'on';
+
+                $advancedSearchCounty = (isset($advancedSearch['county'])
+                    && ($advancedSearch['county'] === 'on' || $advancedSearch['county'] === 'off')) ? $advancedSearch['county'] : 'on';
+
+                $advancedSearchZip = (isset($advancedSearch['zip'])
+                    && ($advancedSearch['zip'] === 'on' || $advancedSearch['zip'] === 'off')) ? $advancedSearch['zip'] : 'on';
+
+                $advancedSearchPropertyType = (isset($advancedSearch['property_type'])
+                    && ($advancedSearch['property_type'] === 'on' || $advancedSearch['property_type'] === 'off')) ? $advancedSearch['property_type'] : 'on';
+
+                $advancedSearchBroker = (isset($advancedSearch['broker'])
+                    && ($advancedSearch['broker'] === 'on' || $advancedSearch['broker'] === 'off')) ? $advancedSearch['broker'] : 'on';
+
+                $advancedSearchKeyword = (isset($advancedSearch['keyword'])
+                    && ($advancedSearch['keyword'] === 'on' || $advancedSearch['keyword'] === 'off')) ? $advancedSearch['keyword'] : 'on';
+
+                $advancedSearchSizeRange = (isset($advancedSearch['size_range'])
+                    && ($advancedSearch['size_range'] === 'on' || $advancedSearch['size_range'] === 'off')) ? $advancedSearch['size_range'] : 'on';
+
+                $advancedSearchPriceRange = (isset($advancedSearch['price_range'])
+                    && ($advancedSearch['price_range'] === 'on' || $advancedSearch['price_range'] === 'off')) ? $advancedSearch['price_range'] : 'on';
+
+
+                $allow_listing_per_page_change = ($allow_listing_per_page_change === 'on' || $allow_listing_per_page_change === 'off') ? $allow_listing_per_page_change : 'on';
+                $default_listing_per_page = ($default_listing_per_page === '12' || $default_listing_per_page === '30' || $default_listing_per_page === '60') ? $default_listing_per_page : '12';
+
+                $show_sort_by = ($show_sort_by === 'on' || $show_sort_by === 'off') ? $show_sort_by : 'on';
+                $default_sort_by = ($default_sort_by === 'price_a_z' || $default_sort_by === 'price_z_a' || $default_sort_by === 'date_a_z' || $default_sort_by === 'date_z_a' || $default_sort_by === 'size_a_z' || $default_sort_by === 'size_z_a' || $default_sort_by === 'broker_a_z' || $default_sort_by === 'broker_z_a' || $default_sort_by === 'county_a_z' || $default_sort_by === 'county_z_a') ? $default_sort_by : 'price_a_z';
 
                 $mapViewStatus = ($mapViewStatus === 'on' || $mapViewStatus === 'off') ? $mapViewStatus : 'on';
 
                 $themeOptions = array(
-                    'theme_color' => $themeColor,
-                    'theme_color_overlay_text' => $themeColorOverlayText,
+                    'listing_style' => $listingStyle,
+                    'listing_detail_style' => $listingDetailStyle,
                     'advanced_search' => array(
                         'status' => $advancedSearchStatus,
-                        'search_button_css' => $advancedSearchSearchButtonCSS,
-                        'reset_button_css' => $advancedSearchResetButtonCSS,
+                        'listing_type' => $advancedSearchListingType,
+                        'street' => $advancedSearchStreet,
+                        'city' => $advancedSearchCity,
+                        'county' => $advancedSearchCounty,
+                        'zip' => $advancedSearchZip,
+                        'property_type' => $advancedSearchPropertyType,
+                        'broker' => $advancedSearchBroker,
+                        'keyword' => $advancedSearchKeyword,
+                        'size_range' => $advancedSearchSizeRange,
+                        'price_range' => $advancedSearchPriceRange
                     ),
+                    'allow_listing_per_page_change' => $allow_listing_per_page_change,
+                    'default_listing_per_page' => $default_listing_per_page,
+                    'show_sort_by' => $show_sort_by,
+                    'default_sort_by' => $default_sort_by,
                     'map_view_status' => $mapViewStatus,
                 );
 
@@ -206,11 +250,50 @@ class BackEndController
             $vars['theme_options_desc'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_OPTIONS_DESC');
             $vars['theme_options_theme_color'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_COLOR');
             $vars['theme_options_theme_color_overlay_text'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_COLOR_OVERLAY_TEXT');
+
+            $vars['theme_options_listing_style'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_STYLE');
+            $vars['theme_options_listing_detail_style'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_DETAIL_STYLE');
+            $vars['theme_options_listing_style_1'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_STYLE_1');
+            $vars['theme_options_listing_style_2'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_STYLE_2');
+            $vars['theme_options_listing_detail_style_1'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_DETAIL_STYLE_1');
+            $vars['theme_options_listing_detail_style_2'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_DETAIL_STYLE_2');
+
             $vars['theme_options_advanced_search'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH');
             $vars['theme_options_advanced_search_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_ON');
             $vars['theme_options_advanced_search_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_OFF');
             $vars['theme_options_advanced_search_search_button_css'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_SEARCH_BUTTON_CSS');
             $vars['theme_options_advanced_search_reset_button_css'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_RESET_BUTTON_CSS');
+            $vars['theme_options_advanced_search_listing_type'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_LISTING_TYPE');
+            $vars['theme_options_advanced_search_street'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_STREET');
+            $vars['theme_options_advanced_search_city'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_CITY');
+            $vars['theme_options_advanced_search_county'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_COUNTY');
+            $vars['theme_options_advanced_search_zip'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_ZIP');
+            $vars['theme_options_advanced_search_property_type'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_PROPERTY_TYPE');
+            $vars['theme_options_advanced_search_broker'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_BROKER');
+            $vars['theme_options_advanced_search_keyword'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_KEYWORD');
+            $vars['theme_options_advanced_search_size_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_SIZE_RANGE');
+            $vars['theme_options_advanced_search_price_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_PRICE_RANGE');
+
+            $vars['theme_options_allow_listing_per_page_change'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE');
+            $vars['theme_options_allow_listing_per_page_change_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE_ON');
+            $vars['theme_options_allow_listing_per_page_change_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE_OFF');
+            $vars['theme_options_default_listing_per_page'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_LISTING_PER_PAGE');
+
+            $vars['theme_options_show_sort_by'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SORT_BY');
+            $vars['theme_options_show_sort_by_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SORT_BY_ON');
+            $vars['theme_options_show_sort_by_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SORT_BY_OFF');
+            $vars['theme_options_default_sort_by'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY');
+            $vars['theme_options_default_sort_by_price_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_PRICE_A_Z');
+            $vars['theme_options_default_sort_by_price_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_PRISE_Z_A');
+            $vars['theme_options_default_sort_by_date_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_DATE_A_Z');
+            $vars['theme_options_default_sort_by_date_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_DATE_Z_A');
+            $vars['theme_options_default_sort_by_size_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_SIZE_A_Z');
+            $vars['theme_options_default_sort_by_size_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_SIZE_Z_A');
+            $vars['theme_options_default_sort_by_broker_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_BROKER_A_Z');
+            $vars['theme_options_default_sort_by_broker_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_BROKER_Z_A');
+            $vars['theme_options_default_sort_by_county_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_COUNTY_A_Z');
+            $vars['theme_options_default_sort_by_county_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_COUNTY_Z_A');
+
             $vars['theme_options_map_view'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_MAP_VIEW');
             $vars['theme_options_map_view_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_MAP_VIEW_ON');
             $vars['theme_options_map_view_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_MAP_VIEW_OFF');
@@ -325,4 +408,6 @@ class BackEndController
     {
         require_once $this->config->getValue('public_admin_path') . 'api-settings.php';
     }
+
+
 }

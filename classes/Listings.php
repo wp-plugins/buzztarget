@@ -38,7 +38,6 @@ class Listings
             curl_close($ch);
 
             $listings = json_decode($listings, true);
-
             $listings = $listings['Result'];
 
             $_listings = array();
@@ -140,9 +139,11 @@ class Listings
                 if (isset($listing['Property']['PropertyName']))
                 {
                     $propertyName = $listing['Property']['PropertyName'];
-                    if (!array_key_exists($propertyName, $properties))
+                    $propertyID = $listing['ListingId'];
+                    if (!array_key_exists($propertyID, $properties))
                     {
                         $properties[$propertyName] = $listing;
+                        $properties[$propertyID] = $listing;
                         $postName = strtolower(str_replace(
                             array('.',',','/',' ','--','---'),
                             '-',
@@ -205,4 +206,5 @@ class Listings
         }
         return false;
     }
+
 }

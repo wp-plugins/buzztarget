@@ -35,14 +35,14 @@ class FrontEndController
         {
             if (is_single())
             {
-                if ($themeFile = locate_template(array('single-property-page.php')))
+                if ($themeFile = locate_template(array('new-single-property-page.php')))
                 {
                     $templatePath = $themeFile;
                 } 
                 else 
                 {
                     $templatesPath = $this->config->getValue('templates_path');
-                    $templatePath = $templatesPath . 'single-property-page.php';
+                    $templatePath = $templatesPath . 'new-single-property-page.php';
                 }
             }
         }

@@ -37,8 +37,12 @@ div.bt-theme-options-clear
 table.bt-theme-options-table
 {
     margin-bottom: 10px;
+    width: 300px;
 }
-
+table.bt-theme-options-table tr td:last-child
+{
+    float: right;
+}
 /* Theme colors table */
 table#bt-theme-colors-table
 {
@@ -46,18 +50,21 @@ table#bt-theme-colors-table
 }
 
 /* Advanced search status table (ON/OFF) select element */
-table#bt-advanced-search-status-table tr td select
+table.advanced-search-fields tr td input:first-child
 {
-    margin-left: 100px;
+    margin-left: 20px;
 }
 
 /* Advanced Search CSS Colors Table */
-table#bt-advanced-search-css-table
+table.advanced-search-fields
 {
     padding-left: 45px;
     margin-bottom: 20px;
 }
-
+table.advanced-search-fields tr
+{
+    height: 35px;
+}
 /* Map View Select Element */
 table#bt-map-view-table tr td select
 {

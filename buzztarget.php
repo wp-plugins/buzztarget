@@ -63,7 +63,8 @@ else // Otherwise we're in the frontend
     new FrontEndScripts($config);
     new FrontEndController($config, $text);
     $listingPagination = new ListingPagination();
-    new Shortcodes($config, $twig, $text, $listingPagination, $request);
+    $listingSort = new ListingSort();
+    new Shortcodes($config, $twig, $text, $listingPagination, $request, $listingSort);
     new FrontEndScripts($config);
 }
 
