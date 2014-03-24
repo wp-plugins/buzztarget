@@ -110,6 +110,7 @@ div#bt-single-property-map-canvas {
     height: 300px;
     margin: 0px;
     padding: 0px;
+    border: 2px solid #ccc;
 }
 
 /*
@@ -341,7 +342,7 @@ hr.bt-single-property-hr {
 }
 
 #buzz-target-plugin section.image h1 {
-    bottom: 15px;
+    bottom: 35px;
     color: #fff;
     position: absolute;
     padding: 0 20px;
@@ -412,6 +413,18 @@ hr.bt-single-property-hr {
 #buzz-target-plugin .broker-item h4 {
     width: 100%;
     margin: 0;
+}
+#buzz-target-plugin ul.property-docs li{
+    margin-top: 10px;
+}
+
+#buzz-target-plugin ul.property-docs, #buzz-target-plugin ul.broker-list{
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
 }
 
 #buzz-target-plugin .broker-list {
@@ -502,6 +515,7 @@ hr.bt-single-property-hr {
     right: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.35);
+    border: 2px solid #ccc;
 }
 
 #buzz-target-plugin .image-overlay .zoom {
@@ -652,9 +666,27 @@ hr.bt-single-property-hr {
 #buzz-target-plugin .pagination-item:hover {
     outline: 5px solid #ccc;
 }
+#buzz-target-plugin .content .slider-pagination .pagination-item img{
+    position: absolute;
+    max-width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+#buzz-target-plugin .content .slider-pagination .pagination-item {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    position: relative;
+}
 
 #buzz-target-plugin .content.two-columns .slider-pagination .pagination-item {
-    max-width: 60px;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ccc;
 }
 
 #buzz-target-plugin .slider-main-image {
@@ -663,6 +695,7 @@ hr.bt-single-property-hr {
     height: auto;
     max-height: 350px;
     background: #000;
+    border: 2px solid #ccc;
 }
 
 #buzz-target-plugin .arrow {
@@ -975,105 +1008,105 @@ hr.bt-single-property-hr {
 
 @media (max-width: 767px) {
 
-    .column {
+    #buzz-target-plugin .column {
         width: 100% !important;
     }
 
-    .pagination-item {
+    #buzz-target-plugin .pagination-item {
         max-height: 70px;
         max-width: 70px;
     }
 
-    .column.half:nth-child(even) h3 {
+    #buzz-target-plugin .column.half:nth-child(even) h3 {
         margin: 0;
     }
 
-    .list-view .list-item .item-info {
+    #buzz-target-plugin .list-view .list-item .item-info {
         width: 70%;
         padding-left: 5%;
     }
 
-    .grid-view .list-item {
+    #buzz-target-plugin .grid-view .list-item {
         width: 47%;
         margin-right: 0;
     }
 
-    .grid-view .list-item:nth-child(odd) {
+    #buzz-target-plugin .grid-view .list-item:nth-child(odd) {
         margin-right: 6%;
     }
 }
 
 @media (max-width: 640px) {
-    .brokers {
+    #buzz-target-plugin .brokers {
         width: 100%;
         float: right;
         padding-top: 20px;
     }
 
-    .pagination-item {
+    #buzz-target-plugin .pagination-item {
         max-height: 40px;
         max-width: 40px;
     }
 
-    .content.two-columns .slider-pagination .pagination-item {
+    #buzz-target-plugin .content.two-columns .slider-pagination .pagination-item {
         max-width: 35px;
     }
 
-    .content.two-columns .image-slider img {
+    #buzz-target-plugin .content.two-columns .image-slider img {
         min-width: 100%;
     }
 
-    table.half {
+    #buzz-target-plugin table.half {
         width: 100%;
         margin: 0 0 20px;
     }
 
-    ul {
+    #buzz-target-plugin ul {
         padding-left: 20px !important;
     }
 
-    .search {
+    #buzz-target-plugin .search {
         min-height: 475px;
     }
 
-    .search-map {
+    #buzz-target-plugin .search-map {
         right: 0;
         bottom: 475px;
         display: none;
     }
 
-    .search-map iframe {
+    #buzz-target-plugin .search-map iframe {
         min-height: 250px;
     }
 
-    .search-filter {
+    #buzz-target-plugin .search-filter {
         width: 100%;
         top: 40px;
     }
 
-    .list-view .list-item .item-info {
+    #buzz-target-plugin .list-view .list-item .item-info {
         width: 100%;
         padding-left: 0;
         padding-top: 20px;
     }
 
-    .list-view .list-item .image {
+    #buzz-target-plugin .list-view .list-item .image {
         width: 100%;
         max-width: 100%;
     }
 
-    .grid-view .list-item {
+    #buzz-target-plugin .grid-view .list-item {
         width: 100%;
         margin: 0 0 30px;
     }
 
-    .pagination-list {
+    #buzz-target-plugin .pagination-list {
         float: none;
         width: 100%;
         text-align: center;
     }
 
-    .pagination-list > a {
+    #buzz-target-plugin .pagination-list > a {
         padding: 10px 15px;
     }
 }

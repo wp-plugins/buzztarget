@@ -20,9 +20,14 @@ foreach ($property['ListingImages'] as $propertyThumbnail):
     endif;
 endforeach;
 
+$propertyDocuments = $property['ListingDocuments'];
+$spaces = $property['SpacesToLease'];
+
 $currentImage = 1;
 $imagesCount = count($otherImages);
+
 ?>
+
 <div id="buzz-target-plugin">
 <div class="container">
     <?php
@@ -31,14 +36,12 @@ $imagesCount = count($otherImages);
             <section class="image">
                 <img src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
                 <div class="darken-bg"></div>
-                <h1><?php echo $property_name; ?></h1><br/>
-<!--                <p>-->
-<!--                    <span>-->
-<!--                        --><?//= $property['Property']['Address']['City']; ?><!--,-->
-<!--                        --><?//= $property['Property']['Address']['State']; ?>
-<!--                        --><?//= $property['Property']['Address']['Zip']; ?>
-<!--                    </span>-->
-<!--                </p>-->
+                <h1><?php echo $property_name; ?></h1>
+                <span>
+                    <?= $property['Property']['Address']['City']; ?>,
+                    <?= $property['Property']['Address']['State']; ?>
+                    <?= $property['Property']['Address']['Zip']; ?>
+                </span>
             </section>
             <section class="content">
                 <h3 class="for-lease">
@@ -71,7 +74,18 @@ $imagesCount = count($otherImages);
                 <div class="overview clear">
                     <h4 class="title theme-color">Property Overview</h4>
 
-                    <p><?= $property['PropertyDescription'];?></p>
+                    <p>
+                        <?php
+                        print (isset($property['PropertyDescription']) ?
+                            $property['PropertyDescription'] :
+                            '');
+                        ?>
+                        <?php
+                        print (isset($property['LocationDescription']) ?
+                            $property['LocationDescription'] :
+                            '');
+                        ?>
+                    </p>
                 </div>
             </section>
             <section class="content">
@@ -91,81 +105,170 @@ $imagesCount = count($otherImages);
                             <div class="slider-pagination">
                                 <?php foreach ($otherImages as $src) {?>
                                 <div class="pagination-item">
-                                    <img src="http://placehold.it/100x100">
+                                    <img src="<?= $src; ?>">
                                 </div>
                                 <? } ?>
                             </div>
                         </div>
                         <h4 class="title info theme-color">Attachments:</h4>
-                        <ul>
-                            <li><a href="#">Marketing Flyer</a></li>
-                            <li><a href="#">Floor Plan</a></li>
+                        <ul class="property-docs">
+                            <?php foreach ($propertyDocuments as $doc) {?>
+                            <li><a href="<?= $doc['AttachmentPath']?>"><?= $doc['AttachmentTitle']?></a></li>
+                            <? } ?>
                         </ul>
                     </div>
                     <div class="column sixty">
                         <h4 class="title info theme-color">Property Information</h4>
                         <table>
                             <tbody>
-                            <tr>
-                                <td>Property Type:</td>
-                                <td>Retail</td>
-                            </tr>
+                            <? if (isset($property['GrossLeasableArea'])){ ?>
                             <tr>
                                 <td>Total Building SF:</td>
-                                <td>18,000</td>
+                                <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
                             </tr>
+                            <? } ?>
+                            <? if (isset($property['TotalLotSize'])){ ?>
+                            <tr>
+                                <td>Total Lot Size SF:</td>
+                                <td><?php echo number_format($property['TotalLotSize']); ?></td>
+                            </tr>
+                            <? } ?>
+                            <? if (isset($property['Occupancy'])){ ?>
                             <tr>
                                 <td>Occupancy:</td>
-                                <td>90%</td>
+                                <td><?php echo $property['Occupancy'] . '%'; ?></td>
                             </tr>
+                            <? } ?>
+                            <? if (isset($property['YearBuild'])){ ?>
                             <tr>
                                 <td>Year Built:</td>
-                                <td>2006</td>
+                                <td><?php echo $property['YearBuild']; ?></td>
                             </tr>
+                            <? } ?>
+                            <? if (isset($property['YearRenovated'])){ ?>
+                            <tr>
+                                <td>Year Renovated:</td>
+                                <td><?php echo $property['YearRenovated']; ?></td>
+                            </tr>
+                            <? } ?>
+                            <? if (isset($property['ParkingSpace'])){ ?>
+                            <tr>
+                                <td>Parking Space:</td>
+                                <td><?php echo $property['ParkingSpace']; ?></td>
+                            </tr>
+                            <? } ?>
+                            <? if (isset($property['Zoning'])){ ?>
+                                <tr>
+                                    <td>Zoning:</td>
+                                    <td><?php echo $property['Zoning']; ?></td>
+                                </tr>
+                            <? } ?>
+                            <? if (isset($property['County'])){ ?>
                             <tr>
                                 <td>County:</td>
-                                <td>Oakland</td>
+                                <td><?php echo $property['County']; ?></td>
                             </tr>
+                            <? } ?>
+                            <? if (isset($property['TrafficCounts'])){ ?>
                             <tr>
-                                <td>Zoning:</td>
-                                <td>C4-3</td>
+                                <td>Traffic Count:</td>
+                                <? if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
+                                    <td><?php echo number_format($property['TrafficCounts']['RangeFrom']); ?></td>
+                                <? } else{ ?>
+                                    <td><?php echo number_format($property['TrafficCounts']['RangeFrom']) . ' - ' . number_format($property['TrafficCounts']['RangeTo']); ?></td>
+                                <? } ?>
                             </tr>
+                            <? } ?>
+                            <? if (isset($property['PopulationRange'])){ ?>
+                            <tr>
+                                <td>Population:</td>
+                                <? if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
+                                <td><?php echo number_format($property['PopulationRange']['RangeFrom']); ?></td>
+                                <? } else{ ?>
+                                <td><?php echo number_format($property['PopulationRange']['RangeFrom']) . ' - ' . number_format($property['PopulationRange']['RangeTo']); ?></td>
+                                <? } ?>
+                            </tr>
+                            <? } ?>
+                            <? if (isset($property['HouseholdIncome'])){ ?>
+                            <tr>
+                                <td>Income:</td>
+                                <? if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
+                                <td><?php echo number_format($property['HouseholdIncome']['RangeFrom']); ?></td>
+                                <? } else{ ?>
+                                <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['PopulationRange']['RangeTo']); ?></td>
+                                <? } ?>
+                            </tr>
+                            <? } ?>
                             </tbody>
                         </table>
+                        <?php if (count($spaces) > 0){?>
                         <h4 class="title info theme-color">Spaces</h4>
                         <table class="theme-table">
                             <tbody>
+                                <?php foreach($spaces as $space){ ?>
                             <tr>
-                                <td>Space 1</td>
-                                <td>$35 / PSF</td>
-                                <td>2,700 SF</td>
-                                <td>Retail</td>
+                                <td><?= $space['Name'];?></td>
+                                <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
+                                <td><?php echo number_format($space['Size']) . ' SF'; ?></td>
+                                <td><?= $space['SpaceType'];?></td>
                             </tr>
-                            <tr>
-                                <td>Space 2</td>
-                                <td>$25 / PSF</td>
-                                <td>9,700 SF</td>
-                                <td>Retail</td>
-                            </tr>
-                            <tr>
-                                <td>Space 3</td>
-                                <td>$35 / PSF</td>
-                                <td>1,700 SF</td>
-                                <td>Retail</td>
-                            </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
+                        <?php } ?>
                     </div>
                 </div>
             </section>
             <section class="content">
-                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6304.893228812689!2d-122.30514182013415!3d37.80300668544161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80857d8b28aaed03%3A0x71b415d535759367!2sOakland%2C+CA!5e0!3m2!1sen!2s!4v1395074246707" frameborder="0"></iframe>
-            </section>
-<!--            <section class="content">-->
-<!--                <a href="search-list.html">Back to Search Results</a>-->
-<!--            </section>-->
+                <?php
+                $lat = $property['Lat'];
+                $lon = $property['Lon'];
+                if(!isset($lat) or !isset($lon)){
+                    $address = $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State'] . ' ' . $property['Property']['Address']['Zip'];
+                    $address = urlencode($address);
+                    $link = "http://maps.google.com/maps/api/geocode/xml?address=".$address."&sensor=false";
+                    $file = file_get_contents($link);
+                    if(!$file)  {
+                        echo "Err: No access to Google service: ".$a."<br/>\n";
+                    }else {
+                        $get = simplexml_load_string($file);
 
-<!--        <!-- Pop-up -->-->
+                        if ($get->status == "OK") {
+                            $lat = (float) $get->result->geometry->location->lat;
+                            $lon = (float) $get->result->geometry->location->lng;
+                        }else{
+                            echo "Err: address not found: ".$a."<br/>\n";
+                        }
+                    }
+                }
+                ?>
+                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                <script>
+                    var map,
+                        lat = <?php echo json_encode($lat); ?>,
+                        lon = <?php echo json_encode($lon); ?>,
+                        address = <?php echo json_encode($property['Property']['Address']['Address']); ?>,
+                        city = <?php echo json_encode($property['Property']['Address']['City']); ?>,
+                        state = <?php echo json_encode($property['Property']['Address']['State']); ?>,
+                        zip = <?php echo json_encode($property['Property']['Address']['Zip']); ?>;
+                    function initialize() {
+                        var mapOptions = {
+                            zoom: 10,
+                            center: new google.maps.LatLng(lat, lon),
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        map = new google.maps.Map(document.getElementById('bt-single-property-map-canvas'), mapOptions);
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(lat, lon),
+                            map: map,
+                            title: address + "\n" + city + ', ' + state + ' ' + zip
+                        });
+                    }
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                </script>
+                <div id="bt-single-property-map-canvas" style="margin:0px; padding: 0px;"></div>
+            </section>
+
 <!--        <div class="modal" id="pop-up1">-->
 <!--            <div class="pop-up-bg"></div>-->
 <!--            <div class="pop-up-wrap">-->
@@ -190,9 +293,6 @@ $imagesCount = count($otherImages);
 <!--            </div>-->
 <!--        </div>-->
 
-
-        <!-- JS -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
             $('.pop-up-btn').on('click', function () {
                 $('#pop-up1')
@@ -226,7 +326,7 @@ $imagesCount = count($otherImages);
                             </div>
                         </div>
                         <div class="slider-pagination">
-                            <?php foreach ($otherImages as $src) {?>
+                            <?php foreach ($otherImages as $src) { ?>
                             <div class="pagination-item">
                                 <img src="<?= $src?>">
                             </div>
@@ -295,124 +395,178 @@ $imagesCount = count($otherImages);
                         <div class="overview clear">
                             <h4 class="title info theme-color">Property Overview</h4>
 
-                            <p class="property-description"><?=$property['PropertyDescription'];?></p>
+                            <p class="property-description">
+                                <?php
+                                print (isset($property['PropertyDescription']) ?
+                                    $property['PropertyDescription'] :
+                                    '');
+                                ?>
+                                <?php
+                                print (isset($property['LocationDescription']) ?
+                                    $property['LocationDescription'] :
+                                    '');
+                                ?>
+                            </p>
                         </div>
                     <?}?>
 
                     <h4 class="title info theme-color">Property Information</h4>
                     <table>
                         <tbody>
-                        <tr>
-                            <td>Total Building SF:</td>
-                            <td>18,000</td>
-                        </tr>
-                        <tr>
-                            <td>Total Lat Size SF:</td>
-                            <td>40,000</td>
-                        </tr>
-                        <tr>
-                            <td>Occupancy:</td>
-                            <td>90%</td>
-                        </tr>
-                        <tr>
-                            <td>Year Built:</td>
-                            <td>2006</td>
-                        </tr>
-                        <tr>
-                            <td>Year Renovated:</td>
-                            <td>2013</td>
-                        </tr>
+                        <? if (isset($property['GrossLeasableArea'])){ ?>
+                            <tr>
+                                <td>Total Building SF:</td>
+                                <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
+                            </tr>
+                        <?}?>
+                        <? if (isset($property['TotalLotSize'])){ ?>
+                            <tr>
+                                <td>Total Lot Size SF:</td>
+                                <td><?php echo number_format($property['TotalLotSize']); ?></td>
+                            </tr>
+                        <?}?>
+                        <? if (isset($property['Occupancy'])){ ?>
+                            <tr>
+                                <td>Occupancy:</td>
+                                <td><?php echo $property['Occupancy'] . '%'; ?></td>
+                            </tr>
+                        <?}?>
+                        <? if (isset($property['YearBuild'])){ ?>
+                            <tr>
+                                <td>Year Built:</td>
+                                <td><?php echo $property['YearBuild']; ?></td>
+                            </tr>
+                        <?}?>
+                        <? if (isset($property['YearRenovated'])){ ?>
+                            <tr>
+                                <td>Year Renovated:</td>
+                                <td><?php echo $property['YearRenovated']; ?></td>
+                            </tr>
+                        <?}?>
+                        <? if (isset($property['ParkingSpace'])){ ?>
                         <tr>
                             <td>Parking Space:</td>
-                            <td>100</td>
+                            <td><?php echo $property['ParkingSpace']; ?></td>
                         </tr>
-                        <tr>
-                            <td>Zoning:</td>
-                            <td>C4-3</td>
-                        </tr>
-                        <tr>
-                            <td>County:</td>
-                            <td>Oakland</td>
-                        </tr>
+                        <?}?>
+                        <? if (isset($property['Zoning'])){ ?>
+                            <tr>
+                                <td>Zoning:</td>
+                                <td><?php echo $property['Zoning']; ?></td>
+                            </tr>
+                        <?}?>
+                        <? if (isset($property['County'])){ ?>
+                            <tr>
+                                <td>County:</td>
+                                <td><?php echo $property['County']; ?></td>
+                            </tr>
+                        <?}?>
+                            <? if (isset($property['TrafficCounts'])){ ?>
                         <tr>
                             <td>Traffic Count:</td>
-                            <td>10,000</td>
+                            <? if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
+                            <td><?php echo number_format($property['TrafficCounts']['RangeFrom']); ?></td>
+                            <? } else{ ?>
+                            <td><?php echo number_format($property['TrafficCounts']['RangeFrom']) . ' - ' . number_format($property['TrafficCounts']['RangeTo']); ?></td>
+                            <? } ?>
                         </tr>
+                            <? } ?>
+                            <? if (isset($property['PopulationRange'])){ ?>
                         <tr>
                             <td>Population:</td>
-                            <td>50,000</td>
+                            <? if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
+                            <td><?php echo number_format($property['PopulationRange']['RangeFrom']); ?></td>
+                            <? } else{ ?>
+                            <td><?php echo number_format($property['PopulationRange']['RangeFrom']) . ' - ' . number_format($property['PopulationRange']['RangeTo']); ?></td>
+                            <? } ?>
                         </tr>
+                            <? } ?>
+                            <? if (isset($property['HouseholdIncome'])){ ?>
                         <tr>
                             <td>Income:</td>
-                            <td>$40,000</td>
+                            <? if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
+                            <td><?php echo number_format($property['HouseholdIncome']['RangeFrom']); ?></td>
+                            <? } else{ ?>
+                            <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['PopulationRange']['RangeTo']); ?></td>
+                            <? } ?>
                         </tr>
+                            <? } ?>
                         </tbody>
                     </table>
-
-                    <h4 class="title info theme-color">Spaces</h4>
-                    <table class="theme-table">
-                        <tbody>
-                        <tr>
-                            <td>Space 1</td>
-                            <td>$35 / PSF</td>
-                            <td>2,700 SF</td>
-                            <td>Retail</td>
-                        </tr>
-                        <tr>
-                            <td>Space 2</td>
-                            <td>$25 / PSF</td>
-                            <td>9,700 SF</td>
-                            <td>Retail</td>
-                        </tr>
-                        <tr>
-                            <td>Space 3</td>
-                            <td>$35 / PSF</td>
-                            <td>1,700 SF</td>
-                            <td>Retail</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <?php if (count($spaces) > 0){?>
+                        <h4 class="title info theme-color">Spaces</h4>
+                        <table class="theme-table">
+                            <tbody>
+                            <?php foreach($spaces as $space){ ?>
+                                <tr>
+                                    <td><?= $space['Name'];?></td>
+                                    <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
+                                    <td><?php echo number_format($space['Size']) . ' SF'; ?></td>
+                                    <td><?= $space['SpaceType'];?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    <?php } ?>
                 </div>
                 <div class="column half">
                     <section class="content">
-                        <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6304.893228812689!2d-122.30514182013415!3d37.80300668544161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80857d8b28aaed03%3A0x71b415d535759367!2sOakland%2C+CA!5e0!3m2!1sen!2s!4v1395074246707" frameborder="0"></iframe>
-<!--                        <section class="content">-->
-<!--                            --><?php
-//                            $lat = $property['Lat'];
-//                            $lon = $property['Lon'];
-//                            ?>
-<!--                            <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>-->
-<!--                            <script>-->
-<!--                                var map,-->
-<!--                                    lat = --><?php //echo json_encode($lat); ?><!--,-->
-<!--                                    lon = --><?php //echo json_encode($lon); ?><!--,-->
-<!--                                    address = --><?php //echo json_encode($property['Property']['Address']['Address']); ?><!--,-->
-<!--                                    city = --><?php //echo json_encode($property['Property']['Address']['City']); ?><!--,-->
-<!--                                    state = --><?php //echo json_encode($property['Property']['Address']['State']); ?><!--,-->
-<!--                                    zip = --><?php //echo json_encode($property['Property']['Address']['Zip']); ?><!--;-->
-<!--                                function initialize() {-->
-<!--                                    var mapOptions = {-->
-<!--                                        zoom: 10,-->
-<!--                                        center: new google.maps.LatLng(lat, lon),-->
-<!--                                        mapTypeId: google.maps.MapTypeId.ROADMAP-->
-<!--                                    };-->
-<!--                                    map = new google.maps.Map(document.getElementById('bt-single-property-map-canvas'), mapOptions);-->
-<!--                                    var marker = new google.maps.Marker({-->
-<!--                                        position: new google.maps.LatLng(lat, lon),-->
-<!--                                        map: map,-->
-<!--                                        title: address + "\n" + city + ', ' + state + ' ' + zip-->
-<!--                                    });-->
-<!--                                }-->
-<!--                                google.maps.event.addDomListener(window, 'load', initialize);-->
-<!--                            </script>-->
-<!--                            <div id="bt-single-property-map-canvas" style="margin:0px; padding: 0px;"></div>-->
-                    </section>
+                        <?php
+                        $lat = $property['Lat'];
+                        $lon = $property['Lon'];
+                        if(!isset($lat) or !isset($lon)){
+                            $address = $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State'] . ' ' . $property['Property']['Address']['Zip'];
+                            $address = urlencode($address);
+                            $link = "http://maps.google.com/maps/api/geocode/xml?address=".$address."&sensor=false";
+                            $file = file_get_contents($link);
+                            if(!$file)  {
+                                echo "Err: No access to Google service: ".$a."<br/>\n";
+                            }else {
+                                $get = simplexml_load_string($file);
 
-                    <h4 class="title info theme-color">Attachments:</h4>
-                    <ul>
-                        <li><a href="#">Marketing Flyer</a></li>
-                        <li><a href="#">Floor Plan</a></li>
-                    </ul>
+                                if ($get->status == "OK") {
+                                    $lat = (float) $get->result->geometry->location->lat;
+                                    $lon = (float) $get->result->geometry->location->lng;
+                                }else{
+                                    echo "Err: address not found: ".$a."<br/>\n";
+                                }
+                            }
+                        }
+                        ?>
+                        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                        <script>
+                            var map,
+                                lat = <?php echo json_encode($lat); ?>,
+                                lon = <?php echo json_encode($lon); ?>,
+                                address = <?php echo json_encode($property['Property']['Address']['Address']); ?>,
+                                city = <?php echo json_encode($property['Property']['Address']['City']); ?>,
+                                state = <?php echo json_encode($property['Property']['Address']['State']); ?>,
+                                zip = <?php echo json_encode($property['Property']['Address']['Zip']); ?>;
+                            function initialize() {
+                                var mapOptions = {
+                                    zoom: 10,
+                                    center: new google.maps.LatLng(lat, lon),
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                };
+                                map = new google.maps.Map(document.getElementById('bt-single-property-map-canvas'), mapOptions);
+                                var marker = new google.maps.Marker({
+                                    position: new google.maps.LatLng(lat, lon),
+                                    map: map,
+                                    title: address + "\n" + city + ', ' + state + ' ' + zip
+                                });
+                            }
+                            google.maps.event.addDomListener(window, 'load', initialize);
+                        </script>
+                        <div id="bt-single-property-map-canvas" style="margin:0px; padding: 0px;"></div>
+                    </section>
+                    <?php if (count($propertyDocuments) > 0) {?>
+                        <h4 class="title info theme-color">Attachments:</h4>
+                        <ul class="property-docs">
+                            <?php foreach ($propertyDocuments as $doc) {?>
+                                <li><a href="<?= $doc['AttachmentPath']?>"><?= $doc['AttachmentTitle']?></a></li>
+                            <? } ?>
+                        </ul>
+                    <? } ?>
                     <h4 class="title info theme-color">For More Information Contact:</h4>
                     <ul class="broker-list">
                         <li>
