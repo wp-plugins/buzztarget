@@ -28,7 +28,6 @@ endforeach;
 
 $currentImage = 1;
 $imagesCount = count($otherImages);
-
 ?>
 
 <!-- 960 Container Start -->

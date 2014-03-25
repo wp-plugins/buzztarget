@@ -38,9 +38,9 @@ $imagesCount = count($otherImages);
                 <div class="darken-bg"></div>
                 <h1><?php echo $property_name; ?></h1>
                 <span>
-                    <?= $property['Property']['Address']['City']; ?>,
-                    <?= $property['Property']['Address']['State']; ?>
-                    <?= $property['Property']['Address']['Zip']; ?>
+                    <?php echo $property['Property']['Address']['City']; ?>,
+                    <?php echo $property['Property']['Address']['State']; ?>
+                    <?php echo $property['Property']['Address']['Zip']; ?>
                 </span>
             </section>
             <section class="content">
@@ -76,14 +76,12 @@ $imagesCount = count($otherImages);
 
                     <p>
                         <?php
-                        print (isset($property['PropertyDescription']) ?
-                            $property['PropertyDescription'] :
-                            '');
-                        ?>
-                        <?php
-                        print (isset($property['LocationDescription']) ?
-                            $property['LocationDescription'] :
-                            '');
+                        if (isset($property['PropertyDescription'])){
+                            echo $property['PropertyDescription'];
+                        }
+                        if (isset($property['LocationDescription'])){
+                            echo $property['LocationDescription'];
+                        }
                         ?>
                     </p>
                 </div>
@@ -105,100 +103,100 @@ $imagesCount = count($otherImages);
                             <div class="slider-pagination">
                                 <?php foreach ($otherImages as $src) {?>
                                 <div class="pagination-item">
-                                    <img src="<?= $src; ?>">
+                                    <img src="<?php echo $src; ?>">
                                 </div>
-                                <? } ?>
+                                <?php } ?>
                             </div>
                         </div>
                         <h4 class="title info theme-color">Attachments:</h4>
                         <ul class="property-docs">
                             <?php foreach ($propertyDocuments as $doc) {?>
-                            <li><a href="<?= $doc['AttachmentPath']?>"><?= $doc['AttachmentTitle']?></a></li>
-                            <? } ?>
+                            <li><a href="<?php echo $doc['AttachmentPath']?>"><?php echo $doc['AttachmentTitle']?></a></li>
+                            <?php } ?>
                         </ul>
                     </div>
                     <div class="column sixty">
                         <h4 class="title info theme-color">Property Information</h4>
                         <table>
                             <tbody>
-                            <? if (isset($property['GrossLeasableArea'])){ ?>
+                            <?php if (isset($property['GrossLeasableArea'])){ ?>
                             <tr>
                                 <td>Total Building SF:</td>
                                 <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['TotalLotSize'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['TotalLotSize'])){ ?>
                             <tr>
                                 <td>Total Lot Size SF:</td>
                                 <td><?php echo number_format($property['TotalLotSize']); ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['Occupancy'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['Occupancy'])){ ?>
                             <tr>
                                 <td>Occupancy:</td>
                                 <td><?php echo $property['Occupancy'] . '%'; ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['YearBuild'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['YearBuild'])){ ?>
                             <tr>
                                 <td>Year Built:</td>
                                 <td><?php echo $property['YearBuild']; ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['YearRenovated'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['YearRenovated'])){ ?>
                             <tr>
                                 <td>Year Renovated:</td>
                                 <td><?php echo $property['YearRenovated']; ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['ParkingSpace'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['ParkingSpace'])){ ?>
                             <tr>
                                 <td>Parking Space:</td>
                                 <td><?php echo $property['ParkingSpace']; ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['Zoning'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['Zoning'])){ ?>
                                 <tr>
                                     <td>Zoning:</td>
                                     <td><?php echo $property['Zoning']; ?></td>
                                 </tr>
-                            <? } ?>
-                            <? if (isset($property['County'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['County'])){ ?>
                             <tr>
                                 <td>County:</td>
                                 <td><?php echo $property['County']; ?></td>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['TrafficCounts'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['TrafficCounts'])){ ?>
                             <tr>
                                 <td>Traffic Count:</td>
-                                <? if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
+                                <?php if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
                                     <td><?php echo number_format($property['TrafficCounts']['RangeFrom']); ?></td>
-                                <? } else{ ?>
+                                <?php } else{ ?>
                                     <td><?php echo number_format($property['TrafficCounts']['RangeFrom']) . ' - ' . number_format($property['TrafficCounts']['RangeTo']); ?></td>
-                                <? } ?>
+                                <?php } ?>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['PopulationRange'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['PopulationRange'])){ ?>
                             <tr>
                                 <td>Population:</td>
-                                <? if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
+                                <?php if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
                                 <td><?php echo number_format($property['PopulationRange']['RangeFrom']); ?></td>
-                                <? } else{ ?>
+                                <?php } else{ ?>
                                 <td><?php echo number_format($property['PopulationRange']['RangeFrom']) . ' - ' . number_format($property['PopulationRange']['RangeTo']); ?></td>
-                                <? } ?>
+                                <?php } ?>
                             </tr>
-                            <? } ?>
-                            <? if (isset($property['HouseholdIncome'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['HouseholdIncome'])){ ?>
                             <tr>
                                 <td>Income:</td>
-                                <? if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
+                                <?php if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
                                 <td><?php echo number_format($property['HouseholdIncome']['RangeFrom']); ?></td>
-                                <? } else{ ?>
+                                <?php } else{ ?>
                                 <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['PopulationRange']['RangeTo']); ?></td>
-                                <? } ?>
+                                <?php } ?>
                             </tr>
-                            <? } ?>
+                            <?php } ?>
                             </tbody>
                         </table>
                         <?php if (count($spaces) > 0){?>
@@ -207,10 +205,10 @@ $imagesCount = count($otherImages);
                             <tbody>
                                 <?php foreach($spaces as $space){ ?>
                             <tr>
-                                <td><?= $space['Name'];?></td>
+                                <td><?php echo $space['Name'];?></td>
                                 <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
                                 <td><?php echo number_format($space['Size']) . ' SF'; ?></td>
-                                <td><?= $space['SpaceType'];?></td>
+                                <td><?php echo $space['SpaceType'];?></td>
                             </tr>
                                 <?php } ?>
                             </tbody>
@@ -284,9 +282,9 @@ $imagesCount = count($otherImages);
 <!--                    <div class="slider-pagination">-->
 <!--                        --><?php //foreach ($otherImages as $src) {?>
 <!--                        <div class="pagination-item">-->
-<!--                            <img src="--><?//= $src?><!--">-->
+<!--                            <img src="--><?php //echo $src?><!--">-->
 <!--                        </div>-->
-<!--                        --><?// } ?>
+<!--                        --><?php// } ?>
 <!--                    </div>-->
 <!--                </div>-->
 <!---->
@@ -328,9 +326,9 @@ $imagesCount = count($otherImages);
                         <div class="slider-pagination">
                             <?php foreach ($otherImages as $src) { ?>
                             <div class="pagination-item">
-                                <img src="<?= $src?>">
+                                <img src="<?php echo $src?>">
                             </div>
-                            <? } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -350,48 +348,48 @@ $imagesCount = count($otherImages);
                             <tbody>
                                 <?php if (isset($property['Property']['Address']['Address'])){ ?>
                                     <tr>
-                                        <td colspan="2"><?= $property['Property']['Address']['Address']; ?></td>
+                                        <td colspan="2"><?php echo $property['Property']['Address']['Address']; ?></td>
                                     </tr>
-                                <?}?>
+                                <?php }?>
                                 <tr>
                                     <td colspan="2">
-                                        <?= $property['Property']['Address']['City']; ?>,
-                                        <?= $property['Property']['Address']['State']; ?>
-                                        <?= $property['Property']['Address']['Zip']; ?>
+                                        <?php echo $property['Property']['Address']['City']; ?>,
+                                        <?php echo $property['Property']['Address']['State']; ?>
+                                        <?php echo $property['Property']['Address']['Zip']; ?>
                                     </td>
                                 </tr>
                                 <?php if (isset($property['County'])){ ?>
                                     <tr>
                                         <td>County: </td>
-                                        <td><?= $property['County'] ?></td>
+                                        <td><?php echo $property['County'] ?></td>
                                     </tr>
-                                <?}?>
+                                <?php }?>
                             </tbody>
                         </table>
                         <table class="half">
                             <tbody>
-                            <? if (isset($property['PropertyPrice'])){ ?>
+                            <?php if (isset($property['PropertyPrice'])){ ?>
                                 <tr>
                                     <td>Price:</td>
                                     <td> <?php echo '$' . number_format($property['PropertyPrice']); ?></td>
                                 </tr>
-                            <?}?>
-                            <? if (isset($property['CapRate'])){ ?>
+                            <?php }?>
+                            <?php if (isset($property['CapRate'])){ ?>
                                 <tr>
                                     <td>CAP Rate:</td>
                                     <td><?php echo round($property['CapRate'], 2) . '%'; ?></td>
                                 </tr>
-                            <?}?>
-                            <? if (isset($property['Noi'])){ ?>
+                            <?php }?>
+                            <?php if (isset($property['Noi'])){ ?>
                                 <tr>
                                     <td>NOI: </td>
                                     <td><?php echo '$' . number_format($property['Noi']); ?></td>
                                 </tr>
-                            <?}?>
+                            <?php }?>
                             </tbody>
                         </table>
                     </div>
-                    <? if (isset($property['PropertyDescription'])){ ?>
+                    <?php if (isset($property['PropertyDescription'])){ ?>
                         <div class="overview clear">
                             <h4 class="title info theme-color">Property Overview</h4>
 
@@ -408,89 +406,89 @@ $imagesCount = count($otherImages);
                                 ?>
                             </p>
                         </div>
-                    <?}?>
+                    <?php } ?>
 
                     <h4 class="title info theme-color">Property Information</h4>
                     <table>
                         <tbody>
-                        <? if (isset($property['GrossLeasableArea'])){ ?>
+                        <?php if (isset($property['GrossLeasableArea'])){ ?>
                             <tr>
                                 <td>Total Building SF:</td>
                                 <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
                             </tr>
-                        <?}?>
-                        <? if (isset($property['TotalLotSize'])){ ?>
+                        <?php } ?>
+                        <?php  if (isset($property['TotalLotSize'])){ ?>
                             <tr>
                                 <td>Total Lot Size SF:</td>
                                 <td><?php echo number_format($property['TotalLotSize']); ?></td>
                             </tr>
-                        <?}?>
-                        <? if (isset($property['Occupancy'])){ ?>
+                        <?php } ?>
+                        <?php if (isset($property['Occupancy'])){ ?>
                             <tr>
                                 <td>Occupancy:</td>
                                 <td><?php echo $property['Occupancy'] . '%'; ?></td>
                             </tr>
-                        <?}?>
-                        <? if (isset($property['YearBuild'])){ ?>
+                        <?php } ?>
+                        <?php if (isset($property['YearBuild'])){ ?>
                             <tr>
                                 <td>Year Built:</td>
                                 <td><?php echo $property['YearBuild']; ?></td>
                             </tr>
-                        <?}?>
-                        <? if (isset($property['YearRenovated'])){ ?>
+                        <?php } ?>
+                        <?php if (isset($property['YearRenovated'])){ ?>
                             <tr>
                                 <td>Year Renovated:</td>
                                 <td><?php echo $property['YearRenovated']; ?></td>
                             </tr>
-                        <?}?>
-                        <? if (isset($property['ParkingSpace'])){ ?>
+                        <?php } ?>
+                        <?php if (isset($property['ParkingSpace'])){ ?>
                         <tr>
                             <td>Parking Space:</td>
                             <td><?php echo $property['ParkingSpace']; ?></td>
                         </tr>
-                        <?}?>
-                        <? if (isset($property['Zoning'])){ ?>
+                        <?php } ?>
+                        <?php if (isset($property['Zoning'])){ ?>
                             <tr>
                                 <td>Zoning:</td>
                                 <td><?php echo $property['Zoning']; ?></td>
                             </tr>
-                        <?}?>
-                        <? if (isset($property['County'])){ ?>
+                        <?php } ?>
+                        <?php if (isset($property['County'])){ ?>
                             <tr>
                                 <td>County:</td>
                                 <td><?php echo $property['County']; ?></td>
                             </tr>
-                        <?}?>
-                            <? if (isset($property['TrafficCounts'])){ ?>
+                        <?php } ?>
+                            <?php if (isset($property['TrafficCounts'])){ ?>
                         <tr>
                             <td>Traffic Count:</td>
-                            <? if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
+                            <?php if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
                             <td><?php echo number_format($property['TrafficCounts']['RangeFrom']); ?></td>
-                            <? } else{ ?>
+                            <?php } else{ ?>
                             <td><?php echo number_format($property['TrafficCounts']['RangeFrom']) . ' - ' . number_format($property['TrafficCounts']['RangeTo']); ?></td>
-                            <? } ?>
+                            <?php } ?>
                         </tr>
-                            <? } ?>
-                            <? if (isset($property['PopulationRange'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['PopulationRange'])){ ?>
                         <tr>
                             <td>Population:</td>
-                            <? if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
+                            <?php if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
                             <td><?php echo number_format($property['PopulationRange']['RangeFrom']); ?></td>
-                            <? } else{ ?>
+                            <?php } else{ ?>
                             <td><?php echo number_format($property['PopulationRange']['RangeFrom']) . ' - ' . number_format($property['PopulationRange']['RangeTo']); ?></td>
-                            <? } ?>
+                            <?php } ?>
                         </tr>
-                            <? } ?>
-                            <? if (isset($property['HouseholdIncome'])){ ?>
+                            <?php } ?>
+                            <?php if (isset($property['HouseholdIncome'])){ ?>
                         <tr>
                             <td>Income:</td>
-                            <? if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
+                            <?php if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
                             <td><?php echo number_format($property['HouseholdIncome']['RangeFrom']); ?></td>
-                            <? } else{ ?>
+                            <?php } else{ ?>
                             <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['PopulationRange']['RangeTo']); ?></td>
-                            <? } ?>
+                            <?php } ?>
                         </tr>
-                            <? } ?>
+                            <?php } ?>
                         </tbody>
                     </table>
                     <?php if (count($spaces) > 0){?>
@@ -499,10 +497,10 @@ $imagesCount = count($otherImages);
                             <tbody>
                             <?php foreach($spaces as $space){ ?>
                                 <tr>
-                                    <td><?= $space['Name'];?></td>
+                                    <td><?php echo $space['Name'];?></td>
                                     <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
                                     <td><?php echo number_format($space['Size']) . ' SF'; ?></td>
-                                    <td><?= $space['SpaceType'];?></td>
+                                    <td><?php echo $space['SpaceType'];?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -563,10 +561,10 @@ $imagesCount = count($otherImages);
                         <h4 class="title info theme-color">Attachments:</h4>
                         <ul class="property-docs">
                             <?php foreach ($propertyDocuments as $doc) {?>
-                                <li><a href="<?= $doc['AttachmentPath']?>"><?= $doc['AttachmentTitle']?></a></li>
-                            <? } ?>
+                                <li><a href="<?php echo $doc['AttachmentPath']?>"><?php echo $doc['AttachmentTitle']?></a></li>
+                            <?php } ?>
                         </ul>
-                    <? } ?>
+                    <?php } ?>
                     <h4 class="title info theme-color">For More Information Contact:</h4>
                     <ul class="broker-list">
                         <li>
@@ -685,5 +683,4 @@ function bt_get_rental_rate($spacesToLease)
     unset($space);
     return array(min($rates), max($rates));
 }
-
-
+?>
