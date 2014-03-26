@@ -80,7 +80,7 @@ div#fetch-listings-button-container > input:first-child {
 }
 
 /* The submit button */
-input#fetchListings
+input#fetchListingsSubmit
 {
     float: left;
 }

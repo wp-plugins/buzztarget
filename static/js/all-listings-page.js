@@ -1,11 +1,36 @@
 jQuery(document).ready(function($)
 {
     $('select[id=listCount]').change(function (e) {
-        var str = window.location.search;
-        str = replaceQueryParam('limit_per_page', $(this).val(), str);
-        str = deleteQueryParam('current_page', str);
-        window.location = window.location.pathname + str;
+        $.ajax( {
+            url : window.location.pathname,
+            data : { limit_per_page: $(this).val() },
+            dataType : 'html'}
+        ).success(function( html ) {
+            htm = $(html).find("#buzz-target-plugin .grid-view").parent().html();
+            $("#buzz-target-plugin .grid-view").parent().html(htm);
+            htm = $(html).find("#buzz-target-plugin .list-view").parent().html();
+            $("#buzz-target-plugin .list-view").parent().html(htm);
+
+            htm = $(html).find("#buzz-target-plugin .content.pagination").html();
+            if(htm != undefined){
+                $("#buzz-target-plugin .content.pagination").remove();
+                $("#buzz-target-plugin").append('<section class="content pagination">' + htm + '</section>');
+            }
+            else{
+                $("#buzz-target-plugin .content.pagination").remove();
+            }
+
+            var filterHeight = $('.search-filter').innerHeight();
+            if($('.search-filter').length == 0){
+                $('.search-map').css("right", "0");
+            }
+            else{
+                $('.search').height(filterHeight + "px");
+            }
+
+        });
     });
+
     $('select[id=sortBy]').change(function (e) {
         var str = window.location.search;
         str = replaceQueryParam('sort_by', $(this).val(), str);
@@ -53,4 +78,7 @@ jQuery(document).ready(function($)
         var query = search.replace(regex, "$1").replace(/&$/, '');
         return (query.length > 2 ? query + "&" : "?");
     }
+
 });
+
+

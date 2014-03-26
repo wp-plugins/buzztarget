@@ -950,6 +950,7 @@ a.bt-gm-link {
     margin-right: 5%;
     float: left;
     margin-bottom: 30px;
+    height: 459px;
 }
 
 #buzz-target-plugin .grid-view .list-item:nth-child(3n) {
@@ -958,8 +959,10 @@ a.bt-gm-link {
 
 #buzz-target-plugin .grid-view .list-item .image {
     min-height: 270px;
+    max-height: 270px;
     position: relative;
     background-color: #fafafa;
+    overflow: hidden;
 }
 
 #buzz-target-plugin .grid-view .list-item .image img {

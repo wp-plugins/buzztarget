@@ -681,6 +681,7 @@ hr.bt-single-property-hr {
     height: 50px;
     border: 1px solid #ccc;
     position: relative;
+    overflow: hidden;
 }
 
 #buzz-target-plugin .content.two-columns .slider-pagination .pagination-item {

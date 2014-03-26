@@ -189,8 +189,8 @@
                                 <td>
                                     {% set default_listing_per_page = theme_options['default_listing_per_page'] %}
                                     <select name="default_listing_per_page" id="bt-default-listing-per-page">
+                                        <option value="9" {% if default_listing_per_page is sameas('9') %} selected="selected" {% endif %}>9</option>
                                         <option value="12" {% if default_listing_per_page is sameas('12') %} selected="selected" {% endif %}>12</option>
-                                        <option value="30" {% if default_listing_per_page is sameas('30') %} selected="selected" {% endif %}>30</option>
                                         <option value="60" {% if default_listing_per_page is sameas('60') %} selected="selected" {% endif %}>60</option>
                                     </select>
                                 </td>
@@ -328,7 +328,7 @@
                     {# Fetch Listings #}
                     <div id="fetch-listings-button-container">
                         <input type="submit" class="button-secondary" name="save_fetch_settings" value="{{save_settings_button_label}}" /> 
-                        <input type="submit" id="fetchListings" name="fetchListings" class="button-primary" value="{{fetch_listings_submit_button_label}}" />
+                        <input type="submit" id="fetchListingsSubmit" name="fetchListings" class="button-primary" value="{{fetch_listings_submit_button_label}}" />
                         <div id="loading" style=""></div>
                     </div>
                 </form>

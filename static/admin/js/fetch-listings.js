@@ -1,7 +1,7 @@
 jQuery(document).ready(function($)
 {
 	//$('form#fetchListings').submit(function (e)
-	$('input[id=fetchListings]').click(function (e)
+	$('input[id=fetchListingsSubmit]').click(function (e)
 	{
 		// Remove success/error msg if one is present
 		if ($('#setting-error-settings_updated').length)
@@ -9,7 +9,7 @@ jQuery(document).ready(function($)
 			$('#setting-error-settings_updated').remove();
 		}
 
-		$('input#fetchListings').val('Please Wait...').addClass('loading');
+		$('input#fetchListingsSubmit').val('Please Wait...').addClass('loading');
 		$('div#loading').show();
 
 		var interval = $('select[id=fetch-schedule-interval]').val();
@@ -50,7 +50,7 @@ jQuery(document).ready(function($)
 			var result = $(data).find('#setting-error-settings_updated');
 			$($(result).clone()).insertAfter('.wrap > h2');
 			$('div#loading').hide();
-			$('input#fetchListings').val('Fetch Listings').removeClass('loading');
+			$('input#fetchListingsSubmit').val('Fetch Listings').removeClass('loading');
 		});
 		return false;
 	});

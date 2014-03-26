@@ -66,6 +66,7 @@ class BackEndController
      */
     public function displayTopMenuPage()
     {
+
         if ($this->request->isPost())
         {
             // Theme options form submission
@@ -90,7 +91,7 @@ class BackEndController
                 $listingStyle = ($listingStyle === 'style1' || $listingStyle === 'style2') ? $listingStyle : 'style1';
                 $listingDetailStyle = ($listingDetailStyle === 'style1' || $listingDetailStyle === 'style2') ? $listingDetailStyle : 'style1';
 
-                $advancedSearchStatus = (isset($advancedSearch['status']) 
+                $advancedSearchStatus = (isset($advancedSearch['status'])
                     && ($advancedSearch['status'] === 'on' || $advancedSearch['status'] === 'off')) ? $advancedSearch['status'] : 'on';
 
                 $advancedSearchListingType = (isset($advancedSearch['listing_type'])
@@ -125,7 +126,7 @@ class BackEndController
 
 
                 $allow_listing_per_page_change = ($allow_listing_per_page_change === 'on' || $allow_listing_per_page_change === 'off') ? $allow_listing_per_page_change : 'on';
-                $default_listing_per_page = ($default_listing_per_page === '12' || $default_listing_per_page === '30' || $default_listing_per_page === '60') ? $default_listing_per_page : '12';
+                $default_listing_per_page = ($default_listing_per_page === '9' || $default_listing_per_page === '12' || $default_listing_per_page === '60') ? $default_listing_per_page : '9';
 
                 $show_sort_by = ($show_sort_by === 'on' || $show_sort_by === 'off') ? $show_sort_by : 'on';
                 $default_sort_by = ($default_sort_by === 'price_a_z' || $default_sort_by === 'price_z_a' || $default_sort_by === 'date_a_z' || $default_sort_by === 'date_z_a' || $default_sort_by === 'size_a_z' || $default_sort_by === 'size_z_a' || $default_sort_by === 'broker_a_z' || $default_sort_by === 'broker_z_a' || $default_sort_by === 'county_a_z' || $default_sort_by === 'county_z_a') ? $default_sort_by : 'price_a_z';
@@ -200,7 +201,7 @@ class BackEndController
 
                 /*
                  * This will allow the fetch listings event to be scheduled
-                 * in buzztarget.php since fetch schedule / filter options 
+                 * in buzztarget.php since fetch schedule / filter options
                  * could be changed.
                  */
                 update_option('buzztarget_scheduled_event', 'false');
@@ -236,7 +237,7 @@ class BackEndController
         }
 
         $tab = (isset($_GET['tab'])) ? $_GET['tab'] : '';
-        
+
 
         $vars['page_url']                   = admin_url(). 'admin.php?page=repl_admin';
         $vars['tab']                        = $tab;
@@ -302,6 +303,7 @@ class BackEndController
         else
         {
             // Get fetch schedule and filter options
+
             $fetchScheduleOptions = get_option('buzztarget_fetch_schedule_options');
             $filterOptions = get_option('buzztarget_listings_filter_options');
             $vars['fetch_schedule_options'] = $fetchScheduleOptions;
@@ -325,7 +327,7 @@ class BackEndController
             $vars['fetch_schedule_est'] = $this->text->__('ADMIN_FETCH_SETTINGS_TAB_FETCH_SCHEDULE_AT_EST');
 
             $vars['fetch_schedule_every'] = $this->text->__('ADMIN_FETCH_SETTINGS_TAB_FETCH_SCHEDULE_EVERY');
- 
+
             // Get current month as an int.
             $current_month = (int) date('n');
 
@@ -363,7 +365,7 @@ class BackEndController
             // Day of Every Month
             $vars['day_of_every_month'] = $this->text->__('ADMIN_FETCH_SETTINGS_TAB_FETCH_SCHEDULE_DAY_OF_EVERY_MONTH');
 
-            // Listings Filter 
+            // Listings Filter
             $vars['listings_filter'] = $this->text->__('ADMIN_FETCH_SETTINGS_TAB_LISTINGS_FILTER');
             $vars['listings_filter_desc'] = $this->text->__('ADMIN_FETCH_SETTINGS_TAB_LISTINGS_FILTER_DESC');
 

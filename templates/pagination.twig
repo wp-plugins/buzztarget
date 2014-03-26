@@ -8,10 +8,11 @@
                 {% if show_sort_by is sameas('on') and is_sort_by_changed is sameas ('true') %}
                     {% set searchPart = searchPart ~ '&sort_by=' ~ default_sort_by %}
                 {% endif %}
+
                 {% if allow_listing_per_page_change is sameas('on') and is_limit_changed is sameas ('true') %}
                     {% set searchPart = searchPart ~ '&limit_per_page=' ~ listing_per_page %}
                 {% endif %}
-                {# Next and Previous Page URLs #}
+                 {#Next and Previous Page URLs#}
                 {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page ~ searchPart %}
 
 

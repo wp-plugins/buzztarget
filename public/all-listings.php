@@ -392,7 +392,7 @@ if (isset($_GET['map_view']))
     // Return listings matching search criteria if a search has been requested
     // otherwise just return the listings for the current page only.
     $listings = ($_POST['advanced_search_submit']) ? $search_listings : $listings;
-
+    $all_properties = $listings;
 
 
     if(count($listings)){
@@ -444,6 +444,7 @@ if (isset($_GET['map_view']))
     $vars = array(
         'list_view' => true,
         'listings' => $listings,
+        'all_properties' => $all_properties,
         // Most text
         'trans' => array(
             'advanced_search' => array(

@@ -34,7 +34,6 @@ class Listings
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
             $listings = curl_exec($ch);
-
             curl_close($ch);
 
             $listings = json_decode($listings, true);
@@ -138,13 +137,14 @@ class Listings
 
                 if (isset($listing['Property']['PropertyName']))
                 {
+                    $listing['Property']['PropertyName'] = trim($listing['Property']['PropertyName']);
                     $propertyName = $listing['Property']['PropertyName'];
                     $propertyID = $listing['ListingId'];
                     if (!array_key_exists($propertyID, $properties))
                     {
                         $properties[$propertyName] = $listing;
                         $properties[$propertyID] = $listing;
-                        $postName = strtolower(str_replace(
+                        $postName = $propertyID . '-' . strtolower(str_replace(
                             array('.',',','/',' ','--','---'),
                             '-',
                             $propertyName));
@@ -152,7 +152,7 @@ class Listings
 
 
                         for($i=0; $i < count($existingPosts); ++$i){
-                            if($existingPosts[$i]['post_title'] == $propertyName){
+                            if($existingPosts[$i]['post_name'] == $postName){
                                 $postStatus = $existingPosts[$i]['post_status'];
                                 wp_delete_post( $existingPosts[$i]['ID'], true );
                                 array_splice($existingPosts, $i, 1);

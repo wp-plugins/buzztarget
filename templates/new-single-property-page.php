@@ -8,23 +8,29 @@ $listingDetailStyle = $theme_options['listing_detail_style'];
 
 $properties = get_option('repl_properties');
 $property_name = get_the_title();
-$property_id = end(explode('/', $_SERVER['REQUEST_URI']));
+
+$post_id = get_the_ID();
+$post = get_post($post_id);
+$post_name = $post->post_name;
+$property_id = array_values(explode('-', $post_name))[0];
+
 $property = $properties[$property_id];
 
-$phoneImage = plugin_dir_url(dirname(__FILE__)) . 'static/images/phone.png';
+if($property){
+    $phoneImage = plugin_dir_url(dirname(__FILE__)) . 'static/images/phone.png';
 
-$otherImages = array();
-foreach ($property['ListingImages'] as $propertyThumbnail):
-    if (isset($propertyThumbnail['AttachmentPath'])):
-        $otherImages[] = $propertyThumbnail['AttachmentPath'];
-    endif;
-endforeach;
+    $otherImages = array();
+    foreach ($property['ListingImages'] as $propertyThumbnail):
+        if (isset($propertyThumbnail['AttachmentPath'])):
+            $otherImages[] = $propertyThumbnail['AttachmentPath'];
+        endif;
+    endforeach;
 
-$propertyDocuments = $property['ListingDocuments'];
-$spaces = $property['SpacesToLease'];
+    $propertyDocuments = $property['ListingDocuments'];
+    $spaces = $property['SpacesToLease'];
 
-$currentImage = 1;
-$imagesCount = count($otherImages);
+    $currentImage = 1;
+    $imagesCount = count($otherImages);
 
 ?>
 
@@ -49,7 +55,7 @@ $imagesCount = count($otherImages);
                     <?php
                         $listingType = ($property['ListingType'] === 'ForSale') ? 'For Sale' : 'For Lease';
                     ?>
-                    <?php echo $listingType; ?>
+                    <?= $listingType; ?>
                 </h3>
                 <div class="brokers">
                     <div class="broker-item">
@@ -77,10 +83,10 @@ $imagesCount = count($otherImages);
                     <p>
                         <?php
                         if (isset($property['PropertyDescription'])){
-                            echo $property['PropertyDescription'];
+                            print $property['PropertyDescription'];
                         }
                         if (isset($property['LocationDescription'])){
-                            echo $property['LocationDescription'];
+                            print $property['LocationDescription'];
                         }
                         ?>
                     </p>
@@ -108,12 +114,14 @@ $imagesCount = count($otherImages);
                                 <?php } ?>
                             </div>
                         </div>
+                        <?php if (count($propertyDocuments) > 0) {?>
                         <h4 class="title info theme-color">Attachments:</h4>
                         <ul class="property-docs">
                             <?php foreach ($propertyDocuments as $doc) {?>
                             <li><a href="<?php echo $doc['AttachmentPath']?>"><?php echo $doc['AttachmentTitle']?></a></li>
                             <?php } ?>
                         </ul>
+                        <?php } ?>
                     </div>
                     <div class="column sixty">
                         <h4 class="title info theme-color">Property Information</h4>
@@ -266,7 +274,9 @@ $imagesCount = count($otherImages);
                 </script>
                 <div id="bt-single-property-map-canvas" style="margin:0px; padding: 0px;"></div>
             </section>
-
+            <section class="content">
+                <a href="javascript:history.back()">Back to Search Results</a>
+            </section>
 <!--        <div class="modal" id="pop-up1">-->
 <!--            <div class="pop-up-bg"></div>-->
 <!--            <div class="pop-up-wrap">-->
@@ -593,9 +603,9 @@ $imagesCount = count($otherImages);
                 </div>
             </div>
         </section>
-<!--        <section class="content">-->
-<!--            <a href="#">Back to Search Results</a>-->
-<!--        </section>-->
+        <section class="content">
+            <a href="javascript:history.back()">Back to Search Results</a>
+        </section>
     <?php
     }
     ?>
@@ -682,5 +692,7 @@ function bt_get_rental_rate($spacesToLease)
     }
     unset($space);
     return array(min($rates), max($rates));
+}
+
 }
 ?>
