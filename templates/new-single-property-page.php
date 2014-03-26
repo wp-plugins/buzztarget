@@ -77,7 +77,8 @@ if($property){
                         <span>248-658-8999</span>
                     </div>
                 </div>
-                <div class="overview clear">
+                <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
+                <div class="overview">
                     <h4 class="title theme-color">Property Overview</h4>
 
                     <p>
@@ -91,6 +92,7 @@ if($property){
                         ?>
                     </p>
                 </div>
+                <?php } ?>
             </section>
             <section class="content">
                 <div class="clearfix">
@@ -399,20 +401,18 @@ if($property){
                             </tbody>
                         </table>
                     </div>
-                    <?php if (isset($property['PropertyDescription'])){ ?>
-                        <div class="overview clear">
+                    <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
+                        <div class="overview">
                             <h4 class="title info theme-color">Property Overview</h4>
 
                             <p class="property-description">
                                 <?php
-                                print (isset($property['PropertyDescription']) ?
-                                    $property['PropertyDescription'] :
-                                    '');
-                                ?>
-                                <?php
-                                print (isset($property['LocationDescription']) ?
-                                    $property['LocationDescription'] :
-                                    '');
+                                if (isset($property['PropertyDescription'])){
+                                    print $property['PropertyDescription'];
+                                }
+                                if (isset($property['LocationDescription'])){
+                                    print $property['LocationDescription'];
+                                }
                                 ?>
                             </p>
                         </div>
