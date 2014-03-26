@@ -61,6 +61,9 @@ please send your inquires to support@buzztarget.com
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed Listing Fetch mechanism and minor issues with property listing pages.
+
 = 1.0.1 =
 * Bug Fixes
 
