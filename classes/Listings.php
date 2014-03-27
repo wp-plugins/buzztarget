@@ -147,7 +147,8 @@ class Listings
                         $postName = $propertyID . '-' . strtolower(str_replace(
                             array('.',',','/',' ','--','---'),
                             '-',
-                            $propertyName));
+                            str_replace( array('&','\'', '%', '?', '@', '#'), '', $propertyName)));
+
                         $postStatus = 'publish';
 
 
