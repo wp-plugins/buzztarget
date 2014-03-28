@@ -1,82 +1,82 @@
 jQuery(document).ready(function($)
 {
-    var propertyImages = otherImages;
-
-    var imageNo = 0;
-
-    var propertyImagesLength = propertyImages.length;
-
-    // Next image
-    $('a[id=bt-next-property-image]').click(function (e)
-    {
-        e.preventDefault();
-        
-        // Get the image
-        var image = getImage('next');
-
-        $('div[id=bt-single-property-image] > img').attr('src', image);
-    });
-
-    // Previous image
-    $('a[id=bt-previous-property-image]').click(function (e)
-    {
-        e.preventDefault();
-
-        // Get the image
-        var image = getImage('previous');
-
-        $('div[id=bt-single-property-image] > img').attr('src', image);
-    });
-
-    // Return image depending on request type (next or prev)
-    function getImage(type)
-    {
-        var image;
-
-        if (type === 'next')
-        {
-            var nextImageNo = imageNo + 1;
-
-            if (nextImageNo >= propertyImagesLength)
-            {
-                nextImageNo = propertyImagesLength - 1;
-            }
-            else
-            {
-                nextImageNo = nextImageNo;
-            }
-
-            imageNo = nextImageNo;
-
-            image = propertyImages[nextImageNo];
-        }
-        else if (type === 'previous')
-        {
-            var prevImageNo = imageNo - 1;
-
-            if (prevImageNo <= 0)
-            {
-                prevImageNo = 0;
-            }
-            else
-            {
-                prevImageNo = prevImageNo;
-            }
-
-            imageNo = prevImageNo;
-
-            image = propertyImages[prevImageNo];
-        }
-
-        var displayImgNo = imageNo + 1;
-
-        if (displayImgNo > propertyImagesLength)
-            displayImgNo--;
-
-        $('div[id=bt-single-property-image-top-bar] > p').text('Images ' + displayImgNo + '/' + propertyImagesLength);
-
-        return image;
-    }
+//    var propertyImages = otherImages;
+//
+//    var imageNo = 0;
+//
+//    var propertyImagesLength = propertyImages.length;
+//
+//    // Next image
+//    $('a[id=bt-next-property-image]').click(function (e)
+//    {
+//        e.preventDefault();
+//
+//        // Get the image
+//        var image = getImage('next');
+//
+//        $('div[id=bt-single-property-image] > img').attr('src', image);
+//    });
+//
+//    // Previous image
+//    $('a[id=bt-previous-property-image]').click(function (e)
+//    {
+//        e.preventDefault();
+//
+//        // Get the image
+//        var image = getImage('previous');
+//
+//        $('div[id=bt-single-property-image] > img').attr('src', image);
+//    });
+//
+//    // Return image depending on request type (next or prev)
+//    function getImage(type)
+//    {
+//        var image;
+//
+//        if (type === 'next')
+//        {
+//            var nextImageNo = imageNo + 1;
+//
+//            if (nextImageNo >= propertyImagesLength)
+//            {
+//                nextImageNo = propertyImagesLength - 1;
+//            }
+//            else
+//            {
+//                nextImageNo = nextImageNo;
+//            }
+//
+//            imageNo = nextImageNo;
+//
+//            image = propertyImages[nextImageNo];
+//        }
+//        else if (type === 'previous')
+//        {
+//            var prevImageNo = imageNo - 1;
+//
+//            if (prevImageNo <= 0)
+//            {
+//                prevImageNo = 0;
+//            }
+//            else
+//            {
+//                prevImageNo = prevImageNo;
+//            }
+//
+//            imageNo = prevImageNo;
+//
+//            image = propertyImages[prevImageNo];
+//        }
+//
+//        var displayImgNo = imageNo + 1;
+//
+//        if (displayImgNo > propertyImagesLength)
+//            displayImgNo--;
+//
+//        $('div[id=bt-single-property-image-top-bar] > p').text('Images ' + displayImgNo + '/' + propertyImagesLength);
+//
+//        return image;
+//    }
 
     /* Display the the image with larger dimensions when clicked */
 

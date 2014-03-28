@@ -129,7 +129,7 @@ class BackEndController
                 $default_listing_per_page = ($default_listing_per_page === '9' || $default_listing_per_page === '12' || $default_listing_per_page === '60') ? $default_listing_per_page : '9';
 
                 $show_sort_by = ($show_sort_by === 'on' || $show_sort_by === 'off') ? $show_sort_by : 'on';
-                $default_sort_by = ($default_sort_by === 'price_a_z' || $default_sort_by === 'price_z_a' || $default_sort_by === 'date_a_z' || $default_sort_by === 'date_z_a' || $default_sort_by === 'size_a_z' || $default_sort_by === 'size_z_a' || $default_sort_by === 'broker_a_z' || $default_sort_by === 'broker_z_a' || $default_sort_by === 'county_a_z' || $default_sort_by === 'county_z_a') ? $default_sort_by : 'price_a_z';
+                $default_sort_by = ($default_sort_by === 'price_a_z' || $default_sort_by === 'price_z_a' || $default_sort_by === 'date_a_z' || $default_sort_by === 'date_z_a' || $default_sort_by === 'size_a_z' || $default_sort_by === 'size_z_a' || $default_sort_by === 'broker_a_z' || $default_sort_by === 'broker_z_a' || $default_sort_by === 'county_a_z' || $default_sort_by === 'county_z_a') ? $default_sort_by : 'date_z_a';
 
                 $mapViewStatus = ($mapViewStatus === 'on' || $mapViewStatus === 'off') ? $mapViewStatus : 'on';
 

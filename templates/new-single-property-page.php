@@ -35,12 +35,36 @@ if($property){
 ?>
 
 <div id="buzz-target-plugin">
+
+<script type="text/javascript" src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/js/jcarousel.connected-carousels.js"></script>
+<script type="text/javascript" src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/js/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">
+    function getBrowserGradient(gradient, ieColor) {
+        var browser = $.browser;
+        var browserGrad = browser.mozilla
+            ? '-moz-' + gradient
+            : browser.webkit
+            ? '-webkit-' + gradient
+            : browser.opera
+            ? '-o-' + gradient
+            : ieColor;
+        return browserGrad;
+    }
+
+    stLight.options({
+        publisher: '374f82ac-04f2-4ff8-8aca-2f1c3b0acc4a',
+        shareButtonColor: getBrowserGradient('linear-gradient(top , #FF8D00 0%, #BB0000 100%)', 'rgb(187,0,0)'),
+        footerColor: getBrowserGradient('linear-gradient(top, #6a6b74 0%, #62646c 35%, #34353b 72%, #242529 100%)', 'rgb(52,53,59)')
+    });
+</script>
+
 <div class="container">
     <?php
         if ($listingDetailStyle == 'style1'){
     ?>
             <section class="image">
-                <img src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
+                <img class="main-logo-image" src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
                 <div class="darken-bg"></div>
                 <h1><?php echo $property_name; ?></h1>
                 <span>
@@ -58,24 +82,17 @@ if($property){
                     <?= $listingType; ?>
                 </h3>
                 <div class="brokers">
-                    <div class="broker-item">
-                        <h4>
-                            <span class="name">John Smith</span>
-                            <a href="#" class="icon-mail">
-                                <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" />
-                            </a>
-                        </h4>
-                        <span>248-658-8999</span>
-                    </div>
-                    <div class="broker-item">
-                        <h4>
-                            <span class="name">Steven Conrad</span>
-                            <a href="#" class="icon-mail">
-                                <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" />
-                            </a>
-                        </h4>
-                        <span>248-658-8999</span>
-                    </div>
+                    <?php foreach($property['ListingAgents'] as $broker){ ?>
+                        <div class="broker-item">
+                            <h4>
+                                <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
+                                <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" class="icon-mail">
+                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" />
+                                </a>
+                            </h4>
+                            <span><?php echo $broker['Phone']; ?></span>
+                        </div>
+                    <?php } ?>
                 </div>
                 <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
                 <div class="overview">
@@ -97,25 +114,42 @@ if($property){
             <section class="content">
                 <div class="clearfix">
                     <div class="column fourty">
-                        <div class="image-slider small">
-                            <div class="slider-main-image">
-                                <img src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
-                                <div class="image-overlay pop-up-btn">
-                                    <span class="zoom"></span>
+                        <?php if(isset($otherImages)){ ?>
+                            <div class="connected-carousels image-slider small">
+                                <div class="stage slider-main-image">
+                                    <div class="carousel carousel-stage carousel-stage-small">
+                                        <ul>
+                                            <?php foreach ($otherImages as $src) {?>
+                                            <li>
+                                                <img src="<?php echo $src; ?>" width="334" height="350">
+                                                <div class="image-overlay pop-up-btn">
+                                                    <span class="zoom"></span>
+                                                </div>
+                                            </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
+                                    <a href="javascript:void(0)" class="prev prev-stage"><span>&lsaquo;</span></a>
+                                    <a href="javascript:void(0)" class="next next-stage"><span>&rsaquo;</span></a>
                                 </div>
-                                <div class="slider-arrows">
-                                    <div class="arrow left"><span>&lt;</span></div>
-                                    <div class="arrow right"><span>&gt;</span></div>
+
+                                <div class="navigation slider-pagination">
+                                    <a href="javascript:void(0)" class="prev prev-navigation"><span>&lsaquo;</span></a>
+                                    <a href="javascript:void(0)" class="next next-navigation"><span>&rsaquo;</span></a>
+                                    <div class="carousel carousel-navigation carousel-navigation-small">
+                                        <ul>
+                                            <?php foreach ($otherImages as $src) {?>
+                                            <li>
+                                                <div class="pagination-item">
+                                                    <img src="<?php echo $src; ?>" width="50" height="50">
+                                                </div>
+                                            </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="slider-pagination">
-                                <?php foreach ($otherImages as $src) {?>
-                                <div class="pagination-item">
-                                    <img src="<?php echo $src; ?>">
-                                </div>
-                                <?php } ?>
-                            </div>
-                        </div>
+                        <?php } ?>
                         <?php if (count($propertyDocuments) > 0) {?>
                         <h4 class="title info theme-color">Attachments:</h4>
                         <ul class="property-docs">
@@ -279,70 +313,59 @@ if($property){
             <section class="content">
                 <a href="javascript:history.back()">Back to Search Results</a>
             </section>
-<!--        <div class="modal" id="pop-up1">-->
-<!--            <div class="pop-up-bg"></div>-->
-<!--            <div class="pop-up-wrap">-->
-<!--                <div class="pop-up-close"></div>-->
-<!--                <div class="image-slider">-->
-<!--                    <div class="slider-main-image">-->
-<!--                        <img src="http://placehold.it/750x350">-->
-<!--                        <div class="slider-arrows">-->
-<!--                            <div class="arrow left"><span><</span></div>-->
-<!--                            <div class="arrow right"><span>></span></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="slider-pagination">-->
-<!--                        --><?php //foreach ($otherImages as $src) {?>
-<!--                        <div class="pagination-item">-->
-<!--                            <img src="--><?php //echo $src?><!--">-->
-<!--                        </div>-->
-<!--                        --><?php// } ?>
-<!--                    </div>-->
-<!--                </div>-->
-<!---->
-<!--            </div>-->
-<!--        </div>-->
 
-        <script>
-            $('.pop-up-btn').on('click', function () {
-                $('#pop-up1')
-                    .show()
-                    .addClass('visible');
-
-            });
-
-            $('.pop-up-close').on('click', function () {
-                $('#pop-up1, #new_request')
-                    .hide()
-                    .removeClass('visible');
-            });
-        </script>
     <?php
         }
         else{
     ?>
         <section class="title">
             <h1><?php echo $property_name; ?></h1>
+            <div class="share-buttons">
+<!--                <button class="btn-share-this"><strong>SHARE</strong></button>-->
+<!--                <span class="st_sharethis" st_title="--><?php //echo $property_name; ?><!-- &amp; Office Condos 16,650/SF | --><?php //echo $property['Property']['Address']['City'] . ' ' . $property['Property']['Address']['State'] . ', ' . $property['Property']['Address']['Zip']; ?><!-- | --><?php //echo '$' . number_format($property['PropertyPrice']); ?><!--" st_image="--><?php //echo $property['ListingImages'][0]['AttachmentPath']; ?><!--?width=400" st_summary="--><?php //echo $listingType; ?><!-- listing by --><?php //echo $property['ListingAgents'][0]['FirstName'] . ' ' . $property['ListingAgents'][0]['LastName']; ?><!-- at Cantrell &amp; Morgan, Inc on BuzzTarget.com" displaytext=""></span>-->
+                <a class="print-page" href="javascript:window.print();">Print</a>
+            </div>
+
         </section>
         <section class="content two-columns">
             <div class="clearfix">
                 <div class="column half">
-                    <div class="image-slider">
-                        <div class="slider-main-image">
-                            <img src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
-                            <div class="slider-arrows">
-                                <div class="arrow left"><span>◄</span></div>
-                                <div class="arrow right"><span>►</span></div>
+                    <?php if(isset($otherImages)){ ?>
+                        <div class="connected-carousels image-slider">
+                            <div class="stage slider-main-image">
+                                <div class="carousel carousel-stage carousel-stage-small">
+                                    <ul>
+                                        <?php foreach ($otherImages as $src) {?>
+                                        <li>
+                                            <img src="<?php echo $src; ?>" width="423" height="350">
+                                            <div class="image-overlay pop-up-btn">
+                                                <span class="zoom"></span>
+                                            </div>
+                                        </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                                <a href="javascript:void(0)" class="prev prev-stage"><span>&lsaquo;</span></a>
+                                <a href="javascript:void(0)" class="next next-stage"><span>&rsaquo;</span></a>
+                            </div>
+
+                            <div class="navigation slider-pagination">
+                                <a href="javascript:void(0)" class="prev prev-navigation"><span>&lsaquo;</span></a>
+                                <a href="javascript:void(0)" class="next next-navigation"><span>&rsaquo;</span></a>
+                                <div class="carousel carousel-navigation carousel-navigation-small">
+                                    <ul>
+                                        <?php foreach ($otherImages as $src) {?>
+                                        <li>
+                                            <div class="pagination-item">
+                                                <img src="<?php echo $src; ?>" width="60" height="60">
+                                            </div>
+                                        </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="slider-pagination">
-                            <?php foreach ($otherImages as $src) { ?>
-                            <div class="pagination-item">
-                                <img src="<?php echo $src?>">
-                            </div>
-                            <?php } ?>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
                 <div class="column half">
                     <h3>
@@ -577,28 +600,19 @@ if($property){
                     <?php } ?>
                     <h4 class="title info theme-color">For More Information Contact:</h4>
                     <ul class="broker-list">
+                        <?php foreach($property['ListingAgents'] as $broker){ ?>
                         <li>
                             <div class="broker-item">
                                 <h4>
-                                    <span class="name">John Smith</span>
+                                    <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
                                 </h4>
-                                <a href="#" class="icon-mail">
-                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png"><span>john.smith@keystonecres.com</span>
+                                <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" target="_blank" class="icon-mail">
+                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png"><span><?php echo $broker['Email']; ?></span>
                                 </a>
-                                <span>248-658-8999</span>
+                                <span><?php echo $broker['Phone']; ?></span>
                             </div>
                         </li>
-                        <li>
-                            <div class="broker-item">
-                                <h4>
-                                    <span class="name">Steven Conrad</span>
-                                </h4>
-                                <a href="#" class="icon-mail">
-                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png"><span>john.smith@keystonecres.com</span>
-                                </a>
-                                <span>248-658-8999</span>
-                            </div>
-                        </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
@@ -616,33 +630,37 @@ if($property){
     <div class="pop-up-bg"></div>
     <div class="pop-up-wrap">
         <div class="pop-up-close"></div>
-        <div class="image-slider">
-            <div class="slider-main-image">
-                <img src="http://placehold.it/750x350">
-                <div class="slider-arrows">
-                    <div class="arrow left"><span><</span></div>
-                    <div class="arrow right"><span>></span></div>
+        <div class="connected-carousels image-slider">
+            <div class="stage slider-main-image">
+                <div class="carousel carousel-stage carousel-stage-popup">
+                    <ul>
+                        <?php foreach ($otherImages as $src) {?>
+                        <li>
+                            <img src="<?php echo $src; ?>"  width="750">
+                        </li>
+                        <?php } ?>
+                    </ul>
                 </div>
+                <a href="javascript:void(0)" class="prev prev-stage"><span>&lsaquo;</span></a>
+                <a href="javascript:void(0)" class="next next-stage"><span>&rsaquo;</span></a>
             </div>
-            <div class="slider-pagination">
-                <div class="pagination-item">
-                    <img src="http://placehold.it/100x100">
-                </div>
-                <div class="pagination-item">
-                    <img src="http://placehold.it/100x100">
-                </div>
-                <div class="pagination-item">
-                    <img src="http://placehold.it/100x100">
-                </div>
-                <div class="pagination-item">
-                    <img src="http://placehold.it/100x100">
-                </div>
-                <div class="pagination-item">
-                    <img src="http://placehold.it/100x100">
+
+            <div class="navigation slider-pagination">
+                <a href="javascript:void(0)" class="prev prev-navigation"><span>&lsaquo;</span></a>
+                <a href="javascript:void(0)" class="next next-navigation"><span>&rsaquo;</span></a>
+                <div class="carousel carousel-navigation carousel-navigation-popup">
+                    <ul>
+                        <?php foreach ($otherImages as $src) {?>
+                        <li>
+                            <div class="pagination-item">
+                                <img src="<?php echo $src; ?>" width="100" height="100">
+                            </div>
+                        </li>
+                        <?php } ?>
+                    </ul>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -656,7 +674,7 @@ if($property){
 
     });
 
-    jQuery('.pop-up-close').on('click', function () {
+    jQuery('.pop-up-close, .pop-up-bg').on('click', function () {
         jQuery('#pop-up1, #new_request')
             .hide()
             .removeClass('visible');

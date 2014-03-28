@@ -21,13 +21,13 @@
 
                 {# Display previous page if it exists #}
                 {% if previousPage is not sameas(0) %}
-                    <a href="{{previousPageURL}}" class="">{{previousPage}}</a>
+                    <a href="javascript:void(0)" class="" onclick="get_content('{{previousPageURL}}');">{{previousPage}}</a>
                 {% endif %}
 
                 {# Current page #}
                 {% set currentPageURL = pagination.listings_current_page_url ~ pagination.current_page ~ searchPart %}
 
-                <a href="{{currentPageURL}}" class="theme-bg">{{ pagination.current_page }}</a>
+                <a href="javascript:void(0)" class="theme-bg" onclick="get_content('{{currentPageURL}}');">{{ pagination.current_page }}</a>
 
                 {# Next page pages #}
                 {% if previousPage is not sameas(0) %}
@@ -41,18 +41,18 @@
                     {% set nextPageURL = pagination.listings_current_page_url ~ nextPage ~ searchPart %}
 
                     {% if nextPage <= pagination.total_pages %}
-                        <a href="{{nextPageURL}}" class="">{{nextPage}}</a>
+                        <a href="javascript:void(0)" class="" onclick="get_content('{{nextPageURL}}');">{{nextPage}}</a>
                     {% endif %}
                 {% endfor %}
 
                 {# Previous URL #}
                 {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page ~ searchPart %}
 
-                <a href="{{previousPageURL}}" id="bt-pagination-lt" class=""><</a>
+                <a href="javascript:void(0)" id="bt-pagination-lt" class="" onclick="get_content('{{previousPageURL}}');"><</a>
 
                 {# Next URL #}
                 {% set nextPageURL = pagination.listings_current_page_url ~ pagination.next_page ~ searchPart %}
-                <a href="{{nextPageURL}}" id="bt-pagination-gt" class="">></a>
+                <a href="javascript:void(0)" id="bt-pagination-gt" class="" onclick="get_content('{{nextPageURL}}');">></a>
             </div>
         </div>
     </section>

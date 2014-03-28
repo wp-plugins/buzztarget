@@ -389,8 +389,33 @@ if (isset($_GET['map_view']))
         $search_listings = array();
     }
 
+    $broker_list = [];
+    $property_type_list = [];
+    $county_list = [];
+    foreach($listings as $property){
+        $listingAgents = $property['ListingAgents'];
+        $propertyTypes = $property['PropertyTypes'];
+        $county = $property['County'];
+        foreach($listingAgents as $agent){
+            $broker = $agent['FirstName'] . ' ' . $agent['LastName'];
+            if (!in_array($broker, $broker_list)) {
+                $broker_list[] = $broker;
+            }
+        }
+        foreach($propertyTypes as $property){
+            $propertyType = $property;
+            if ($propertyType && !in_array($propertyType, $property_type_list)) {
+                $property_type_list[] = $propertyType;
+            }
+        }
+        if ($county && !in_array($county, $county_list)) {
+            $county_list[] = $county;
+        }
+    }
+
     // Return listings matching search criteria if a search has been requested
     // otherwise just return the listings for the current page only.
+
     $listings = ($_POST['advanced_search_submit']) ? $search_listings : $listings;
     $all_properties = $listings;
 
@@ -436,7 +461,8 @@ if (isset($_GET['map_view']))
     else{
         $default_sort_by = $themeOptions['default_sort_by'];
     }
-    //$listings = $this->listingSort->getSortListings(array_values($listings), $default_sort_by);
+
+    $listings = $this->listingSort->getSortListings(array_values($listings), $default_sort_by);
 
     $listings = $this->listingPagination->getCurrentPageListings(array_values($listings), $listing_per_page);
 
@@ -445,6 +471,9 @@ if (isset($_GET['map_view']))
         'list_view' => true,
         'listings' => $listings,
         'all_properties' => $all_properties,
+        'broker_list' => $broker_list,
+        'property_type_list' => $property_type_list,
+        'county_list' => $county_list,
         // Most text
         'trans' => array(
             'advanced_search' => array(

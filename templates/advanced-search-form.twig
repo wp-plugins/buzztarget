@@ -26,9 +26,16 @@
                     </div>
                 {% endif %}
                 {% if show_county is sameas('on') %}
-                <div class="input-group">
-                    <input type="text" placeholder="County" id="county"  name="county" value="{% if saved.county %}{{ saved.county }}{% endif %}" />
-                </div>
+                {% if county_list is not empty%}
+                    <div class="input-group">
+                        <select name="county" id="county">
+                            <option value="">Select county</option>
+                            {% for key, county in county_list %}
+                            <option {% if county is sameas(saved.county) %} selected="selected" {% endif %} value="{{county}}">{{county}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
                 {% endif %}
                 {% if show_zip is sameas('on') %}
                     <div class="input-group">
@@ -37,16 +44,39 @@
                 {% endif %}
             </div>
             {% if show_property_type is sameas('on') %}
+            {% if property_type_list is not empty%}
                 <div class="clearfix">
                     <div class="input-group">
-                        <select name="property_types[]" id="propertyType">
-                            <option {% if 'retail' in saved.property_types %} selected="selected" {% endif %} value="retail">Retail</option>
-                            <option {% if 'office' in saved.property_types %} selected="selected" {% endif %} value="office">Office</option>
-                            <option {% if 'industrial' in saved.property_types %} selected="selected" {% endif %} value="industrial">Industrial</option>
-                            <option {% if 'mixeduse' in saved.property_types %} selected="selected" {% endif %} value="mixeduse">Mixed Use</option>
+                        <select name="property_type" id="propertyType">
+                            <option value="">Select property type</option>
+                            {% for key, type in property_type_list %}
+                            <option {% if type is sameas(saved.property_type) %} selected="selected" {% endif %} value="{{type}}">{{type}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
+            {% endif %}
+            {% endif %}
+            {% if show_broker is sameas('on') %}
+            {% if broker_list is not empty%}
+            <div class="clearfix">
+                <div class="input-group">
+                    <select name="broker" id="broker">
+                        <option value="">Select broker</option>
+                        {% for key, broker in broker_list %}
+                            <option {% if broker is sameas(saved.broker) %} selected="selected" {% endif %} value="{{broker}}">{{broker}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if show_keyword is sameas('on') %}
+            <div class="clearfix">
+                <div class="input-group">
+                    <input type="text" placeholder="Keyword" name="keyword" id="keyword" value="{% if saved.keyword %}{{ saved.keyword }}{% endif %}" />
+                </div>
+            </div>
             {% endif %}
             {% if show_size_range is sameas('on') %}
                 <div class="clearfix">
@@ -65,13 +95,6 @@
                     </div>
                     <div class="input-group half">
                         <input type="text" placeholder="Price To" id="priceTo" name="price_to" value="{% if saved.price_to %}{{ saved.price_to }}{% endif %}" />
-                    </div>
-                </div>
-            {% endif %}
-            {% if show_keyword is sameas('on') %}
-                <div class="clearfix">
-                    <div class="input-group">
-                        <input type="text" placeholder="Keyword" name="keyword" id="keyword" value="{% if saved.keyword %}{{ saved.keyword }}{% endif %}" />
                     </div>
                 </div>
             {% endif %}
