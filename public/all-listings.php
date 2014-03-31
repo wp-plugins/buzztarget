@@ -39,42 +39,52 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
 
         // $_POST keys
         $postKeys = array(
+            'address_line_1',
+            'address_line_2',
+            'county',
+            'address_zip_state',
+            'property_type',
+            'broker',
             'keyword',
-            'address_line_1', 'address_line_2', 'address_zip_state',
             'size_from', 'size_to',
-            'price_from', 'price_to',
+            'price_from', 'price_to'
         );
         // $_POST filter for key(s)
         $postFilters = 'wp_strip_all_tags';
         // Get $_POST values from key(s)
-        list($keyword,
-            $addressLine1, $addressLine2, $addressZipState,
+        list($addressLine1,
+            $addressLine2,
+            $county,
+            $addressZipState,
+            $propertyType,
+            $broker,
+            $keyword,
             $sizeFrom, $sizeTo,
             $priceFrom, $priceTo) = $this->request->getPostValues($postKeys, $postFilters);
 
-        // Fetch listing & property types separately
-        list($listingTypes, $propertyTypes) = $this->request->getPostValues(array('listing_types', 'property_types'));
+        // Fetch listing types separately
+        list($listingTypes) = $this->request->getPostValues(array('listing_types'));
 
         $sizeFrom = (float) $sizeFrom;
         $sizeTo = (float) $sizeTo;
 
-
         $priceFrom = (float) $priceFrom;
         $priceTo = (float) $priceTo;
 
-
         // Saves form submission values
         $search_vars['saved'] = array(
-            'keyword' => $keyword,
             'address_line_1' => $addressLine1,
             'address_line_2' => $addressLine2,
+            'county' => $county,
             'address_zip_state' => $addressZipState,
+            'property_type' => $propertyType,
+            'broker' => $broker,
+            'keyword' => $keyword,
             'size_from' => $sizeFrom,
             'size_to' => $sizeTo,
             'price_from' => $priceFrom,
             'price_to' => $priceTo,
-            'listing_types' => $listingTypes,
-            'property_types' => $propertyTypes,
+            'listing_types' => $listingTypes
         );
 
         // Save search criteria
@@ -132,11 +142,6 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
             if(count($search_criteria) && count($listing)){
                 foreach($search_criteria as $s_criteria => $value){
                     switch($s_criteria){
-                        case 'keyword':
-                            if(strripos(serialize($listing), $value) === false){
-                                $matched = false;
-                            }
-                            break;
                         case 'address_line_1': // address
                             if (! isset($listing['Property']['Address']['Address'])
                                 || strripos($listing['Property']['Address']['Address'], $value) === false){
@@ -145,7 +150,13 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
                             break;
                         case 'address_line_2': // city
                             if (!isset($listing['Property']['Address']['City'])
-                                || strripos($listing['Property']['Address']['City'], $value) === false){
+                                || strripos(str_replace(array(',',' '), array("",""), $value), str_replace(array(',',' '), array("",""), $listing['Property']['Address']['City'])) === false){
+                                $matched = false;
+                            }
+                            break;
+                        case 'county': // address
+                            if (! isset($listing['County'])
+                                || strripos($listing['County'], $value) === false){
                                 $matched = false;
                             }
                             break;
@@ -165,6 +176,39 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
                                 if (strripos($stateZip, $addrStateZip) === false){
                                     $matched = false;
                                 }
+                            }
+                            break;
+                        case 'property_type':
+                            if(!isset($listing['PropertyTypes'])){
+                                $matched = false;
+                            }else{
+                                for($i = 0; $i < count($listing['PropertyTypes']); ++$i){
+                                    if($listing['PropertyTypes'][$i] == $value){
+                                        break;
+                                    }
+                                }
+                                if($i >= count($listing['PropertyTypes'])){
+                                    $matched = false;
+                                }
+                            }
+                            break;
+                        case 'broker':
+                            if(!isset($listing['ListingAgents'])){
+                                $matched = false;
+                            }else{
+                                for($i = 0; $i < count($listing['ListingAgents']); ++$i){
+                                    if($listing['ListingAgents'][$i]['FirstName'] . ' ' . $listing['ListingAgents'][$i]['LastName'] == $value){
+                                        break;
+                                    }
+                                }
+                                if($i >= count($listing['ListingAgents'])){
+                                    $matched = false;
+                                }
+                            }
+                            break;
+                        case 'keyword':
+                            if(strripos(serialize($listing), $value) === false){
+                                $matched = false;
                             }
                             break;
                         case 'size_from': //&& $listing['TotalLotSize'] <= $sizeTo |  && $availableSpaceSize[1] <= $sizeTo
@@ -244,22 +288,6 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
                                 }
                                 if($i >= count($listing['ListingType'])){
                                     $matched = false;
-                                }
-                            }
-                            break;
-                        case 'property_types':
-                            if (is_array($value)){
-                                if(!isset($listing['PropertyTypes'])){
-                                    $matched = false;
-                                }else{
-                                    for($i = 0; $i < count($listing['PropertyTypes']); ++$i){
-                                        if(in_array(strtolower($listing['PropertyTypes'][$i]), $value)){
-                                            break;
-                                        }
-                                    }
-                                    if($i >= count($listing['PropertyTypes'])){
-                                        $matched = false;
-                                    }
                                 }
                             }
                             break;

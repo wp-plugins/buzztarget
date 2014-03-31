@@ -1,11 +1,7 @@
 <section class="content">
     <div class="search">
         {# Any search result messages will be displayed here #}
-        {% if trans.search_error %}
-        <div id="bt-search-error">
-            <p>{{trans.search_error}}</p>
-        </div>
-        {% endif %}
+
         {% set mapProperties = [] %}
         {% for key, property in all_properties %}
         {% set propertyURLDashed = properties_url ~ '/' ~ property.wp_page_id ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
@@ -196,6 +192,13 @@
 <section class="content">
     <div class="clearfix">
         <div class="list-view">
+
+            {% if trans.search_error %}
+            <div id="bt-search-error">
+                <p>{{trans.search_error}}</p>
+            </div>
+            {% endif %}
+
             {% for property in listings %}
                 {# URL to property page #}
                 {% set propertyURLDashed = properties_url ~ '/' ~ property.wp_page_id ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
@@ -203,7 +206,7 @@
                     <div class="image">
                         <a href="{{propertyURLDashed}}">
                             {% if property.ListingImages.0.AttachmentPath is defined %}
-                            <img src="{{property.ListingImages.0.AttachmentPath}}">
+                            <img src="{{property.ListingImages.0.AttachmentPath}}" style="height:200px!important">
                             {% else %}
                             <img src="http://placehold.it/200x200">
                             {% endif %}

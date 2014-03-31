@@ -454,12 +454,7 @@ hr.bt-single-property-hr {
 #buzz-target-plugin .share-buttons{
     float: right;
 }
-#buzz-target-plugin .share-buttons .share-page{
-    background-image: url('images/print_16_gray.png');
-}
-#buzz-target-plugin .share-buttons .print-page{
-    background-image: url('images/sharethis_16_gray.png');
-}
+
 #buzz-target-plugin .column {
     float: left;
 }
@@ -761,7 +756,7 @@ hr.bt-single-property-hr {
 }
 #buzz-target-plugin .modal .image-slider img {
     max-width: 750px;
-    /*max-height: 350px;*/
+    max-height: 350px;
 }
 
 /* Search */
@@ -1188,7 +1183,6 @@ hr.bt-single-property-hr {
 #buzz-target-plugin .connected-carousels .carousel li {
     float: left;
     position: relative;
-    min-height: 350px;
 }
 
 #buzz-target-plugin .carousel.carousel-navigation li.active .pagination-item{
@@ -1209,6 +1203,7 @@ hr.bt-single-property-hr {
 }
 #buzz-target-plugin .connected-carousels .carousel-stage li{
     width: 334px;
+    min-height: 350px;
 }
 #buzz-target-plugin .connected-carousels .carousel-stage li .main-slider-image{
     min-height: 350px;
@@ -1244,6 +1239,8 @@ hr.bt-single-property-hr {
 
 #buzz-target-plugin .connected-carousels .carousel-navigation li img {
     display: block;
+    width: 100px;
+    height: 100px;
 }
 
 #buzz-target-plugin .connected-carousels .carousel-navigation li.active img {

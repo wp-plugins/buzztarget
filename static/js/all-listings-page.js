@@ -1,65 +1,11 @@
 jQuery(document).ready(function($)
 {
     $('select[id=listCount]').change(function (e) {
-        $.ajax( {
-            url : window.location.pathname,
-            data : { sort_by: $('#sortBy').val(), limit_per_page: $(this).val() },
-            dataType : 'html'}
-        ).success(function( html ) {
-            htm = $(html).find("#buzz-target-plugin .grid-view").parent().html();
-            $("#buzz-target-plugin .grid-view").parent().html(htm);
-            htm = $(html).find("#buzz-target-plugin .list-view").parent().html();
-            $("#buzz-target-plugin .list-view").parent().html(htm);
-
-            htm = $(html).find("#buzz-target-plugin .content.pagination").html();
-            if(htm != undefined){
-                $("#buzz-target-plugin .content.pagination").remove();
-                $("#buzz-target-plugin").append('<section class="content pagination">' + htm + '</section>');
-            }
-            else{
-                $("#buzz-target-plugin .content.pagination").remove();
-            }
-
-            var filterHeight = $('.search-filter').innerHeight();
-            if($('.search-filter').length == 0){
-                $('.search-map').css("right", "0");
-            }
-            else{
-                $('.search').height(filterHeight + "px");
-            }
-
-        });
+        get_content(window.location.pathname);
     });
 
     $('select[id=sortBy]').change(function (e) {
-        $.ajax( {
-                url : window.location.pathname,
-                data : { sort_by: $(this).val(), limit_per_page: $('#listCount').val() },
-                dataType : 'html'}
-        ).success(function( html ) {
-                htm = $(html).find("#buzz-target-plugin .grid-view").parent().html();
-                $("#buzz-target-plugin .grid-view").parent().html(htm);
-                htm = $(html).find("#buzz-target-plugin .list-view").parent().html();
-                $("#buzz-target-plugin .list-view").parent().html(htm);
-
-                htm = $(html).find("#buzz-target-plugin .content.pagination").html();
-                if(htm != undefined){
-                    $("#buzz-target-plugin .content.pagination").remove();
-                    $("#buzz-target-plugin").append('<section class="content pagination">' + htm + '</section>');
-                }
-                else{
-                    $("#buzz-target-plugin .content.pagination").remove();
-                }
-
-                var filterHeight = $('.search-filter').innerHeight();
-                if($('.search-filter').length == 0){
-                    $('.search-map').css("right", "0");
-                }
-                else{
-                    $('.search').height(filterHeight + "px");
-                }
-
-            });
+        get_content(window.location.pathname);
     });
     /* Hide advanced search by default */
     if ($('div[id=bt-advanced-search]').is(':visible'))
@@ -94,14 +40,19 @@ jQuery(document).ready(function($)
 });
 
 function get_content(url){
-    console.log(url);
+    var sendData = new Object();
+    sendData.sort_by = jQuery('#sortBy').val();
+    sendData.limit_per_page  = jQuery('#listCount').val();
+    if(getQueryParam("search") == 'true'){
+        sendData.search = getQueryParam("search");
+    }
+
     jQuery.ajax( {
             url : url,
-            data : { sort_by: jQuery('#sortBy').val(), limit_per_page: jQuery('#listCount').val() },
+            data : sendData,
             dataType : 'html'}
     ).success(function( html ) {
             htm = jQuery(html).find("#buzz-target-plugin .grid-view").parent().html();
-            console.log(html);
             jQuery("#buzz-target-plugin .grid-view").parent().html(htm);
             htm =jQuery(html).find("#buzz-target-plugin .list-view").parent().html();
             jQuery("#buzz-target-plugin .list-view").parent().html(htm);
@@ -124,4 +75,10 @@ function get_content(url){
             }
 
         });
+}
+function getQueryParam(param) {
+    var result =  window.location.search.match(
+        new RegExp("(\\?|&)" + param + "(\\[\\])?=([^&]*)")
+    );
+    return result ? result[3] : false;
 }

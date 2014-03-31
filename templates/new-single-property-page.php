@@ -323,7 +323,34 @@ if($property){
             <div class="share-buttons">
 <!--                <button class="btn-share-this"><strong>SHARE</strong></button>-->
 <!--                <span class="st_sharethis" st_title="--><?php //echo $property_name; ?><!-- &amp; Office Condos 16,650/SF | --><?php //echo $property['Property']['Address']['City'] . ' ' . $property['Property']['Address']['State'] . ', ' . $property['Property']['Address']['Zip']; ?><!-- | --><?php //echo '$' . number_format($property['PropertyPrice']); ?><!--" st_image="--><?php //echo $property['ListingImages'][0]['AttachmentPath']; ?><!--?width=400" st_summary="--><?php //echo $listingType; ?><!-- listing by --><?php //echo $property['ListingAgents'][0]['FirstName'] . ' ' . $property['ListingAgents'][0]['LastName']; ?><!-- at Cantrell &amp; Morgan, Inc on BuzzTarget.com" displaytext=""></span>-->
-                <a class="print-page" href="javascript:window.print();">Print</a>
+<!--                <button class="red-style btn-share-this"><strong>SHARE</strong></button>-->
+
+<!--                <span class="st_sharethis" st_title="Marsh Point Medical &amp; Office Condos 16,650/SF | Neptune Beach, FL | $599,000" st_image="http://buzztarget.com/s3/buzztarget-images/ListingImages/13281/dd665e02-413e-4a71-84e0-9fd09611ecae.JPG.ashx?width=400" st_summary="For sale listing by Cantrell  Morgan at Cantrell &amp; Morgan, Inc on BuzzTarget.com" displaytext="ShareThis"></span>-->
+                <script language="javascript" type="text/javascript">
+                    jQuery(function () {
+
+                        jQuery('button.btn-share-this').unbind('click').click(function () {
+                            jQuery('span.st_sharethis .stButton').click();
+
+                            var newTopPosition = Math.round((jQuery(window).height() - jQuery('#stwrapper').height()) / 2);
+                            if (newTopPosition > 50) {
+                                jQuery('#stwrapper').css('top', newTopPosition + 'px');
+                            }
+                            return false;
+                        });
+                        var contactMemberBtn = jQuery('.listing-actions .la-private-reply');
+                        if (contactMemberBtn.length > 0) {
+                            jQuery('.property-bar-content button.btn-contact-member').unbind('click').click(function () {
+                                contactMemberBtn.click();
+                                return false;
+                            });
+                        } else {
+                            jQuery('.property-bar-content button.btn-contact-member').hide();
+                        }
+                    });
+                </script>
+
+                <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
             </div>
 
         </section>
