@@ -24,6 +24,8 @@ class Shortcodes
         add_shortcode('for-sale', array($this, 'showForSaleListings'));
         add_shortcode('for-lease', array($this, 'showForLeaseListings'));
         add_shortcode('all-listings', array($this, 'showAllListings'));
+        add_shortcode('all-featured', array($this, 'showAllFeatured'));
+        add_shortcode('all-broker-listings', array($this, 'showAllBrokerListings'));
     }
 
     /**
@@ -40,6 +42,29 @@ class Shortcodes
         global $shortcode;
         $shortcode = 'all_listing';
         require_once $this->config->getValue('public_path') . 'all-listings.php';
+    }
+
+    public function showAllFeatured($atts)
+    {
+        global $shortcode;
+        $shortcode = 'all_featured';
+        $featuredTitle = $atts['title'];
+        $featuredClass = $atts['class'];
+        $featuredNumberOfListingPerRow = (int)$atts['numberoflistingperrow'];
+
+        require_once $this->config->getValue('public_path') . 'all-featured.php';
+
+    }
+
+    public function showAllBrokerListings($atts)
+    {
+        global $shortcode;
+        $shortcode = 'all_broker_listings';
+        $brokerListingsTitle = $atts['title'];
+        $brokerListingsClass = $atts['class'];
+        $brokerListingsNumberOfListingPerRow = (int)$atts['numberoflistingperrow'];
+        $brokerEmail = $atts['brokeremail'];
+        require_once $this->config->getValue('public_path') . 'all-broker-listings.php';
     }
 
     public function showForLeaseListings()

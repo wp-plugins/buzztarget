@@ -9,20 +9,20 @@ form#saveThemeOptions
 }
 
 /* Theme options content heading */
-strong#bt-theme-options-sub-head
+strong#bt-theme-options-sub-head, strong#bt-theme-css-sub-head
 {
     font-size: 14px;
 }
 
 /* Description accompanying content heading */
-p#bt-theme-options-sub-head-desc
+p#bt-theme-options-sub-head-desc, p#bt-theme-css-sub-head-desc
 {
     margin: 2px 0px 10px 0px;
     font-style: italic;
 }
 
 /* Container for the options, except submit button, heading and description */
-div#bt-theme-options
+div#bt-theme-options, div#bt-theme-css
 {
     padding: 15px 0px 40px 30px;
 }

@@ -15,6 +15,19 @@
                 <strong>{{ save_theme_options_result }}</strong>
             </p>
         </div>
+
+    {% elseif theme_css_save_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ theme_css_save_result }}</strong>
+            </p>
+        </div>
+    {% elseif theme_css_restore_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ theme_css_restore_result }}</strong>
+            </p>
+        </div>
     {% endif %}
 
     <p> {{ listings_page_description }}</p>
@@ -22,8 +35,9 @@
     {# Tabs #}
     <div style="margin: 20px;">
         <h3 class="nav-tab-wrapper bt-nav-tab-wrapper">
-            <a href="{{page_url}}" class="nav-tab {% if tab is not sameas('theme_options') %} nav-tab-active {% endif %}">Fetch Settings</a>
+            <a href="{{page_url}}" class="nav-tab {% if tab is not sameas('theme_options') and tab is not sameas('theme_css') %} nav-tab-active {% endif %}">Fetch Settings</a>
             <a href="{{page_url}}&tab=theme_options" class="nav-tab {% if tab is sameas('theme_options') %} nav-tab-active {% endif %}">Theme Options</a>
+            <a href="{{page_url}}&tab=theme_css" class="nav-tab {% if tab is sameas('theme_css') %} nav-tab-active {% endif %}">CSS</a>
         </h3>
 
         {# Tab Content #}
@@ -229,109 +243,126 @@
                     </div>
                     <input type="submit" name="save_theme_options" class="button-primary" value="{{save_changes}}" />
                 </form>
+            {% elseif tab is sameas('theme_css') %}
+            {# Theme CSS #}
+                <form method="POST" id="saveThemeCSS" action="#">
+                    <strong id="bt-theme-css-sub-head">{{theme_css_heading}}</strong>
+                    <p id="bt-theme-css-sub-head-desc">{{theme_css_desc}}</p>
+                    <div id="bt-theme-css">
+                        <table id="bt-theme-css-table" class="bt-theme-css-table">
+                            <tr>
+                                <td>
+                                    <textarea rows="33" cols="150" name="theme-css-text">{{css_file_content}}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" name="save_theme_css" class="button-primary" value="{{save_css_changes}}" />
+                        <input type="submit" name="restore_theme_css" class="button-secondary" value="{{restore_css_changes}}" />
+                    </div>
+                </form>
             {# Fetch Settings (Default) #}
             {% else %}
                 <form method="POST" id="fetchListings" action="#">
-                    <p>{{ fetch_settings_desc }}</p>
-                    <strong class="bt-fetch-settings-sub-head">{{fetch_schedule_heading}}</strong>
-                    <p class="bt-fetch-settings-sub-head-desc">{{fetch_schedule_desc}}</p>
-                    <table id="bt-fetch-schedule-table">
-                        {# Fetch Schedule Interval #}
+                <p>{{ fetch_settings_desc }}</p>
+                <strong class="bt-fetch-settings-sub-head">{{fetch_schedule_heading}}</strong>
+                <p class="bt-fetch-settings-sub-head-desc">{{fetch_schedule_desc}}</p>
+                <table id="bt-fetch-schedule-table">
+                    {# Fetch Schedule Interval #}
                         <tr>
-                            <td>{{fetch_schedule_internal}}</td>
-                            <td>
-                                <select name="fetch_schedule_interval" id="fetch-schedule-interval">
-                                    {% set interval = attribute(fetch_schedule_options, 'interval') %}
-                                    {% set daily = fetch_schedule_interval_daily %}
-                                    <option value="{{daily|lower}}" {% if interval is sameas(daily|lower) %} selected="selected" {% endif %}>{{daily}}</option>
-                                    {% set weekly = fetch_schedule_interval_weekly %}
-                                    <option value="{{weekly|lower}}" {% if interval is sameas(weekly|lower) %} selected="selected" {% endif %}>{{weekly}}</option>
-                                    {% set monthly = fetch_schedule_interval_monthly %}
-                                    <option value="{{monthly|lower}}" {% if interval is sameas(monthly|lower) %} selected="selected" {% endif %}>{{monthly}}</option>
-                                </select>
-                            </td>
-                        </tr>
-                        {# Fetch Schedule At #}
+                    <td>{{fetch_schedule_internal}}</td>
+                    <td>
+                        <select name="fetch_schedule_interval" id="fetch-schedule-interval">
+                            {% set interval = attribute(fetch_schedule_options, 'interval') %}
+                            {% set daily = fetch_schedule_interval_daily %}
+                            <option value="{{daily|lower}}" {% if interval is sameas(daily|lower) %} selected="selected" {% endif %}>{{daily}}</option>
+                            {% set weekly = fetch_schedule_interval_weekly %}
+                            <option value="{{weekly|lower}}" {% if interval is sameas(weekly|lower) %} selected="selected" {% endif %}>{{weekly}}</option>
+                            {% set monthly = fetch_schedule_interval_monthly %}
+                            <option value="{{monthly|lower}}" {% if interval is sameas(monthly|lower) %} selected="selected" {% endif %}>{{monthly}}</option>
+                        </select>
+                    </td>
+                </tr>
+                    {# Fetch Schedule At #}
                         <tr>
-                            <td>{{fetch_schedule_at}}</td>
-                            <td>
-                                {# 1-12 #}
+                    <td>{{fetch_schedule_at}}</td>
+                    <td>
+                        {# 1-12 #}
                                 <select name="fetch_schedule_time" id="fetch-schedule-time">
-                                    {% set time = attribute(fetch_schedule_options, 'at') %}
-                                    {% for i in 1..12 %}
-                                        <option value="{{i}}" {% if time is sameas(i) %} selected="selected" {% endif %}>{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                {# AM/PM #}
+                        {% set time = attribute(fetch_schedule_options, 'at') %}
+                        {% for i in 1..12 %}
+                        <option value="{{i}}" {% if time is sameas(i) %} selected="selected" {% endif %}>{{i}}</option>
+                        {% endfor %}
+                    </select>
+                        {# AM/PM #}
                                 <select name="fetch_schedule_cycle" id="fetch-schedule-cycle">
-                                    {% set cycle = attribute(fetch_schedule_options, 'at_cycle') %}
-                                    <option value="{{fetch_schedule_am|lower}}" {% if cycle is sameas(fetch_schedule_am|lower) %} selected="selected" {% endif %}>{{fetch_schedule_am}}</option>
-                                    <option value="{{fetch_schedule_pm|lower}}" {% if cycle is sameas(fetch_schedule_pm|lower) %} selected="selected" {% endif %}>{{fetch_schedule_pm}}</option>
-                                </select>
-                                {{fetch_schedule_est}}
-                            </td>
-                        </tr>
-                        {# Fetch Schedule Every (Week Day Alphabetical) #}
+                        {% set cycle = attribute(fetch_schedule_options, 'at_cycle') %}
+                        <option value="{{fetch_schedule_am|lower}}" {% if cycle is sameas(fetch_schedule_am|lower) %} selected="selected" {% endif %}>{{fetch_schedule_am}}</option>
+                        <option value="{{fetch_schedule_pm|lower}}" {% if cycle is sameas(fetch_schedule_pm|lower) %} selected="selected" {% endif %}>{{fetch_schedule_pm}}</option>
+                    </select>
+                        {{fetch_schedule_est}}
+                    </td>
+                </tr>
+                    {# Fetch Schedule Every (Week Day Alphabetical) #}
                         <tr id="bt-fetch-schedule-every-weekday-tr">
-                            <td>{{fetch_schedule_every}}</td>
-                            <td>
-                                <select name="fetch_schedule_every_weekday" id="fetch-schedule-weekday">
-                                    {% for weekday in fetch_schedule_weekdays %}
-                                        <option value="{{weekday|lower}}">{{weekday}}</option>
-                                    {% endfor %}
-                                </select>
-                            </td>
-                        </tr>
-                        {# Fetch Schedule Every (Month Day Numerical) #}
+                    <td>{{fetch_schedule_every}}</td>
+                    <td>
+                        <select name="fetch_schedule_every_weekday" id="fetch-schedule-weekday">
+                            {% for weekday in fetch_schedule_weekdays %}
+                            <option value="{{weekday|lower}}">{{weekday}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                    {# Fetch Schedule Every (Month Day Numerical) #}
                         <tr id="bt-fetch-schedule-every-month-day-tr">
-                            <td>{{fetch_schedule_every}}</td>
-                            <td>
-                                <select name="fetch_schedule_every_month_day" id="fetch-schedule-month-day">
-                                    {% set chosenMonthDay = attribute(fetch_schedule_options, 'every_month_day') %}
-                                    {% for i in 1..current_month_last_day %}
-                                        <option value="{{i}}" {% if chosenMonthDay is sameas(i) %} selected="selected" {% endif %}>{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                {{day_of_every_month}}
-                            </td>
-                        </tr>
-                    </table>
-                    
+                    <td>{{fetch_schedule_every}}</td>
+                    <td>
+                        <select name="fetch_schedule_every_month_day" id="fetch-schedule-month-day">
+                            {% set chosenMonthDay = attribute(fetch_schedule_options, 'every_month_day') %}
+                            {% for i in 1..current_month_last_day %}
+                            <option value="{{i}}" {% if chosenMonthDay is sameas(i) %} selected="selected" {% endif %}>{{i}}</option>
+                            {% endfor %}
+                        </select>
+                        {{day_of_every_month}}
+                    </td>
+                </tr>
+                </table>
 
-                    {# Listings Filter #}
+
+                {# Listings Filter #}
                     <strong class="bt-fetch-settings-sub-head">{{listings_filter}}</strong>
-                    <p class="bt-fetch-settings-sub-head-desc">{{listings_filter_desc}}</p>
+                <p class="bt-fetch-settings-sub-head-desc">{{listings_filter_desc}}</p>
 
-                    <div id="bt-listings-filter-content">
-                        <div id="bt-listing-types-div">
-                            <strong>{{listing_types_label}}</strong>
-                            <p id="bt-listing-types">
-                                {% set listingTypes = attribute(filter_options, 'listing_types') %}
-                                {% for type in listing_types %}
-                                    {% set value = type|lower|str_replace_spaces %}
-                                    <input type="checkbox" name="listing_types[]" id="listing-types" value="{{value}}" {% if value in listingTypes %} checked="checked" {% endif %}/> {{type}}
-                                {% endfor %}
-                            </p>
-                        </div>
-                        <div id="bt-listing-statuses-div">
-                            <strong>{{listing_status_label}}</strong>
-                            <p id="bt-listing-statuses">
-                                {% set listingStatuses = attribute(filter_options, 'listing_statuses') %}
-                                {% for status in listing_statuses %}
-                                    {% set value = status|lower|str_replace_spaces %}
-                                    <input type="checkbox" name="listing_statuses[]" id="listing-statuses" value="{{value}}" {% if value in listingStatuses %} checked="checked" {% endif %} /> {{status}}
-                                {% endfor %}
-                            </p>
-                        </div>
+                <div id="bt-listings-filter-content">
+                    <div id="bt-listing-types-div">
+                        <strong>{{listing_types_label}}</strong>
+                        <p id="bt-listing-types">
+                            {% set listingTypes = attribute(filter_options, 'listing_types') %}
+                            {% for type in listing_types %}
+                            {% set value = type|lower|str_replace_spaces %}
+                            <input type="checkbox" name="listing_types[]" id="listing-types" value="{{value}}" {% if value in listingTypes %} checked="checked" {% endif %}/> {{type}}
+                            {% endfor %}
+                        </p>
                     </div>
+                    <div id="bt-listing-statuses-div">
+                        <strong>{{listing_status_label}}</strong>
+                        <p id="bt-listing-statuses">
+                            {% set listingStatuses = attribute(filter_options, 'listing_statuses') %}
+                            {% for status in listing_statuses %}
+                            {% set value = status|lower|str_replace_spaces %}
+                            <input type="checkbox" name="listing_statuses[]" id="listing-statuses" value="{{value}}" {% if value in listingStatuses %} checked="checked" {% endif %} /> {{status}}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
 
-                    {# Fetch Listings #}
+                {# Fetch Listings #}
                     <div id="fetch-listings-button-container">
-                        <input type="submit" class="button-secondary" name="save_fetch_settings" value="{{save_settings_button_label}}" /> 
-                        <input type="submit" id="fetchListingsSubmit" name="fetchListings" class="button-primary" value="{{fetch_listings_submit_button_label}}" />
-                        <div id="loading" style=""></div>
-                    </div>
-                </form>
+                <input type="submit" class="button-secondary" name="save_fetch_settings" value="{{save_settings_button_label}}" />
+                <input type="submit" id="fetchListingsSubmit" name="fetchListings" class="button-primary" value="{{fetch_listings_submit_button_label}}" />
+                <div id="loading" style=""></div>
+            </div>
+            </form>
             {% endif %}
         </div>
     </div>

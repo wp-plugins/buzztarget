@@ -32,32 +32,24 @@ if($property){
     $currentImage = 1;
     $imagesCount = count($otherImages);
 
+    $siteUrl = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+
 ?>
 
 <div id="buzz-target-plugin">
+<meta name="description" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> on <?php echo $_SERVER['SERVER_NAME'];?>."/>
+<meta property="og:title" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> "/>
+<meta property="og:type" content="<?php echo $property['ListingType'];?> Listing" />
+<meta property="og:url" content="<?php echo $siteUrl;?>" />
+
+<meta property="og:image" content="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>?width=400" />
+
+<meta property="og:description" content="<?php echo $property['ListingType'];?> listing by <?php echo $property['ListingAgents'][0]['FirstName'] . ' ' . $property['ListingAgents'][0]['LastName']; ?> on <?php echo $_SERVER['SERVER_NAME'];?>" />
+<meta property="og:site_name" content="<?php echo $_SERVER['SERVER_NAME'];?>" />
+
 
 <script type="text/javascript" src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/js/jcarousel.connected-carousels.js"></script>
 <script type="text/javascript" src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/js/jquery.jcarousel.min.js"></script>
-<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">
-    function getBrowserGradient(gradient, ieColor) {
-        var browser = $.browser;
-        var browserGrad = browser.mozilla
-            ? '-moz-' + gradient
-            : browser.webkit
-            ? '-webkit-' + gradient
-            : browser.opera
-            ? '-o-' + gradient
-            : ieColor;
-        return browserGrad;
-    }
-
-    stLight.options({
-        publisher: '374f82ac-04f2-4ff8-8aca-2f1c3b0acc4a',
-        shareButtonColor: getBrowserGradient('linear-gradient(top , #FF8D00 0%, #BB0000 100%)', 'rgb(187,0,0)'),
-        footerColor: getBrowserGradient('linear-gradient(top, #6a6b74 0%, #62646c 35%, #34353b 72%, #242529 100%)', 'rgb(52,53,59)')
-    });
-</script>
 
 <div class="container">
     <?php
@@ -321,34 +313,10 @@ if($property){
         <section class="title">
             <h1><?php echo $property_name; ?></h1>
             <div class="share-buttons">
-<!--                <button class="btn-share-this"><strong>SHARE</strong></button>-->
-<!--                <span class="st_sharethis" st_title="--><?php //echo $property_name; ?><!-- &amp; Office Condos 16,650/SF | --><?php //echo $property['Property']['Address']['City'] . ' ' . $property['Property']['Address']['State'] . ', ' . $property['Property']['Address']['Zip']; ?><!-- | --><?php //echo '$' . number_format($property['PropertyPrice']); ?><!--" st_image="--><?php //echo $property['ListingImages'][0]['AttachmentPath']; ?><!--?width=400" st_summary="--><?php //echo $listingType; ?><!-- listing by --><?php //echo $property['ListingAgents'][0]['FirstName'] . ' ' . $property['ListingAgents'][0]['LastName']; ?><!-- at Cantrell &amp; Morgan, Inc on BuzzTarget.com" displaytext=""></span>-->
-<!--                <button class="red-style btn-share-this"><strong>SHARE</strong></button>-->
-
-<!--                <span class="st_sharethis" st_title="Marsh Point Medical &amp; Office Condos 16,650/SF | Neptune Beach, FL | $599,000" st_image="http://buzztarget.com/s3/buzztarget-images/ListingImages/13281/dd665e02-413e-4a71-84e0-9fd09611ecae.JPG.ashx?width=400" st_summary="For sale listing by Cantrell  Morgan at Cantrell &amp; Morgan, Inc on BuzzTarget.com" displaytext="ShareThis"></span>-->
-                <script language="javascript" type="text/javascript">
-                    jQuery(function () {
-
-                        jQuery('button.btn-share-this').unbind('click').click(function () {
-                            jQuery('span.st_sharethis .stButton').click();
-
-                            var newTopPosition = Math.round((jQuery(window).height() - jQuery('#stwrapper').height()) / 2);
-                            if (newTopPosition > 50) {
-                                jQuery('#stwrapper').css('top', newTopPosition + 'px');
-                            }
-                            return false;
-                        });
-                        var contactMemberBtn = jQuery('.listing-actions .la-private-reply');
-                        if (contactMemberBtn.length > 0) {
-                            jQuery('.property-bar-content button.btn-contact-member').unbind('click').click(function () {
-                                contactMemberBtn.click();
-                                return false;
-                            });
-                        } else {
-                            jQuery('.property-bar-content button.btn-contact-member').hide();
-                        }
-                    });
-                </script>
+                <script type="text/javascript">var switchTo5x=true;</script>
+                <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+                <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false});</script>
+                <span class='st_sharethis' displayText=''></span>
 
                 <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
             </div>

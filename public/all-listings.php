@@ -17,7 +17,6 @@ $search_vars = array();
 
 // Search form submission
 
-
 if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
 {
 
@@ -207,7 +206,7 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
                             }
                             break;
                         case 'keyword':
-                            if(strripos(serialize($listing), $value) === false){
+                            if(!in_multiarray($value, $listing)){
                                 $matched = false;
                             }
                             break;
@@ -405,7 +404,7 @@ if (isset($_GET['map_view']))
         // Delete cached search values
         delete_option('buzztarget_saved_search_values');
 
-        // Delete cached search listings 
+        // Delete cached search listings
         delete_option('buzztarget_saved_search_listings');
     }
 
@@ -588,5 +587,16 @@ if (isset($_GET['map_view']))
 
     $vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 }
-
+function in_multiarray($elem, $array) {
+    foreach ($array as $key => $value) {
+        if(is_array($value)){
+            if(in_multiarray($elem, $value))
+                return true;
+        }
+        else{
+            if(strripos($value, $elem)) return true;
+        }
+    }
+    return false;
+}
 echo $this->twig->render('listings.twig', $vars);

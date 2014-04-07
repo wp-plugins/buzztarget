@@ -31,7 +31,7 @@ class FrontEndScripts
         {
             wp_register_script('all-listings-page', $staticURL . 'js/all-listings-page.js');
             wp_enqueue_script('all-listings-page');
-            wp_register_style('all-listings-page', $staticURL . 'css/all-listings-page.css');
+            wp_register_style('all-listings-page', $staticURL . 'css/properties.css');
             wp_enqueue_style('all-listings-page');
         }
         // For sale / for lease / individual properties
@@ -43,7 +43,7 @@ class FrontEndScripts
                 wp_register_style('bt-jquery-ui', $staticURL . 'css/jquery-ui.css');
                 wp_enqueue_style('bt-jquery-ui');
 
-                wp_register_style('single-property-page', $staticURL . 'css/single-property-page.css');
+                wp_register_style('single-property-page', $staticURL . 'css/properties.css');
                 wp_enqueue_style('single-property-page');
                 wp_register_script('single-property-page', $staticURL . 'js/single-property-page.js', array('jquery', 'jquery-ui-dialog'));
                 wp_enqueue_script('single-property-page');
@@ -52,7 +52,7 @@ class FrontEndScripts
             {
                 wp_register_script('all-listings-page', $staticURL . 'js/all-listings-page.js');
                 wp_enqueue_script('all-listings-page');
-                wp_register_style('all-listings-page', $staticURL . 'css/all-listings-page.css');
+                wp_register_style('all-listings-page', $staticURL . 'css/properties.css');
                 wp_enqueue_style('all-listings-page');
             }
         }

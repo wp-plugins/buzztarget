@@ -232,6 +232,32 @@ class BackEndController
                     }
                 }
             }
+            elseif(isset($_POST['save_theme_css']) || isset($_POST['restore_theme_css'])){
+                if(isset($_POST['save_theme_css'])){
+                    $file = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties.css';
+                    $cssFileContent = $_POST['theme-css-text'];
+
+                    if(file_put_contents($file, str_replace("\"", "'", $cssFileContent))){
+                        $vars['theme_css_save_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_SAVE_SUCCESS');
+                    }
+                    else{
+                        $vars['theme_css_save_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_SAVE_FAILURE');
+                    }
+                }
+                if(isset($_POST['restore_theme_css'])){
+                    $file = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties.css';
+                    $originalFile = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties_original.css';
+                    $cssOriginalFileContent = file_get_contents($originalFile);
+
+                    if(file_put_contents($file, str_replace("\"", "'", $cssOriginalFileContent))){
+                        $vars['theme_css_restore_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_RESTORE_SUCCESS');
+                    }
+                    else{
+                        $vars['theme_css_restore_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_RESTORE_FAILURE');
+                    }
+                }
+
+            }
 
             wp_clear_scheduled_hook('buzztarget_fetch_listings_event');
         }
@@ -299,6 +325,20 @@ class BackEndController
             $vars['theme_options_map_view_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_MAP_VIEW_ON');
             $vars['theme_options_map_view_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_MAP_VIEW_OFF');
             $vars['save_changes'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SAVE_CHANGES');
+        }
+        elseif ($tab === 'theme_css')
+        {
+            $file = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties.css';
+            $cssFileContent = file_get_contents($file);
+
+            $vars['css_file_content'] = $cssFileContent;
+
+            $vars['theme_css_heading'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_CSS_HEADING');
+            $vars['theme_css_desc'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_CSS_DESC');
+
+            // Submit Button Label
+            $vars['save_css_changes'] = $this->text->__('ADMIN_THEME_CSS_TAB_SAVE_CHANGES');
+            $vars['restore_css_changes'] = $this->text->__('ADMIN_THEME_CSS_TAB_RESTORE_CHANGES');
         }
         else
         {

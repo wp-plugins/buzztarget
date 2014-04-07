@@ -93,6 +93,8 @@ $strings = array(
     // Theme Options
     'ADMIN_THEME_OPTIONS_TAB_THEME_OPTIONS_HEADING' => 'Theme Options',
     'ADMIN_THEME_OPTIONS_TAB_THEME_OPTIONS_DESC' => 'Set your theme options',
+    'ADMIN_THEME_OPTIONS_TAB_THEME_CSS_HEADING' => 'Custom CSS',
+    'ADMIN_THEME_OPTIONS_TAB_THEME_CSS_DESC' => 'Customize your CSS based on your Theme',
     'ADMIN_THEME_OPTIONS_TAB_THEME_COLOR' => 'Theme Color',
     'ADMIN_THEME_OPTIONS_TAB_THEME_COLOR_OVERLAY_TEXT' => 'Theme Color Overlay Text',
 
@@ -147,6 +149,13 @@ $strings = array(
     'ADMIN_THEME_OPTIONS_TAB_SAVE_CHANGES' => 'Save Changes',
     'ADMIN_THEME_OPTIONS_TAB_SAVE_SUCCESS' => 'Theme options saved successfully.',
     'ADMIN_THEME_OPTIONS_TAB_SAVE_FAILURE' => 'An error occurred attempting to save the theme options. Please try again.',
+
+    'ADMIN_THEME_CSS_TAB_SAVE_CHANGES' => 'Save Changes',
+    'ADMIN_THEME_CSS_TAB_RESTORE_CHANGES' => 'Restore Original',
+    'ADMIN_THEME_CSS_TAB_SAVE_SUCCESS' => 'Theme CSS saved successfully.',
+    'ADMIN_THEME_CSS_TAB_SAVE_FAILURE' => 'An error occurred attempting to save the theme CSS. Please try again.',
+    'ADMIN_THEME_CSS_TAB_RESTORE_SUCCESS' => 'Theme CSS restored successfully.',
+    'ADMIN_THEME_CSS_TAB_RESTORE_FAILURE' => 'An error occurred attempting to restore the theme CSS. Please try again.',
 
     // Options page
     'ADMIN_SETTINGS_PAGE_TITLE' => 'API Settings',

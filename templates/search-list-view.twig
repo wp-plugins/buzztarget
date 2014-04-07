@@ -233,7 +233,13 @@
                                         {{ property.Property.Address.Zip }}
                                     </i>
                                 </p>
-                                <p class="broker-name">Broker Name</p>
+                                <p class="broker-name">
+                                    {% set brokerList = '' %}
+                                    {% for broker in property.ListingAgents %}
+                                        {% set brokerList = brokerList ~ broker.FirstName ~ ' ' ~ broker.LastName ~ ', ' %}
+                                    {% endfor %}
+                                    {{ brokerList|trim|trim(',') }}
+                                </p>
                             </div>
                             <div class="price theme-color">
                                 {% if property.PropertyPrice is defined %}
