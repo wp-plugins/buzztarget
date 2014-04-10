@@ -1,7 +1,7 @@
 <div id="buzz-target-plugin">
 <section class="content featured">
     <div class="clearfix">
-        <div class="featured-property-title theme-bg {{broker_listings_class}}">
+        <div class="{% if broker_listings_class %}{{broker_listings_class}}{% else %}featured-property-title theme-bg{% endif %}">
             {{broker_listings_title}}
         </div>
 

@@ -36,7 +36,17 @@ jQuery(document).ready(function($)
         else{
             $('.search').height(filterHeight + "px");
         }
+
     }, 100);
+    $('.list-item .image img').each(function(){
+        if ( $(this).height() > $(this).width()) {
+            $(this).addClass( "heigherImg" );
+        }
+        else{
+            $(this).addClass( "widtherImg" );
+        }
+    });
+
 });
 
 function get_content(url){
@@ -73,6 +83,14 @@ function get_content(url){
             else{
                 jQuery('.search').height(filterHeight + "px");
             }
+            jQuery('.list-item .image img').each(function(){
+                if ( jQuery(this).height() > jQuery(this).width()) {
+                    jQuery(this).addClass( "heigherImg" );
+                }
+                else{
+                    jQuery(this).addClass( "widtherImg" );
+                }
+            });
 
         });
 }

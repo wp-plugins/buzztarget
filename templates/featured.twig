@@ -1,8 +1,7 @@
 <div id="buzz-target-plugin">
-    {#{{ dump(listings) }}#}
 <section class="content featured">
     <div class="clearfix">
-        <div class="featured-property-title theme-bg {{featured_class}}">
+        <div class="{% if featured_class %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
             {{featured_title}}
         </div>
 
@@ -68,7 +67,7 @@
             <script>
                 jQuery('.featured-slider').unslider({
                     speed: 500,               //  The speed to animate each slide (in milliseconds)
-                    delay: false,              //  The delay between slide animations (in milliseconds)
+                    delay: 3000,              //  The delay between slide animations (in milliseconds)
                     complete: function() {},  //  A function that gets called after every slide animation
                     keys: true,               //  Enable keyboard (left, right) arrow shortcuts
                     dots: true,               //  Display dot navigation

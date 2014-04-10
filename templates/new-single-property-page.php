@@ -67,11 +67,13 @@ if($property){
             </section>
             <section class="content">
                 <h3 class="for-lease">
-                    <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>
-                    <?php
-                        $listingType = ($property['ListingType'] === 'ForSale') ? 'For Sale' : 'For Lease';
-                    ?>
-                    <?= $listingType; ?>
+                    <div>
+                        <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>
+                        <?php
+                            $listingType = ($property['ListingType'] === 'ForSale') ? 'For Sale' : 'For Lease';
+                        ?>
+                        <?= $listingType; ?>
+                    </div>
                 </h3>
                 <div class="brokers">
                     <?php foreach($property['ListingAgents'] as $broker){ ?>
@@ -105,7 +107,7 @@ if($property){
             </section>
             <section class="content">
                 <div class="clearfix">
-                    <div class="column fourty">
+                    <div class="column less-half">
                         <?php if(isset($otherImages)){ ?>
                             <div class="connected-carousels image-slider small">
                                 <div class="stage slider-main-image">
@@ -113,7 +115,7 @@ if($property){
                                         <ul>
                                             <?php foreach ($otherImages as $src) {?>
                                             <li>
-                                                <img src="<?php echo $src; ?>" width="334" height="350">
+                                                <img src="<?php echo $src; ?>">
                                                 <div class="image-overlay pop-up-btn">
                                                     <span class="zoom"></span>
                                                 </div>
@@ -128,7 +130,7 @@ if($property){
                                 <div class="navigation slider-pagination">
                                     <a href="javascript:void(0)" class="prev prev-navigation"><span>&lsaquo;</span></a>
                                     <a href="javascript:void(0)" class="next next-navigation"><span>&rsaquo;</span></a>
-                                    <div class="carousel carousel-navigation carousel-navigation-small">
+                                    <div class="carousel carousel-navigation carousel-navigation-small <?php if (count($otherImages)<5){ echo 'centered-items';}?>">
                                         <ul>
                                             <?php foreach ($otherImages as $src) {?>
                                             <li>
@@ -151,59 +153,60 @@ if($property){
                         </ul>
                         <?php } ?>
                     </div>
-                    <div class="column sixty">
+                    <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0)) || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0)) || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)) || (isset($property['County']) && $property['County'] != 0) || (isset($property['Zoning']) && $property['Zoning'] != 0 ) || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ) || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ) || (isset($property['YearBuild']) && $property['YearBuild'] != 0 ) || (isset($property['Occupancy']) && $property['Occupancy'] != 0) || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0) || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0) ){ ?>
+                    <div class="column half property-info">
                         <h4 class="title info theme-color">Property Information</h4>
                         <table>
                             <tbody>
-                            <?php if (isset($property['GrossLeasableArea'])){ ?>
+                            <?php if (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0){ ?>
                             <tr>
                                 <td>Total Building SF:</td>
                                 <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['TotalLotSize'])){ ?>
+                            <?php if (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0){ ?>
                             <tr>
                                 <td>Total Lot Size SF:</td>
                                 <td><?php echo number_format($property['TotalLotSize']); ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['Occupancy'])){ ?>
+                            <?php if (isset($property['Occupancy']) && $property['Occupancy'] != 0){ ?>
                             <tr>
                                 <td>Occupancy:</td>
                                 <td><?php echo $property['Occupancy'] . '%'; ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['YearBuild'])){ ?>
+                            <?php if (isset($property['YearBuild']) && $property['YearBuild'] != 0 ){ ?>
                             <tr>
                                 <td>Year Built:</td>
                                 <td><?php echo $property['YearBuild']; ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['YearRenovated'])){ ?>
+                            <?php if (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ){ ?>
                             <tr>
                                 <td>Year Renovated:</td>
                                 <td><?php echo $property['YearRenovated']; ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['ParkingSpace'])){ ?>
+                            <?php if (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ){ ?>
                             <tr>
                                 <td>Parking Space:</td>
                                 <td><?php echo $property['ParkingSpace']; ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['Zoning'])){ ?>
+                            <?php if (isset($property['Zoning']) && $property['Zoning'] != 0 ){ ?>
                                 <tr>
                                     <td>Zoning:</td>
                                     <td><?php echo $property['Zoning']; ?></td>
                                 </tr>
                             <?php } ?>
-                            <?php if (isset($property['County'])){ ?>
+                            <?php if (isset($property['County']) && $property['County'] != 0){ ?>
                             <tr>
                                 <td>County:</td>
                                 <td><?php echo $property['County']; ?></td>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['TrafficCounts'])){ ?>
+                            <?php if (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)){ ?>
                             <tr>
                                 <td>Traffic Count:</td>
                                 <?php if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
@@ -213,7 +216,7 @@ if($property){
                                 <?php } ?>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['PopulationRange'])){ ?>
+                            <?php if (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0)){ ?>
                             <tr>
                                 <td>Population:</td>
                                 <?php if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
@@ -223,7 +226,7 @@ if($property){
                                 <?php } ?>
                             </tr>
                             <?php } ?>
-                            <?php if (isset($property['HouseholdIncome'])){ ?>
+                            <?php if (isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0)){ ?>
                             <tr>
                                 <td>Income:</td>
                                 <?php if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
@@ -251,6 +254,7 @@ if($property){
                         </table>
                         <?php } ?>
                     </div>
+                    <?php } ?>
                 </div>
             </section>
             <section class="content">
@@ -324,7 +328,7 @@ if($property){
         </section>
         <section class="content two-columns">
             <div class="clearfix">
-                <div class="column half">
+                <div class="column less-half">
                     <?php if(isset($otherImages)){ ?>
                         <div class="connected-carousels image-slider">
                             <div class="stage slider-main-image">
@@ -332,7 +336,7 @@ if($property){
                                     <ul>
                                         <?php foreach ($otherImages as $src) {?>
                                         <li>
-                                            <img src="<?php echo $src; ?>" width="423" height="350">
+                                            <img src="<?php echo $src; ?>">
                                             <div class="image-overlay pop-up-btn">
                                                 <span class="zoom"></span>
                                             </div>
@@ -347,7 +351,7 @@ if($property){
                             <div class="navigation slider-pagination">
                                 <a href="javascript:void(0)" class="prev prev-navigation"><span>&lsaquo;</span></a>
                                 <a href="javascript:void(0)" class="next next-navigation"><span>&rsaquo;</span></a>
-                                <div class="carousel carousel-navigation carousel-navigation-small">
+                                <div class="carousel carousel-navigation carousel-navigation-small <?php if (count($otherImages)<5){ echo 'centered-items';}?>">
                                     <ul>
                                         <?php foreach ($otherImages as $src) {?>
                                         <li>
@@ -364,13 +368,15 @@ if($property){
                 </div>
                 <div class="column half">
                     <h3>
-                        <strong
-                            <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>>
-                            <?php
-                            $listingType = ($property['ListingType'] === 'ForSale') ? 'For Sale' : 'For Lease';
-                            ?>
-                            <?php echo $listingType; ?>
-                        </strong>
+                        <div>
+                            <strong
+                                <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>>
+                                <?php
+                                $listingType = ($property['ListingType'] === 'ForSale') ? 'For Sale' : 'For Lease';
+                                ?>
+                                <?php echo $listingType; ?>
+                            </strong>
+                        </div>
                     </h3>
                     <h4 class="title info theme-color"><?php echo $property_name; ?></h4>
                     <div class="clearfix">
@@ -388,7 +394,7 @@ if($property){
                                         <?php echo $property['Property']['Address']['Zip']; ?>
                                     </td>
                                 </tr>
-                                <?php if (isset($property['County'])){ ?>
+                                <?php if (isset($property['County']) && $property['County'] != 0){ ?>
                                     <tr>
                                         <td>County: </td>
                                         <td><?php echo $property['County'] ?></td>
@@ -398,19 +404,19 @@ if($property){
                         </table>
                         <table class="half">
                             <tbody>
-                            <?php if (isset($property['PropertyPrice'])){ ?>
+                            <?php if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
                                 <tr>
                                     <td>Price:</td>
                                     <td> <?php echo '$' . number_format($property['PropertyPrice']); ?></td>
                                 </tr>
                             <?php }?>
-                            <?php if (isset($property['CapRate'])){ ?>
+                            <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
                                 <tr>
                                     <td>CAP Rate:</td>
                                     <td><?php echo round($property['CapRate'], 2) . '%'; ?></td>
                                 </tr>
                             <?php }?>
-                            <?php if (isset($property['Noi'])){ ?>
+                            <?php if (isset($property['Noi']) && $property['Noi'] != 0){ ?>
                                 <tr>
                                     <td>NOI: </td>
                                     <td><?php echo '$' . number_format($property['Noi']); ?></td>
@@ -435,59 +441,59 @@ if($property){
                             </p>
                         </div>
                     <?php } ?>
-
-                    <h4 class="title info theme-color">Property Information</h4>
+                <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0)) || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0)) || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)) || (isset($property['County']) && $property['County'] != 0) || (isset($property['Zoning']) && $property['Zoning'] != 0 ) || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ) || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ) || (isset($property['YearBuild']) && $property['YearBuild'] != 0 ) || (isset($property['Occupancy']) && $property['Occupancy'] != 0) || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0) || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0) ){ ?>
+                <h4 class="title info theme-color">Property Information</h4>
                     <table>
                         <tbody>
-                        <?php if (isset($property['GrossLeasableArea'])){ ?>
+                        <?php if (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0){ ?>
                             <tr>
                                 <td>Total Building SF:</td>
                                 <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
                             </tr>
                         <?php } ?>
-                        <?php  if (isset($property['TotalLotSize'])){ ?>
+                        <?php  if (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0){ ?>
                             <tr>
                                 <td>Total Lot Size SF:</td>
                                 <td><?php echo number_format($property['TotalLotSize']); ?></td>
                             </tr>
                         <?php } ?>
-                        <?php if (isset($property['Occupancy'])){ ?>
+                        <?php if (isset($property['Occupancy']) && $property['Occupancy'] != 0){ ?>
                             <tr>
                                 <td>Occupancy:</td>
                                 <td><?php echo $property['Occupancy'] . '%'; ?></td>
                             </tr>
                         <?php } ?>
-                        <?php if (isset($property['YearBuild'])){ ?>
+                        <?php if (isset($property['YearBuild']) && $property['YearBuild'] != 0){ ?>
                             <tr>
                                 <td>Year Built:</td>
                                 <td><?php echo $property['YearBuild']; ?></td>
                             </tr>
                         <?php } ?>
-                        <?php if (isset($property['YearRenovated'])){ ?>
+                        <?php if (isset($property['YearRenovated']) && $property['YearRenovated'] != 0){ ?>
                             <tr>
                                 <td>Year Renovated:</td>
                                 <td><?php echo $property['YearRenovated']; ?></td>
                             </tr>
                         <?php } ?>
-                        <?php if (isset($property['ParkingSpace'])){ ?>
+                        <?php if (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0){ ?>
                         <tr>
                             <td>Parking Space:</td>
                             <td><?php echo $property['ParkingSpace']; ?></td>
                         </tr>
                         <?php } ?>
-                        <?php if (isset($property['Zoning'])){ ?>
+                        <?php if (isset($property['Zoning']) && $property['Zoning'] != 0){ ?>
                             <tr>
                                 <td>Zoning:</td>
                                 <td><?php echo $property['Zoning']; ?></td>
                             </tr>
                         <?php } ?>
-                        <?php if (isset($property['County'])){ ?>
+                        <?php if (isset($property['County']) && $property['County'] != 0){ ?>
                             <tr>
                                 <td>County:</td>
                                 <td><?php echo $property['County']; ?></td>
                             </tr>
                         <?php } ?>
-                            <?php if (isset($property['TrafficCounts'])){ ?>
+                            <?php if (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom']!=0 || $property['TrafficCounts']['RangeTo']!=0)){ ?>
                         <tr>
                             <td>Traffic Count:</td>
                             <?php if ($property['TrafficCounts']['RangeFrom'] == $property['TrafficCounts']['RangeTo']){ ?>
@@ -497,7 +503,7 @@ if($property){
                             <?php } ?>
                         </tr>
                             <?php } ?>
-                            <?php if (isset($property['PopulationRange'])){ ?>
+                            <?php if (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom']!=0 || $property['PopulationRange']['RangeTo']!=0)){ ?>
                         <tr>
                             <td>Population:</td>
                             <?php if ($property['PopulationRange']['RangeFrom'] == $property['PopulationRange']['RangeTo']){ ?>
@@ -507,7 +513,7 @@ if($property){
                             <?php } ?>
                         </tr>
                             <?php } ?>
-                            <?php if (isset($property['HouseholdIncome'])){ ?>
+                            <?php if (isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom']!=0 || $property['HouseholdIncome']['RangeTo']!=0)){ ?>
                         <tr>
                             <td>Income:</td>
                             <?php if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
@@ -519,6 +525,7 @@ if($property){
                             <?php } ?>
                         </tbody>
                     </table>
+                        <?php } ?>
                     <?php if (count($spaces) > 0){?>
                         <h4 class="title info theme-color">Spaces</h4>
                         <table class="theme-table">
@@ -535,7 +542,7 @@ if($property){
                         </table>
                     <?php } ?>
                 </div>
-                <div class="column half">
+                <div class="column less-half">
                     <section class="content">
                         <?php
                         $lat = $property['Lat'];
@@ -600,10 +607,10 @@ if($property){
                             <div class="broker-item">
                                 <h4>
                                     <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
+                                    <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" target="_blank" class="icon-mail">
+                                        <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png">
+                                    </a>
                                 </h4>
-                                <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" target="_blank" class="icon-mail">
-                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png"><span><?php echo $broker['Email']; ?></span>
-                                </a>
                                 <span><?php echo $broker['Phone']; ?></span>
                             </div>
                         </li>
@@ -631,7 +638,7 @@ if($property){
                     <ul>
                         <?php foreach ($otherImages as $src) {?>
                         <li>
-                            <img src="<?php echo $src; ?>"  width="750">
+                            <img src="<?php echo $src; ?>" >
                         </li>
                         <?php } ?>
                     </ul>
@@ -643,12 +650,12 @@ if($property){
             <div class="navigation slider-pagination">
                 <a href="javascript:void(0)" class="prev prev-navigation"><span>&lsaquo;</span></a>
                 <a href="javascript:void(0)" class="next next-navigation"><span>&rsaquo;</span></a>
-                <div class="carousel carousel-navigation carousel-navigation-popup">
+                <div class="carousel carousel-navigation carousel-navigation-popup <?php if (count($otherImages)<5){ echo 'centered-items';}?>">
                     <ul>
                         <?php foreach ($otherImages as $src) {?>
                         <li>
                             <div class="pagination-item">
-                                <img src="<?php echo $src; ?>" width="100" height="100">
+                                <img src="<?php echo $src; ?>">
                             </div>
                         </li>
                         <?php } ?>

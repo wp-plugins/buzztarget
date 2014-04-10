@@ -1,5 +1,15 @@
 jQuery(document).ready(function($)
 {
+    $('.pagination-item img, .carousel.carousel-stage.carousel-stage-small li img, .carousel.carousel-stage.carousel-stage-popup img, .carousel.carousel-navigation.carousel-navigation-popup .pagination-item img').each(function(){
+        if ( $(this).height() > $(this).width()) {
+            $(this).addClass( "heigherImg" );
+        }
+        else{
+            $(this).addClass( "widtherImg" );
+        }
+    });
+
+
 //    var propertyImages = otherImages;
 //
 //    var imageNo = 0;

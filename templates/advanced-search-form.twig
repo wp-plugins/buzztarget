@@ -26,7 +26,7 @@
                     </div>
                 {% endif %}
                 {% if show_county is sameas('on') %}
-                {#{% if county_list is not empty%}#}
+                {% if county_list is not empty%}
                     <div class="input-group">
                         <select name="county" id="county">
                             <option value="">Select county</option>
@@ -35,7 +35,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                {#{% endif %}#}
+                {% endif %}
                 {% endif %}
                 {% if show_zip is sameas('on') %}
                     <div class="input-group">

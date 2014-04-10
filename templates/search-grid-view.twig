@@ -208,7 +208,7 @@
                     <div class="image">
                         <a href="{{propertyURLDashed}}">
                             {% if property.ListingImages.0.AttachmentPath is defined %}
-                                <img src="{{property.ListingImages.0.AttachmentPath}}" style="height:270px!important">
+                                <img src="{{property.ListingImages.0.AttachmentPath}}">
                             {% else %}
                                 <img src="http://placehold.it/270x270">
                             {% endif %}
@@ -217,13 +217,20 @@
                     <div class="item-info">
                         <div class="clearfix">
                             <div class="main-info">
-                                {% if property.ListingType is sameas('ForLease') %}
+                                <div class="price-block">
+                                    {% if property.ListingType is sameas('ForLease') %}
                                     <h4>For Lease</h4>
-                                {% elseif property.ListingType is sameas('ForSale') %}
+                                    {% elseif property.ListingType is sameas('ForSale') %}
                                     <h4>For Sale</h4>
-                                {% endif %}
-                                <h3 class="theme-color">
-                                    <a href="{{propertyURLDashed}}">
+                                    {% endif %}
+                                    <div class="price theme-color">
+                                        {% if property.PropertyPrice is defined %}
+                                        ${{ property.PropertyPrice|number_format(2, '.', ',') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <h3 class="theme-color property-name">
+                                    <a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">
                                         {{property.Property.PropertyName}}
                                     </a>
                                 </h3>
@@ -236,11 +243,6 @@
                                     </i>
                                 </p>
 
-                            </div>
-                            <div class="price theme-color">
-                                {% if property.PropertyPrice is defined %}
-                                    ${{ property.PropertyPrice|number_format(2, '.', ',') }}
-                                {% endif %}
                             </div>
                             <div class="details"><b>{{ trans.status }}</b> {{ property.Status }} | <a href="{{propertyURLDashed}}">{{ trans.details }}</a></div>
                         </div>
