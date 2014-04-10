@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" xmlns="http://www.w3.org/1999/html">
     <div class="search">
         {# Any search result messages will be displayed here #}
 
@@ -229,11 +229,13 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <h3 class="theme-color property-name">
-                                    <a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">
-                                        {{property.Property.PropertyName}}
-                                    </a>
-                                </h3>
+                                <div class="property-name-block">
+                                    <h3 class="theme-color property-name">
+                                        <a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">
+                                            {{property.Property.PropertyName}}
+                                        </a>
+                                    </h3>
+                                </div>
                                 <p class="address"><i>{{ property.Property.Address.Address }}</i></p>
                                 <p class="address">
                                     <i>
