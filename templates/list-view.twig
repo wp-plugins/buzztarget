@@ -1,0 +1,66 @@
+{# Advanced Search & Advanced Search Bar #}
+{% include 'advanced-search-bar.twig' %}
+
+{# All listings #}
+<div id="bt-listings">
+
+    {# Map View & List View #}
+    {% include 'view-type-buttons.twig' %}
+
+    <div class="bt-sml-clear">&nbsp;</div>
+
+    {# Any search result messages will be displayed here #}
+    {% if trans.search_error %}
+    <div id="bt-search-error">
+        <p>{{trans.search_error}}</p>
+    </div>
+    {% endif %}
+
+    {# Display properties #}
+    <div id="bt-properties">
+    {% for property in listings %}
+
+    {# Property #}
+            <div class="bt-property">
+    {# URL to property page #}
+    {% set propertyURLDashed = properties_url ~ '/' ~ property.Property.PropertyName|replace(' ', '-') ~ '/' ~ property.ListingId %}
+
+    {# Property Image #}
+                <div class="bt-property-image">
+
+    <a href="{{propertyURLDashed}}">
+        <img src="{{property.ListingImages.0.AttachmentPath}}" />
+    </a>
+</div>
+    <p class="bt-property-listing-type">
+        {% if property.ListingType is sameas('ForLease') %}
+        For Lease
+        {% elseif property.ListingType is sameas('ForSale') %}
+        For Sale
+        {% endif %}
+    </p>
+    {# Property Details #}
+                <div class="bt-property-details">
+    <p>
+        <a href="{{propertyURLDashed}}" {% if theme_color %} style="color:{{theme_color}}" {% endif %}>
+            {{property.Property.PropertyName}}
+        </a>
+    </p>
+    <p>{{ property.Property.Address.Address }}</p>
+    <p>
+        {{ property.Property.Address.City }},
+        {{ property.Property.Address.State }}
+        {{ property.Property.Address.Zip }}
+    </p>
+    <p>
+        <b>{{ trans.status }}</b> {{ property.Status }} | <a href="{{propertyURLDashed}}" {% if theme_color %} style="color:{{theme_color}}" {% endif %}>{{ trans.details }}</a>
+    </p>
+</div>
+</div>
+    {% endfor %}
+</div>
+
+    {# Pagination #}
+    {% include 'pagination.twig' %}
+
+</div> {# end #bt-listings #}
