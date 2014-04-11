@@ -895,6 +895,11 @@
     border-top: 5px solid #dedede;
 }
 
+#buzz-target-plugin .grid-view.custom-title {
+    padding-top: 5px;
+    border-top: none;
+}
+
 #buzz-target-plugin .list-view .list-item {
     width: 100%;
     float: left;
