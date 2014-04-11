@@ -53,4 +53,4 @@ parse_str($_SERVER['QUERY_STRING'], $query_string);
 $vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 
-echo $this->twig->render('broker-listings.twig', $vars);
+$cont = $this->twig->render('broker-listings.twig', $vars);

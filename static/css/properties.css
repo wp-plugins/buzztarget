@@ -1716,6 +1716,7 @@ a.bt-gm-link {
 #buzz-target-plugin .banner ul { margin: 0; padding-top: 40px;}
 #buzz-target-plugin .banner ul li { float: left; margin: 0;}
 #buzz-target-plugin .banner.has-dots{ height: 100%!important; }
+#buzz-target-plugin .banner.has-dots ol{ line-height: 20px; }
 #buzz-target-plugin .banner.has-dots ul li .list-item{ height: 405px; }
 #buzz-target-plugin .banner .dots {
     position: absolute;

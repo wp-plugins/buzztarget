@@ -53,6 +53,7 @@ class Shortcodes
         $featuredNumberOfListingPerRow = (int)$atts['numberoflistingperrow'];
 
         require_once $this->config->getValue('public_path') . 'all-featured.php';
+        return $cont;
 
     }
 
@@ -64,7 +65,9 @@ class Shortcodes
         $brokerListingsClass = $atts['class'];
         $brokerListingsNumberOfListingPerRow = (int)$atts['numberoflistingperrow'];
         $brokerEmail = $atts['brokeremail'];
+
         require_once $this->config->getValue('public_path') . 'all-broker-listings.php';
+        return $cont;
     }
 
     public function showForLeaseListings()
