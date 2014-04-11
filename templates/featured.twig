@@ -2,10 +2,10 @@
 <section class="content featured">
     <div class="clearfix">
         <div class="{% if featured_class %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
-            {{featured_title}}
+            <span>{{featured_title}}</span>
         </div>
 
-        <div class="grid-view">
+        <div class="grid-view {% if featured_class %}custom-title{% endif %}">
 
             {% if trans.search_error %}
             <div id="bt-search-error">
