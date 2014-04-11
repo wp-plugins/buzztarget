@@ -1,9 +1,12 @@
 <div id="buzz-target-plugin">
 <section class="content featured">
     <div class="clearfix">
-        <div class="{% if featured_class %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
-            <span>{{featured_title}}</span>
-        </div>
+        {% if (featured_class or featured_title) %}
+            <div class="{% if featured_class %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
+                <span>{{featured_title}}</span>
+            </div>
+            <div class="title-line"></div>
+        {% endif %}
 
         <div class="grid-view {% if featured_class %}custom-title{% endif %}">
 

@@ -1,10 +1,12 @@
 <div id="buzz-target-plugin">
 <section class="content featured">
     <div class="clearfix">
-        <div class="{% if broker_listings_class %}{{broker_listings_class}}{% else %}featured-property-title theme-bg{% endif %}">
-            <span>{{broker_listings_title}}</span>
-        </div>
-
+        {% if (broker_listings_class or broker_listings_title) %}
+            <div class="{% if broker_listings_class %}{{broker_listings_class}}{% else %}featured-property-title theme-bg{% endif %}">
+                <span>{{broker_listings_title}}</span>
+            </div>
+            <div class="title-line"></div>
+        {% endif %}
         <div class="grid-view {% if featured_class %}custom-title{% endif %}">
 
             {% if trans.search_error %}
