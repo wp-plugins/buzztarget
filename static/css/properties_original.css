@@ -895,7 +895,7 @@
     border-top: 5px solid #dedede;
 }
 
-#buzz-target-plugin .grid-view.custom-title {
+#buzz-target-plugin .content.featured .grid-view, #buzz-target-plugin .content.broker-listings .grid-view{
     padding-top: 5px;
     border-top: none;
 }
@@ -1715,6 +1715,10 @@ a.bt-gm-link {
 #buzz-target-plugin .featured-property-title{
     width: 25%;
     padding-left: 10px;
+}
+#buzz-target-plugin .title-line{
+    border-bottom: 5px solid #ccc;
+    margin-bottom: 5px;
 }
 #buzz-target-plugin .banner { position: relative; overflow: auto; }
 #buzz-target-plugin .banner li { list-style: none; }
