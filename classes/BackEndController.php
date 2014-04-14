@@ -234,7 +234,7 @@ class BackEndController
             }
             elseif(isset($_POST['save_theme_css']) || isset($_POST['restore_theme_css'])){
                 if(isset($_POST['save_theme_css'])){
-                    $file = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties.css';
+                    $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
                     $cssFileContent = $_POST['theme-css-text'];
 
                     if(file_put_contents($file, str_replace("\"", "'", $cssFileContent))){
@@ -245,8 +245,8 @@ class BackEndController
                     }
                 }
                 if(isset($_POST['restore_theme_css'])){
-                    $file = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties.css';
-                    $originalFile = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties_original.css';
+                    $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
+                    $originalFile = WP_PLUGIN_DIR . '/buzztarget/static/css/properties_original.css';
                     $cssOriginalFileContent = file_get_contents($originalFile);
 
                     if(file_put_contents($file, str_replace("\"", "'", $cssOriginalFileContent))){
