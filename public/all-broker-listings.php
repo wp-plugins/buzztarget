@@ -25,14 +25,7 @@ foreach($listings as $key => $val){
 
 $count_of_pages = ceil(count($broker_listings) / $brokerListingsNumberOfListingPerRow);
 
-for($i=0; $i<$count_of_pages; $i++){
-    for( $j=$i*$brokerListingsNumberOfListingPerRow; $j<$i*$brokerListingsNumberOfListingPerRow+$brokerListingsNumberOfListingPerRow; $j++){
-        if(isset($broker_listings[$j])){
-            $broker_listings_partial[$i][] = $broker_listings[$j];
-        }
-    }
-}
-$listings = $broker_listings_partial;
+$listings = $this->listingPagination->getCurrentPageListings(array_values($broker_listings), $brokerListingsNumberOfListingPerRow);
 
 $themeOptions = get_option('buzztarget_theme_options');
 
@@ -49,8 +42,34 @@ $vars = array(
     'properties_url' => site_url() . '/properties',
 );
 
-parse_str($_SERVER['QUERY_STRING'], $query_string);
-$vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+/*
+* Pagination
+*/
 
+$currentPage = $this->listingPagination->getCurrentPage();
+$totalPages = $this->listingPagination->getTotalPages();
+
+$_currentPage = $currentPage;
+$nextPage = (($_cPage = $_currentPage) + 1 > $totalPages) ? $_currentPage : $_cPage + 1;
+$previousPage = (($_cPage = $_currentPage) - 1 === 0) ? $_currentPage : $_cPage - 1;
+
+$start = $this->listingPagination->getStart();
+$end = $this->listingPagination->getEnd();
+
+
+parse_str($_SERVER['QUERY_STRING'], $query_string);
+$rdr_str = (array_key_exists('search', $query_string))? '?search=true&current_page=' : '?current_page=';
+
+$vars['pagination'] = array(
+    'current_page' => $currentPage,
+    'total_pages' => absint($totalPages),
+    'next_page' => $nextPage,
+    'previous_page' => $previousPage,
+    'start' => $start,
+    'end' => $end,
+    'listings_current_page_url' =>  site_url() . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . $rdr_str,
+);
+
+$vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $cont = $this->twig->render('broker-listings.twig', $vars);

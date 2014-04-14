@@ -895,7 +895,7 @@
     border-top: 5px solid #dedede;
 }
 
-#buzz-target-plugin .content.featured .grid-view{
+#buzz-target-plugin .content.featured .grid-view, #buzz-target-plugin .content.broker-listings .grid-view{
     padding-top: 5px;
     border-top: none;
 }

@@ -14,15 +14,17 @@
                 {% endif %}
                  {#Next and Previous Page URLs#}
                 {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page ~ searchPart %}
-
-
                 {# Prev page no #}
                 {% set previousPage = pagination.current_page - 1 %}
 
                 {# Display previous page if it exists #}
-                {% if previousPage is not sameas(0) %}
-                    <a href="javascript:void(0)" class="" onclick="get_content('{{previousPageURL}}');">{{previousPage}}</a>
-                {% endif %}
+                    {% for i in previousPage-4..previousPage %}
+                        {% if i > 0 %}
+                            {% set previousPageURL = pagination.listings_current_page_url ~ i ~ searchPart %}
+                            {% set previousPage = i %}
+                            <a href="javascript:void(0)" class="" onclick="get_content('{{previousPageURL}}');">{{previousPage}}</a>
+                        {% endif %}
+                    {% endfor %}
 
                 {# Current page #}
                 {% set currentPageURL = pagination.listings_current_page_url ~ pagination.current_page ~ searchPart %}

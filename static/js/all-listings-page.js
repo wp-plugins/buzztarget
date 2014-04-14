@@ -62,18 +62,34 @@ function get_content(url){
             data : sendData,
             dataType : 'html'}
     ).success(function( html ) {
-            htm = jQuery(html).find("#buzz-target-plugin .grid-view").parent().html();
-            jQuery("#buzz-target-plugin .grid-view").parent().html(htm);
-            htm =jQuery(html).find("#buzz-target-plugin .list-view").parent().html();
-            jQuery("#buzz-target-plugin .list-view").parent().html(htm);
+            if(jQuery(html).find("#buzz-target-plugin .content").hasClass('broker-listings')){
+                htm = jQuery(html).find("#buzz-target-plugin .content.broker-listings .grid-view").parent().html();
+                jQuery("#buzz-target-plugin .content.broker-listings .grid-view").parent().html(htm);
 
-            htm = jQuery(html).find("#buzz-target-plugin .content.pagination").html();
-            if(htm != undefined){
-                jQuery("#buzz-target-plugin .content.pagination").remove();
-                jQuery("#buzz-target-plugin").append('<section class="content pagination">' + htm + '</section>');
+                htm = jQuery(html).find("#buzz-target-plugin .content.broker-listings").next(".content.pagination").html();
+
+                if(htm != undefined){
+                    jQuery("#buzz-target-plugin .content.broker-listings").next(".content.pagination").remove();
+                    jQuery('<section class="content pagination">' + htm + '</section>').insertAfter(jQuery("#buzz-target-plugin .content.broker-listings"));
+                }
+                else{
+                    jQuery("#buzz-target-plugin .content.broker-listings").next(".content.pagination").remove();
+                }
             }
             else{
-                jQuery("#buzz-target-plugin .content.pagination").remove();
+                htm = jQuery(html).find("#buzz-target-plugin .grid-view").parent().html();
+                jQuery("#buzz-target-plugin .grid-view").parent().html(htm);
+                htm =jQuery(html).find("#buzz-target-plugin .list-view").parent().html();
+                jQuery("#buzz-target-plugin .list-view").parent().html(htm);
+
+                htm = jQuery(html).find("#buzz-target-plugin .content.pagination").html();
+                if(htm != undefined){
+                    jQuery("#buzz-target-plugin .content.pagination").remove();
+                    jQuery("#buzz-target-plugin").append('<section class="content pagination">' + htm + '</section>');
+                }
+                else{
+                    jQuery("#buzz-target-plugin .content.pagination").remove();
+                }
             }
 
             var filterHeight = jQuery('.search-filter').innerHeight();
