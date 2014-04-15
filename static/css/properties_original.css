@@ -333,7 +333,7 @@
 
 #buzz-target-plugin .container {
     background: #fff;
-    max-width: 950px;
+    max-width: 940px;
     margin: 0 auto;
     padding: 0 0 20px 0;
 }
@@ -1272,7 +1272,7 @@
 /*}*/
 
 #buzz-target-plugin .connected-carousels .carousel-stage li{
-    width: 473px;
+    width: 467px;
     min-height: 350px;
     overflow: hidden;
 }
@@ -1282,7 +1282,7 @@
 }
 
 #buzz-target-plugin .two-columns .connected-carousels .carousel-stage li{
-    width: 473px;
+    width: 467px;
     overflow: hidden;
 }
 
