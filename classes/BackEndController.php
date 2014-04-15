@@ -328,7 +328,7 @@ class BackEndController
         }
         elseif ($tab === 'theme_css')
         {
-            $file = str_replace( "/", "\\", WP_PLUGIN_DIR ) . '\buzztarget\static\css\properties.css';
+            $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
             $cssFileContent = file_get_contents($file);
 
             $vars['css_file_content'] = $cssFileContent;
