@@ -33,7 +33,7 @@
 	function buzztarget_init() {
 		// ADD SCRIPTS & STYLES
 		wp_enqueue_script('jquery');
-		wp_enqueue_style('buzztarget-style', BUZZTARGET_FILE_URL . 'style1.css', '', '1.0');
+		wp_enqueue_style('buzztarget-style', BUZZTARGET_FILE_URL . 'style.css', '', '1.0');
 		wp_register_script('buzztarget-script', BUZZTARGET_FILE_URL . 'script.js', array('jquery'));
 		wp_enqueue_script('buzztarget-script');
 

@@ -29,17 +29,18 @@
                     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
                     <script>
                         var properties = {{ mapProperties|json_encode()|raw }} ;
-                        if (properties)
+                        function initialize()
                         {
-                            function initialize()
+                            var mapOptions,
+                                    map,
+                                    markers = [],
+                                    propertyWindow = new google.maps.InfoWindow({
+                                        content: ''
+                                    });
+                            var mapInitialized = false;
+
+                            if (properties.length > 0)
                             {
-                                var mapOptions,
-                                        map,
-                                        markers = [],
-                                        propertyWindow = new google.maps.InfoWindow({
-                                            content: ''
-                                        });
-                                var mapInitialized = false;
                                 for (var i = 0; i < properties.length; i++)
                                 {
                                     var propertyWindowContent = '<div class="bt-gm-property-window">' +
@@ -145,11 +146,19 @@
                                             }
                                         })(marker, propertyWindowContent));
                                     }
-
                                 }
                             }
-                            google.maps.event.addDomListener(window, 'load', initialize);
+                            else{
+                                mapOptions = {
+                                    zoom: 3,
+                                    center: new google.maps.LatLng(0, 0),
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                };
+                                map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                            }
                         }
+                        google.maps.event.addDomListener(window, 'load', initialize);
+
                     </script>
                     <div id="bt-map-canvas" class="map" style="margin:0px; padding: 0px;"></div>
                 </div>
