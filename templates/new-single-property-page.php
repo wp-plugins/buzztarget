@@ -316,15 +316,6 @@ if($property){
     ?>
         <section class="title">
             <h1><?php echo $property_name; ?></h1>
-            <div class="share-buttons">
-                <script type="text/javascript">var switchTo5x=true;</script>
-                <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-                <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false});</script>
-                <span class='st_sharethis' displayText=''></span>
-
-                <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
-            </div>
-
         </section>
         <section class="content two-columns">
             <div class="clearfix">
@@ -368,7 +359,7 @@ if($property){
                 </div>
                 <div class="column half">
                     <h3>
-                        <div>
+                        <div class="listings-type">
                             <strong
                                 <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>>
                                 <?php
@@ -376,6 +367,14 @@ if($property){
                                 ?>
                                 <?php echo $listingType; ?>
                             </strong>
+                        </div>
+                        <div class="share-buttons">
+                            <script type="text/javascript">var switchTo5x=true;</script>
+                            <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+                            <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false});</script>
+                            <span class='st_sharethis' displayText=''></span>
+
+                            <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
                         </div>
                     </h3>
                     <h4 class="title info theme-color"><?php echo $property_name; ?></h4>

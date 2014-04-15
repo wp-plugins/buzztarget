@@ -479,7 +479,13 @@
     margin-bottom: 10px;
 }
 
+#buzz-target-plugin .listings-type{
+    width: 80%;
+    float: left;
+}
+
 #buzz-target-plugin .share-buttons{
+    width: 15%;
     float: right;
 }
 
