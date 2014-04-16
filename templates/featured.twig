@@ -5,6 +5,8 @@
             <div class="{% if featured_class %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
                 <span>{{featured_title}}</span>
             </div>
+        {% endif %}
+        {% if featured_class is not defined %}
             <div class="title-line"></div>
         {% endif %}
 
