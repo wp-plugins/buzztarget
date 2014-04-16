@@ -1718,7 +1718,7 @@ a.bt-gm-link {
     color: #1c52db;
 }
 
-#buzz-target-plugin .featured-property-title{
+#buzz-target-plugin .featured-property-title, #buzz-target-plugin .broker-property-title{
     width: 25%;
     padding-left: 10px;
 }

@@ -2,11 +2,11 @@
 <section class="content broker-listings">
     <div class="clearfix">
         {% if (broker_listings_class or broker_listings_title) %}
-            <div class="{% if broker_listings_class %}{{broker_listings_class}}{% else %}featured-property-title theme-bg{% endif %}">
+            <div class="{% if broker_listings_class and broker_listings_class is not sameas('broker-property-title') %}{{broker_listings_class}}{% else %}broker-property-title theme-bg{% endif %}">
                 <span>{{broker_listings_title}}</span>
             </div>
         {% endif %}
-        {% if broker_listings_class is not defined %}
+        {% if broker_listings_class is not defined or broker_listings_class is sameas('broker-property-title')  %}
         <div class="title-line"></div>
         {% endif %}
 

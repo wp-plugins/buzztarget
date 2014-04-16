@@ -2,11 +2,11 @@
 <section class="content featured">
     <div class="clearfix">
         {% if (featured_class or featured_title) %}
-            <div class="{% if featured_class %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
+            <div class="{% if featured_class and featured_class is not sameas('featured-property-title') %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
                 <span>{{featured_title}}</span>
             </div>
         {% endif %}
-        {% if featured_class is not defined %}
+        {% if featured_class is not defined or featured_class is sameas('featured-property-title') %}
             <div class="title-line"></div>
         {% endif %}
 
