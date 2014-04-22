@@ -714,4 +714,5 @@ function bt_get_rental_rate($spacesToLease)
 }
 
 }
+get_footer();
 ?>

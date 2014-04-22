@@ -237,7 +237,7 @@ class BackEndController
                     $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
                     $cssFileContent = $_POST['theme-css-text'];
 
-                    if(file_put_contents($file, str_replace("\"", "'", $cssFileContent))){
+                    if(file_put_contents($file, str_replace("\'", "'", str_replace("\"", "'", $cssFileContent)))){
                         $vars['theme_css_save_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_SAVE_SUCCESS');
                     }
                     else{
