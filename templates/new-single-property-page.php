@@ -88,6 +88,14 @@ if($property){
                         </div>
                     <?php } ?>
                 </div>
+                <div class="share-buttons one-column-style">
+                    <script type="text/javascript">var switchTo5x=true;</script>
+                    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+                    <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false});</script>
+                    <span class='st_sharethis' displayText=''></span>
+
+                    <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
+                </div>
                 <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
                 <div class="overview">
                     <h4 class="title theme-color">Property Overview</h4>

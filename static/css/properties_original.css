@@ -323,7 +323,7 @@
 }
 
 #buzz-target-plugin h3.for-lease {
-    width: 60%;
+    width: 55%;
     float: left;
 }
 
@@ -421,7 +421,7 @@
 }
 
 #buzz-target-plugin .brokers {
-    width: 40%;
+    width: 30%;
     float: left;
     margin-bottom: 10px;
     text-align: right;
@@ -487,6 +487,12 @@
 #buzz-target-plugin .share-buttons{
     width: 15%;
     float: right;
+}
+#buzz-target-plugin .share-buttons.one-column-style{
+    width: 15%;
+    float: right;
+    text-align: right;
+    margin-top: 1%;
 }
 
 #buzz-target-plugin .stButton .sharethis {
