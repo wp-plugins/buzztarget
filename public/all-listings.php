@@ -297,7 +297,7 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
                     $search_listings[] = $listing;
                 }
             }else{
-                $search_listings = array();
+                $search_listings = $listings;
             }
         }
 
