@@ -56,7 +56,7 @@ if($property){
         if ($listingDetailStyle == 'style1'){
     ?>
             <section class="image">
-                <img class="main-logo-image" src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" />
+                <img class="main-logo-image" src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" alt="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>"/>
                 <div class="darken-bg"></div>
                 <h1><?php echo $property_name; ?></h1>
                 <span>
@@ -81,7 +81,7 @@ if($property){
                             <h4>
                                 <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
                                 <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" class="icon-mail">
-                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" />
+                                    <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png"/>
                                 </a>
                             </h4>
                             <span><?php echo $broker['Phone']; ?></span>
@@ -94,7 +94,7 @@ if($property){
                     <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false, onhover: false});</script>
                     <span class='st_sharethis' displayText=''></span>
 
-                    <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
+                    <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
                 </div>
                 <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
                 <div class="overview">
@@ -123,7 +123,7 @@ if($property){
                                         <ul>
                                             <?php foreach ($otherImages as $src) {?>
                                             <li>
-                                                <img src="<?php echo $src; ?>">
+                                                <img src="<?php echo $src; ?>" alt="<?php echo $src; ?>">
                                                 <div class="image-overlay pop-up-btn">
                                                     <span class="zoom"></span>
                                                 </div>
@@ -143,7 +143,7 @@ if($property){
                                             <?php foreach ($otherImages as $src) {?>
                                             <li>
                                                 <div class="pagination-item">
-                                                    <img src="<?php echo $src; ?>" width="50" height="50">
+                                                    <img src="<?php echo $src; ?>" alt="<?php echo $src; ?>" width="50" height="50">
                                                 </div>
                                             </li>
                                             <?php } ?>
@@ -288,7 +288,7 @@ if($property){
                     }
                 }
                 ?>
-                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
                 <script>
                     var map,
                         lat = <?php echo json_encode($lat); ?>,
@@ -335,7 +335,7 @@ if($property){
                                     <ul>
                                         <?php foreach ($otherImages as $src) {?>
                                         <li>
-                                            <img src="<?php echo $src; ?>">
+                                            <img src="<?php echo $src; ?>" alt="<?php echo $src; ?>">
                                             <div class="image-overlay pop-up-btn">
                                                 <span class="zoom"></span>
                                             </div>
@@ -355,7 +355,7 @@ if($property){
                                         <?php foreach ($otherImages as $src) {?>
                                         <li>
                                             <div class="pagination-item">
-                                                <img src="<?php echo $src; ?>" width="60" height="60">
+                                                <img src="<?php echo $src; ?>" width="60" height="60" alt="<?php echo $src; ?>">
                                             </div>
                                         </li>
                                         <?php } ?>
@@ -366,7 +366,7 @@ if($property){
                     <?php } ?>
                 </div>
                 <div class="column half">
-                    <h3>
+                    <div class="header-share-block">
                         <div class="listings-type">
                             <strong
                                 <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>>
@@ -382,9 +382,9 @@ if($property){
                             <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false, onhover: false});</script>
                             <span class='st_sharethis' displayText=''></span>
 
-                            <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
+                            <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
                         </div>
-                    </h3>
+                    </div>
                     <h4 class="title info theme-color"><?php echo $property_name; ?></h4>
                     <div class="clearfix">
                         <table class="half">
@@ -573,7 +573,7 @@ if($property){
                             }
                         }
                         ?>
-                        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
                         <script>
                             var map,
                                 lat = <?php echo json_encode($lat); ?>,
@@ -615,7 +615,7 @@ if($property){
                                 <h4>
                                     <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
                                     <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" target="_blank" class="icon-mail">
-                                        <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png">
+                                        <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png">
                                     </a>
                                 </h4>
                                 <span><?php echo $broker['Phone']; ?></span>
@@ -645,7 +645,7 @@ if($property){
                     <ul>
                         <?php foreach ($otherImages as $src) {?>
                         <li>
-                            <img src="<?php echo $src; ?>" >
+                            <img src="<?php echo $src; ?>" alt="<?php echo $src; ?>">
                         </li>
                         <?php } ?>
                     </ul>
@@ -662,7 +662,7 @@ if($property){
                         <?php foreach ($otherImages as $src) {?>
                         <li>
                             <div class="pagination-item">
-                                <img src="<?php echo $src; ?>">
+                                <img src="<?php echo $src; ?>" alt="<?php echo $src; ?>">
                             </div>
                         </li>
                         <?php } ?>

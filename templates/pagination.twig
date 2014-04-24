@@ -50,7 +50,7 @@
                 {# Previous URL #}
                 {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page ~ searchPart %}
 
-                <a href="javascript:void(0)" id="bt-pagination-lt" class="" onclick="get_content('{{previousPageURL}}');"><</a>
+                <a href="javascript:void(0)" id="bt-pagination-lt" class="" onclick="get_content('{{previousPageURL}}');">&lt;</a>
 
                 {# Next URL #}
                 {% set nextPageURL = pagination.listings_current_page_url ~ pagination.next_page ~ searchPart %}

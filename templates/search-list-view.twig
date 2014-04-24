@@ -22,10 +22,9 @@
             ])
         %}
         {% endfor %}
-        {% if show_filter_form is sameas('on') %}
         <div class="clearfix">
             <div class="search-map">
-                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
                 <script>
                     var properties = {{ mapProperties|json_encode()|raw }} ;
                     function initialize()
@@ -160,9 +159,10 @@
                 </script>
                 <div id="bt-map-canvas" class="map" style="margin:0px; padding: 0px;"></div>
             </div>
+            {% if show_filter_form is sameas('on') %}
             {% include 'advanced-search-form.twig' %}
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </section>
 <section class="content sort">
@@ -214,7 +214,7 @@
                     <div class="image">
                         <a href="{{propertyURLDashed}}">
                             {% if property.ListingImages.0.AttachmentPath is defined %}
-                            <img src="{{property.ListingImages.0.AttachmentPath}}">
+                            <img src="{{property.ListingImages.0.AttachmentPath}}" alt="{{property.ListingImages.0.AttachmentPath}}">
                             {% else %}
                             <img src="http://placehold.it/200x200">
                             {% endif %}

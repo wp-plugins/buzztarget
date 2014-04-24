@@ -428,7 +428,7 @@
 }
 
 #buzz-target-plugin .broker-item {
-    width: 45%;
+    width: 50%;
     margin: 2.5% 0;
     float: right;
     display: inline-block;
@@ -483,7 +483,9 @@
     width: 80%;
     float: left;
 }
-
+#buzz-target-plugin .column.half:nth-child(even) .header-share-block{
+    margin: -30px 0 0px;
+}
 #buzz-target-plugin .share-buttons{
     width: 15%;
     float: right;
