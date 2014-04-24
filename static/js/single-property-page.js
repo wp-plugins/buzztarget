@@ -8,6 +8,9 @@ jQuery(document).ready(function($)
             $(this).addClass( "widtherImg" );
         }
     });
+    $("#buzz-target-plugin .column.half:nth-child(even)").addClass("even");
+    $("#buzz-target-plugin .column.half:nth-child(odd)").addClass("odd");
+    $("#buzz-target-plugin .theme-table tr:nth-child(odd)").addClass("odd");
 
 
 //    var propertyImages = otherImages;

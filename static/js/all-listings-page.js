@@ -1,6 +1,12 @@
 jQuery(document).ready(function($)
 {
+
+    $('.grid-view .list-item:nth-child(3n), .list-view .list-item:nth-child(3n)').addClass('nth-child-3np');
+    $('#buzz-target-plugin .grid-view .list-item:nth-child(odd)').addClass('odd');
+
+
     if ($.browser.msie) {
+
         $('input[placeholder]').each(function() {
             var input = $(this);
             if (input.val() == '' || input.val() == input.attr('placeholder')) {
@@ -92,6 +98,9 @@ function get_content(url){
     ).success(function( html ) {
             if(jQuery(html).find("#buzz-target-plugin .content").hasClass('broker-listings')){
                 htm = jQuery(html).find("#buzz-target-plugin .content.broker-listings .grid-view").parent().html();
+                jQuery('#buzz-target-plugin .content.broker-listings .grid-view .list-item:nth-child(3n)').addClass('nth-child-3np');
+                jQuery('#buzz-target-plugin .grid-view .list-item:nth-child(odd)').addClass('odd');
+
                 jQuery("#buzz-target-plugin .content.broker-listings .grid-view").parent().html(htm);
 
                 htm = jQuery(html).find("#buzz-target-plugin .content.broker-listings").next(".content.pagination").html();
@@ -107,6 +116,8 @@ function get_content(url){
             else{
                 htm = jQuery(html).find("#buzz-target-plugin .grid-view").parent().html();
                 jQuery("#buzz-target-plugin .grid-view").parent().html(htm);
+                jQuery('#buzz-target-plugin .grid-view .list-item:nth-child(3n)').addClass('nth-child-3np');
+                jQuery('#buzz-target-plugin .grid-view .list-item:nth-child(odd)').addClass('odd');
                 htm =jQuery(html).find("#buzz-target-plugin .list-view").parent().html();
                 jQuery("#buzz-target-plugin .list-view").parent().html(htm);
 
