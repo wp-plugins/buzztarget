@@ -17,12 +17,12 @@
                 {% endif %}
                 {% if show_street is sameas('on') %}
                     <div class="input-group">
-                        <input type="text" placeholder="Street" id="street" name="address_line_1" value="{% if saved.address_line_1 %}{{ saved.address_line_1 }}{% endif %}" />
+                        <input type="text" placeholder="Street" id="street" name="address_line_1" value="{{ saved.address_line_1 }}" />
                     </div>
                 {% endif %}
                 {% if show_city is sameas('on') %}
                     <div class="input-group">
-                        <input type="text" placeholder="City (separated by commas)" id="city" name="address_line_2" value="{% if saved.address_line_2 %}{{ saved.address_line_2 }}{% endif %}" />
+                        <input type="text" placeholder="City (separated by commas)" id="city" name="address_line_2" value="{{ saved.address_line_2 }}" />
                     </div>
                 {% endif %}
                 {% if show_county is sameas('on') %}
@@ -39,7 +39,7 @@
                 {% endif %}
                 {% if show_zip is sameas('on') %}
                     <div class="input-group">
-                        <input type="text" placeholder="ZIP & State" id="zip" name="address_zip_state" value="{% if saved.address_zip_state %}{{ saved.address_zip_state }}{% endif %}" />
+                        <input type="text" placeholder="ZIP & State" id="zip" name="address_zip_state" value="{{ saved.address_zip_state }}" />
                     </div>
                 {% endif %}
             </div>
@@ -74,27 +74,27 @@
             {% if show_keyword is sameas('on') %}
             <div class="clearfix">
                 <div class="input-group">
-                    <input type="text" placeholder="Keyword" name="keyword" id="keyword" value="{% if saved.keyword %}{{ saved.keyword }}{% endif %}" />
+                    <input type="text" placeholder="Keyword" name="keyword" id="keyword" value="{{ saved.keyword }}" />
                 </div>
             </div>
             {% endif %}
             {% if show_size_range is sameas('on') %}
                 <div class="clearfix">
                     <div class="input-group half">
-                        <input type="text" placeholder="Size From" id="sizeFrom" name="size_from" value="{% if saved.size_from %}{{ saved.size_from }}{% endif %}" />
+                        <input type="text" placeholder="Size From" id="sizeFrom" name="size_from" value="{{ saved.size_from }}" />
                     </div>
                     <div class="input-group half">
-                        <input type="text" placeholder="Size To" id="sizeTo" name="size_to" value="{% if saved.size_to %}{{ saved.size_to }}{% endif %}" />
+                        <input type="text" placeholder="Size To" id="sizeTo" name="size_to" value="{{ saved.size_to }}" />
                     </div>
                 </div>
             {% endif %}
             {% if show_price_range is sameas('on') %}
                 <div class="clearfix">
                     <div class="input-group half">
-                        <input type="text" placeholder="Price From" id="priceFrom" name="price_from" value="{% if saved.price_from %}{{ saved.price_from }}{% endif %}" />
+                        <input type="text" placeholder="Price From" id="priceFrom" name="price_from" value="{{ saved.price_from }}" />
                     </div>
                     <div class="input-group half">
-                        <input type="text" placeholder="Price To" id="priceTo" name="price_to" value="{% if saved.price_to %}{{ saved.price_to }}{% endif %}" />
+                        <input type="text" placeholder="Price To" id="priceTo" name="price_to" value="{{ saved.price_to }}" />
                     </div>
                 </div>
             {% endif %}

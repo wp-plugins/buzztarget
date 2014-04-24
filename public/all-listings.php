@@ -63,11 +63,18 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
         // Fetch listing types separately
         list($listingTypes) = $this->request->getPostValues(array('listing_types'));
 
-        $sizeFrom = (float) $sizeFrom;
-        $sizeTo = (float) $sizeTo;
-
-        $priceFrom = (float) $priceFrom;
-        $priceTo = (float) $priceTo;
+        if($sizeFrom){
+            $sizeFrom = (float) $sizeFrom;
+        }
+        if($sizeTo){
+            $sizeTo = (float) $sizeTo;
+        }
+        if($priceFrom){
+            $priceFrom = (float) $priceFrom;
+        }
+        if($priceTo){
+            $priceTo = (float) $priceTo;
+        }
 
         // Saves form submission values
         $search_vars['saved'] = array(
