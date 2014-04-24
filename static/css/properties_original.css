@@ -1013,7 +1013,7 @@
 
 .main-info .property-name{
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis!important;
 }
 
 .main-info .property-name a{

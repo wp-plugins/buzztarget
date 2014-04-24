@@ -1,5 +1,33 @@
 jQuery(document).ready(function($)
 {
+    if ($.browser.msie) {
+        $('input[placeholder]').each(function() {
+            var input = $(this);
+            if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                input.val(input.attr('placeholder'));
+            }
+            $(input).focus(function() {
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                }
+            });
+            $(input).blur(function() {
+                if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    input.val(input.attr('placeholder'));
+                }
+            });
+        });
+
+        $('input[name=advanced_search_submit]').click(function(e){
+            $('#adv_search_form').find('[placeholder]').each(function() {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                }
+            })
+        });
+    }
+
     $('select[id=listCount]').change(function (e) {
         get_content(window.location.pathname);
     });

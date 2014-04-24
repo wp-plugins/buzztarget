@@ -19,7 +19,6 @@ $search_vars = array();
 
 if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
 {
-
     if(isset($_GET['search']) && !isset($_POST['advanced_search_submit'])){
         $_POST = unserialize($_SESSION["wp-search"]);
     }else{
