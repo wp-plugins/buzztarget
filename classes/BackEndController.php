@@ -78,6 +78,7 @@ class BackEndController
                 $postKeys = array(
                     'listing_style',
                     'listing_detail_style',
+                    'full_width_style',
                     'advanced_search',
                     'allow_listing_per_page_change',
                     'default_listing_per_page',
@@ -86,10 +87,11 @@ class BackEndController
                     'map_view_status',
                 );
 
-                list($listingStyle, $listingDetailStyle, $advancedSearch, $allow_listing_per_page_change, $default_listing_per_page, $show_sort_by, $default_sort_by, $mapViewStatus) = $this->request->getPostValues($postKeys);
+                list($listingStyle, $listingDetailStyle, $fullWidthStyle, $advancedSearch, $allow_listing_per_page_change, $default_listing_per_page, $show_sort_by, $default_sort_by, $mapViewStatus) = $this->request->getPostValues($postKeys);
 
                 $listingStyle = ($listingStyle === 'style1' || $listingStyle === 'style2') ? $listingStyle : 'style1';
                 $listingDetailStyle = ($listingDetailStyle === 'style1' || $listingDetailStyle === 'style2') ? $listingDetailStyle : 'style1';
+                $fullWidthStyle = ($fullWidthStyle === 'on' || $fullWidthStyle === 'off') ? $fullWidthStyle : 'on';
 
                 $advancedSearchStatus = (isset($advancedSearch['status'])
                     && ($advancedSearch['status'] === 'on' || $advancedSearch['status'] === 'off')) ? $advancedSearch['status'] : 'on';
@@ -136,6 +138,7 @@ class BackEndController
                 $themeOptions = array(
                     'listing_style' => $listingStyle,
                     'listing_detail_style' => $listingDetailStyle,
+                    'full_width_style' => $fullWidthStyle,
                     'advanced_search' => array(
                         'status' => $advancedSearchStatus,
                         'listing_type' => $advancedSearchListingType,
@@ -284,6 +287,7 @@ class BackEndController
             $vars['theme_options_listing_style_2'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_STYLE_2');
             $vars['theme_options_listing_detail_style_1'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_DETAIL_STYLE_1');
             $vars['theme_options_listing_detail_style_2'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_LISTING_DETAIL_STYLE_2');
+            $vars['theme_options_full_width'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_FULL_WIDTH');
 
             $vars['theme_options_advanced_search'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH');
             $vars['theme_options_advanced_search_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_ON');

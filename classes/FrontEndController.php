@@ -11,8 +11,8 @@ class FrontEndController
     {
         $this->config = $config;
         $this->text = $text;
-
         add_filter('template_include', array($this, 'templateInclude'));
+
     }
 
     /**
@@ -29,6 +29,7 @@ class FrontEndController
      *
      * @return string The template file path.
     */
+
     public function templateInclude($templatePath)
     {
         if (get_post_type() === 'properties')
@@ -48,4 +49,5 @@ class FrontEndController
         }
         return $templatePath;
     }
+
 }

@@ -35,7 +35,20 @@ if($property){
     $siteUrl = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 ?>
-
+<?php
+    if($theme_options['full_width_style'] == 'on'){
+?>
+<script>
+    if(jQuery('body').hasClass('right_sidebar')){
+        jQuery('body').removeClass('right_sidebar').addClass('full_width');
+    }
+    else{
+        jQuery('body').removeClass('right-sidebar').addClass('full-width');
+    }
+</script>
+<?php
+    }
+?>
 <div id="buzz-target-plugin">
 <meta name="description" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> on <?php echo $_SERVER['SERVER_NAME'];?>."/>
 <meta property="og:title" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> "/>

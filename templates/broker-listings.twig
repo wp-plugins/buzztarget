@@ -47,20 +47,10 @@
                                 </div>
                             </div>
                             <div class="property-name-block">
-                                <h3 class="theme-color property-name">
-                                    <a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">
-                                        {{property.Property.PropertyName}}
-                                    </a>
-                                </h3>
+                                <h3 class="theme-color property-name"><a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">{{property.Property.PropertyName}}</a></h3>
                             </div>
                             <p class="address"><i>{{ property.Property.Address.Address }}</i></p>
-                            <p class="address">
-                                <i>
-                                    {{ property.Property.Address.City }},
-                                    {{ property.Property.Address.State }}
-                                    {{ property.Property.Address.Zip }}
-                                </i>
-                            </p>
+                            <p class="address"><i>{{ property.Property.Address.City }}, {{ property.Property.Address.State }} {{ property.Property.Address.Zip }}</i></p>
 
                         </div>
                     </div>

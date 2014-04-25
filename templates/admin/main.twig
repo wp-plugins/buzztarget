@@ -70,6 +70,14 @@
                                     </select>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>{{theme_options_full_width}}</td>
+                                <td>
+                                    {% set full_width_style = theme_options['full_width_style'] %}
+                                    <input type="radio" name="full_width_style" value="on" {% if full_width_style is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="full_width_style" value="off" {% if full_width_style is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
                         </table>
 
                         {# Advanced Search Status (ON/OFF) #}
