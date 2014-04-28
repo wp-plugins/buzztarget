@@ -581,6 +581,9 @@
 
 #buzz-target-plugin .image-overlay {
     opacity: 0;
+    filter: alpha(opacity = 0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -589,7 +592,15 @@
     background: rgba(0, 0, 0, 0.35);
     border: 1px solid #ccc;
 }
-
+.ie8 #buzz-target-plugin .image-overlay {
+    background: rgb(0, 0, 0);
+    filter: alpha(opacity = 0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.ie8 #buzz-target-plugin .image-overlay .zoom {
+    display: none;
+}
 #buzz-target-plugin .image-overlay .zoom {
     position: absolute;
     width: 46px;
@@ -606,6 +617,16 @@
 
 #buzz-target-plugin .carousel-stage:hover .image-overlay {
     opacity: 1;
+}
+.ie8 #buzz-target-plugin .carousel-stage:hover .image-overlay {
+    background: rgb(0, 0, 0);
+    filter: alpha(opacity=35);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=35)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=35);
+}
+
+.ie8 #buzz-target-plugin .carousel-stage:hover .image-overlay .zoom  {
+    display: block;
 }
 
 #buzz-target-plugin table {
@@ -660,6 +681,9 @@
 
 #buzz-target-plugin .modal {
     opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     display: none;
     -webkit-transition: opacity 300ms ease-out;
     -moz-transition: opacity 300ms ease-out;
@@ -669,6 +693,9 @@
 
 #buzz-target-plugin .modal.visible {
     opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     display: block;
     -webkit-transition: opacity 300ms ease-out;
     -moz-transition: opacity 300ms ease-out;
@@ -682,6 +709,9 @@
     bottom: 0;
     left: 0;
     right: 0;
+    background: rgb(0, 0, 0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
     background: rgba(0, 0, 0, 0.75);
     z-index: 10;
 }
@@ -769,6 +799,7 @@
     text-align: center;
     font-size: 30px;
     opacity: 0;
+    filter: alpha(opacity=0);
     color: #fff;
 }
 
@@ -790,6 +821,7 @@
 
 #buzz-target-plugin .arrow:hover {
     opacity: 1;
+    filter: alpha(opacity=100);
     background: rgba(0, 0, 0, 0.35);
 }
 
@@ -975,7 +1007,7 @@
 }
 .ie8 #buzz-target-plugin .list-view .list-item .image img.widtherImg, .ie8 #buzz-target-plugin .grid-view .list-item .image img.widtherImg, .ie8 #buzz-target-plugin .content .slider-pagination .pagination-item img.widtherImg,
 .ie8 #buzz-target-plugin .connected-carousels .carousel-stage li img.widtherImg{
-    left: 0;
+    left: 25%;
 }
 
 #buzz-target-plugin .list-view .list-item .image img.heigherImg, #buzz-target-plugin .grid-view .list-item .image img.heigherImg, #buzz-target-plugin .content .slider-pagination .pagination-item img.heigherImg,
@@ -1101,11 +1133,11 @@
     padding-top: 5px;
 }
 #buzz-target-plugin .grid-view .list-item .item-info .price-block h4{
-    width: 30%;
+    width: 35%;
     float: left;
 }
 #buzz-target-plugin .grid-view .list-item .item-info .price-block .price{
-    width: 70%;
+    width: 65%;
     float: right;
     text-align: right;
 }
@@ -1261,6 +1293,7 @@
     color: #fff;
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.85);
     opacity: .66;
+    filter: alpha(opacity=66);
 }
 
 #buzz-target-plugin .connected-carousels .photo-credits a {
@@ -1353,13 +1386,13 @@
 /** Navigation carousel specific styles **/
 
 #buzz-target-plugin .connected-carousels .carousel-navigation {
-    height: 62px;
+    /*height: 62px;*/
     /*width: 320px;*/
     padding-top:5px;
 }
 
 #buzz-target-plugin .two-columns .connected-carousels .carousel-navigation {
-    height: 72px;
+    /*height: 72px;*/
     /*width: 360px;*/
     padding-top: 0;
 }
@@ -1377,6 +1410,9 @@
     display: block;
     width: 100px;
     height: 100px;
+}
+#buzz-target-plugin .connected-carousels .carousel-navigation li.active{
+    background: none;
 }
 
 #buzz-target-plugin .connected-carousels .carousel-navigation li.active img {
@@ -1798,6 +1834,7 @@ a.bt-gm-link {
     border-radius: 6px;
     cursor: pointer;
     opacity: .4;
+    filter: alpha(opacity=40);
     -webkit-transition: background .5s, opacity .5s;
     -moz-transition: background .5s, opacity .5s;
     transition: background .5s, opacity .5s;
@@ -1805,4 +1842,5 @@ a.bt-gm-link {
 #buzz-target-plugin .banner .dots li.active {
     background: #ccc;
     opacity: 1;
+    filter: alpha(opacity=100);
 }
