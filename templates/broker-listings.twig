@@ -1,5 +1,5 @@
 <div id="buzz-target-plugin">
-<section class="content broker-listings">
+<div class="section content broker-listings">
     <div class="clearfix">
         {% if (broker_listings_class or broker_listings_title) %}
             <div class="{% if broker_listings_class and broker_listings_class is not sameas('broker-property-title') %}{{broker_listings_class}}{% else %}broker-property-title theme-bg{% endif %}">
@@ -59,7 +59,7 @@
             {% endfor %}
         </div>
     </div>
-</section>
+</div>
 
 {# Pagination #}
 {% include 'pagination.twig' %}

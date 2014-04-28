@@ -1,4 +1,4 @@
-<section class="content" xmlns="http://www.w3.org/1999/xhtml">
+<div class="section content" xmlns="http://www.w3.org/1999/xhtml">
     <div class="search">
         {# Any search result messages will be displayed here #}
 
@@ -166,9 +166,9 @@
             {% endif %}
         </div>
     </div>
-</section>
+</div>
 
-<section class="content sort">
+<div class="section content sort">
     <div class="clearfix">
         {% if show_sort_by is sameas('on') %}
             <div class="select-group">
@@ -198,9 +198,9 @@
             </div>
         {% endif %}
     </div>
-</section>
+</div>
 
-<section class="content">
+<div class="section content">
     <div class="clearfix">
         <div class="grid-view">
 
@@ -262,7 +262,7 @@
             {% endfor %}
         </div>
     </div>
-</section>
+</div>
 
 {# Pagination #}
 {% include 'pagination.twig' %}

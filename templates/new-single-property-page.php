@@ -46,9 +46,11 @@ if($property){
         jQuery('body').removeClass('right-sidebar').addClass('full-width');
     }
 </script>
+
 <?php
     }
 ?>
+
 <div id="buzz-target-plugin">
 <meta name="description" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> on <?php echo $_SERVER['SERVER_NAME'];?>."/>
 <meta property="og:title" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> "/>
@@ -68,7 +70,7 @@ if($property){
     <?php
         if ($listingDetailStyle == 'style1'){
     ?>
-            <section class="image">
+            <div class="section image">
                 <img class="main-logo-image" src="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>" alt="<?php echo $property['ListingImages'][0]['AttachmentPath']; ?>"/>
                 <div class="darken-bg"></div>
                 <h1><?php echo $property_name; ?></h1>
@@ -77,8 +79,8 @@ if($property){
                     <?php echo $property['Property']['Address']['State']; ?>
                     <?php echo $property['Property']['Address']['Zip']; ?>
                 </span>
-            </section>
-            <section class="content">
+            </div>
+            <div class="section content">
                 <h3 class="for-lease">
                     <div>
                         <?php if ($themeColor): ?> style="color: <?php echo $themeColor; ?> !important;" <?php endif; ?>
@@ -125,8 +127,8 @@ if($property){
                     </p>
                 </div>
                 <?php } ?>
-            </section>
-            <section class="content">
+            </div>
+            <div class="section content">
                 <div class="clearfix">
                     <div class="column less-half">
                         <?php if(isset($otherImages)){ ?>
@@ -277,8 +279,8 @@ if($property){
                     </div>
                     <?php } ?>
                 </div>
-            </section>
-            <section class="content">
+            </div>
+            <div class="section content">
                 <?php
                 $lat = $property['Lat'];
                 $lon = $property['Lon'];
@@ -326,19 +328,19 @@ if($property){
                     google.maps.event.addDomListener(window, 'load', initialize);
                 </script>
                 <div id="bt-single-property-map-canvas" style="margin:0px; padding: 0px;"></div>
-            </section>
-            <section class="content">
+            </div>
+            <div class="section content">
                 <a href="javascript:history.back()">Back to Search Results</a>
-            </section>
+            </div>
 
     <?php
         }
         else{
     ?>
-        <section class="title">
+        <div class="section title">
             <h1><?php echo $property_name; ?></h1>
-        </section>
-        <section class="content two-columns">
+        </div>
+        <div class="section content two-columns">
             <div class="clearfix">
                 <div class="column less-half">
                     <?php if(isset($otherImages)){ ?>
@@ -399,7 +401,7 @@ if($property){
                         </div>
                     </div>
                     <h4 class="title info theme-color"><?php echo $property_name; ?></h4>
-                    <div class="clearfix">
+                    <div class="clearfix main-info">
                         <table class="half">
                             <tbody>
                                 <?php if (isset($property['Property']['Address']['Address'])){ ?>
@@ -563,7 +565,7 @@ if($property){
                     <?php } ?>
                 </div>
                 <div class="column less-half">
-                    <section class="content">
+                    <div class="section content">
                         <?php
                         $lat = $property['Lat'];
                         $lon = $property['Lon'];
@@ -611,7 +613,7 @@ if($property){
                             google.maps.event.addDomListener(window, 'load', initialize);
                         </script>
                         <div id="bt-single-property-map-canvas" style="margin:0px; padding: 0px;"></div>
-                    </section>
+                    </div>
                     <?php if (count($propertyDocuments) > 0) {?>
                         <h4 class="title info theme-color">Attachments:</h4>
                         <ul class="property-docs">
@@ -638,10 +640,10 @@ if($property){
                     </ul>
                 </div>
             </div>
-        </section>
-        <section class="content">
+        </div>
+        <div class="section content">
             <a href="javascript:history.back()">Back to Search Results</a>
-        </section>
+        </div>
     <?php
     }
     ?>

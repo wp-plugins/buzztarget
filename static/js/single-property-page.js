@@ -11,6 +11,7 @@ jQuery(document).ready(function($)
     $("#buzz-target-plugin .column.half:nth-child(even)").addClass("even");
     $("#buzz-target-plugin .column.half:nth-child(odd)").addClass("odd");
     $("#buzz-target-plugin .theme-table tr:nth-child(odd)").addClass("odd");
+    $("#buzz-target-plugin .main-info table:last-child").addClass("last");
 
 
 //    var propertyImages = otherImages;

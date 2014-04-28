@@ -1,7 +1,7 @@
 {# ONLY show pagination if there is more than 1 page for now #}
 {% if pagination.total_pages is not sameas(1) %}
     {# Pagination #}
-    <section class="content pagination">
+    <div class="section content pagination">
         <div class="clearfix">
             <div class="pagination-list">
                 {% set searchPart = '' %}
@@ -57,5 +57,5 @@
                 <a href="javascript:void(0)" id="bt-pagination-gt" class="" onclick="get_content('{{nextPageURL}}');">></a>
             </div>
         </div>
-    </section>
+    </div>
 {% endif %}

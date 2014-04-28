@@ -107,7 +107,7 @@ function get_content(url){
 
                 if(htm != undefined){
                     jQuery("#buzz-target-plugin .content.broker-listings").next(".content.pagination").remove();
-                    jQuery('<section class="content pagination">' + htm + '</section>').insertAfter(jQuery("#buzz-target-plugin .content.broker-listings"));
+                    jQuery('<div class="section content pagination">' + htm + '</div>').insertAfter(jQuery("#buzz-target-plugin .content.broker-listings"));
                 }
                 else{
                     jQuery("#buzz-target-plugin .content.broker-listings").next(".content.pagination").remove();
@@ -124,7 +124,7 @@ function get_content(url){
                 htm = jQuery(html).find("#buzz-target-plugin .content.pagination").html();
                 if(htm != undefined){
                     jQuery("#buzz-target-plugin .content.pagination").remove();
-                    jQuery("#buzz-target-plugin").append('<section class="content pagination">' + htm + '</section>');
+                    jQuery("#buzz-target-plugin").append('<div class="section content pagination">' + htm + '</div>');
                 }
                 else{
                     jQuery("#buzz-target-plugin .content.pagination").remove();
