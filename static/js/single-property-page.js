@@ -12,6 +12,9 @@ jQuery(document).ready(function($)
     $("#buzz-target-plugin .column.half:nth-child(odd)").addClass("odd");
     $("#buzz-target-plugin .theme-table tr:nth-child(odd)").addClass("odd");
     $("#buzz-target-plugin .main-info table:last-child").addClass("last");
+    if($('.carousel-navigation.carousel-navigation-popup ul li').size()<=5){
+        $('.carousel-navigation-popup').parent().find($('a')).addClass('hidden');
+    };
 
 
 //    var propertyImages = otherImages;

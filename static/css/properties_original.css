@@ -499,7 +499,7 @@
     margin: -30px 0 0px;
 }
 #buzz-target-plugin .share-buttons{
-    width: 15%;
+    width: 17%;
     float: right;
 }
 #buzz-target-plugin .share-buttons.one-column-style{
@@ -1412,7 +1412,7 @@
 
 #buzz-target-plugin .modal .connected-carousels .carousel-navigation {
     height: 108px;
-    width: 550px;
+    width: 570px;
 }
 
 #buzz-target-plugin .connected-carousels .carousel-navigation li {
@@ -1514,7 +1514,7 @@
     top: 11px;
     z-index: 2;
 }
-#buzz-target-plugin .modal .connected-carousels .prev-navigation {
+#buzz-target-plugin .modal .connected-carousels .prev-navigation, #buzz-target-plugin .modal .connected-carousels .next-navigation {
     top: 40px;
 }
 #buzz-target-plugin .connected-carousels .prev-navigation.inactive,
