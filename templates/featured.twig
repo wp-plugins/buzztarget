@@ -18,7 +18,7 @@
             </div>
             {% endif %}
 
-            <div class="banner featured-slider">
+            <div class="banner featured-slider number-per-row-{{numberPerRow}}">
                 <ul>
                     {% for part_properties in listings %}
                         <li>
@@ -29,7 +29,7 @@
                                 <div class="image">
                                     <a href="{{propertyURLDashed}}">
                                         {% if property.ListingImages.0.AttachmentPath is defined %}
-                                        <img src="{{property.ListingImages.0.AttachmentPath}}" style="height:270px!important">
+                                        <img src="{{property.ListingImages.0.AttachmentPath}}">
                                         {% else %}
                                         <img src="http://placehold.it/270x270">
                                         {% endif %}
@@ -46,7 +46,6 @@
                                             <h3 class="theme-color property-name"><a href="{{propertyURLDashed}}">{{property.Property.PropertyName}}</a></h3>
                                             <p class="address"><i>{{ property.Property.Address.Address }}</i></p>
                                             <p class="address"><i>{{ property.Property.Address.City }}, {{ property.Property.Address.State }} {{ property.Property.Address.Zip }}</i></p>
-
                                         </div>
                                     </div>
                                 </div>

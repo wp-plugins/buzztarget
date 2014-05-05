@@ -1088,6 +1088,9 @@
 #buzz-target-plugin .list-view .list-item .item-info .main-info {
     width: 70%;
 }
+#buzz-target-plugin .list-item .item-info .main-info {
+    min-height: 129px;
+}
 
 .main-info .property-name{
     overflow: hidden;
@@ -1110,8 +1113,36 @@
     margin-right: 0;
 }
 #buzz-target-plugin .grid-view .list-item.nth-child-3np{
-      margin-right: 0!important;
-  }
+    margin-right: 0!important;
+}
+
+#buzz-target-plugin .grid-view .number-per-row-3 .list-item {
+    width: 30%;
+    margin-right: 5%;
+    height: 460px!important;
+}
+#buzz-target-plugin .grid-view .number-per-row-4 .list-item {
+    width: 22%;
+    margin-right: 4%;
+    height: 401px!important;
+}
+#buzz-target-plugin .grid-view .number-per-row-5 .list-item {
+    width: 18%;
+    margin-right: 2.5%;
+    height: 364px!important;
+}
+#buzz-target-plugin .grid-view .number-per-row-6 .list-item {
+    width: 15%;
+    margin-right: 2%;
+    height: 334px!important;
+}
+#buzz-target-plugin .grid-view .number-per-row-3 .list-item.nth-child-3np,
+#buzz-target-plugin .grid-view .number-per-row-4 .list-item.nth-child-4np,
+#buzz-target-plugin .grid-view .number-per-row-5 .list-item.nth-child-5np,
+#buzz-target-plugin .grid-view .number-per-row-6 .list-item.nth-child-6np
+{
+    margin-right: 0!important;
+}
 
 #buzz-target-plugin .grid-view .list-item .image {
     min-height: 270px;
@@ -1119,6 +1150,26 @@
     position: relative;
     background-color: #fafafa;
     overflow: hidden;
+}
+#buzz-target-plugin .featured-slider .list-item{
+    margin-bottom: 0;
+}
+#buzz-target-plugin .grid-view .number-per-row-3 .list-item .image{
+    min-height: 270px;
+    max-height: 270px;
+
+}
+#buzz-target-plugin .grid-view .number-per-row-4 .list-item .image{
+    min-height: 211px;
+    max-height: 211px;
+}
+#buzz-target-plugin .grid-view .number-per-row-5 .list-item .image{
+    min-height: 173px;
+    max-height: 173px;
+}
+#buzz-target-plugin .grid-view .number-per-row-6 .list-item .image{
+    min-height: 144px;
+    max-height: 144px;
 }
 
 #buzz-target-plugin .grid-view .list-item .item-info {

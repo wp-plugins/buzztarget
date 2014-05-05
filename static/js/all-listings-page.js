@@ -1,7 +1,10 @@
 jQuery(document).ready(function($)
 {
 
-    $('.grid-view .list-item:nth-child(3n), .list-view .list-item:nth-child(3n)').addClass('nth-child-3np');
+    $('.grid-view .number-per-row-3 .list-item:nth-child(3n), .list-view .number-per-row-3 .list-item:nth-child(3n)').addClass('nth-child-3np');
+    $('.grid-view .number-per-row-4 .list-item:nth-child(4n), .list-view .number-per-row-4 .list-item:nth-child(4n)').addClass('nth-child-4np');
+    $('.grid-view .number-per-row-5 .list-item:nth-child(5n), .list-view .number-per-row-5 .list-item:nth-child(5n)').addClass('nth-child-5np');
+    $('.grid-view .number-per-row-6 .list-item:nth-child(6n), .list-view .number-per-row-6 .list-item:nth-child(6n)').addClass('nth-child-6np');
     $('#buzz-target-plugin .grid-view .list-item:nth-child(odd)').addClass('odd');
 
 
