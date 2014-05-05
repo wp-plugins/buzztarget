@@ -18,7 +18,7 @@ foreach($listings as $key => $val){
         $featured[] = $listings[$key];
     }
 }
-
+$featuredNumberOfListingPerRow = $featuredNumberOfListingPerRow ? $featuredNumberOfListingPerRow : 3;
 $count_of_slides = ceil(count($featured) / $featuredNumberOfListingPerRow);
 
 for($i=0; $i<$count_of_slides; $i++){
