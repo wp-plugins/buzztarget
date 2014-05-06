@@ -1,10 +1,11 @@
 jQuery(document).ready(function($)
 {
 
-    $('.grid-view .number-per-row-3 .list-item:nth-child(3n), .list-view .number-per-row-3 .list-item:nth-child(3n)').addClass('nth-child-3np');
-    $('.grid-view .number-per-row-4 .list-item:nth-child(4n), .list-view .number-per-row-4 .list-item:nth-child(4n)').addClass('nth-child-4np');
-    $('.grid-view .number-per-row-5 .list-item:nth-child(5n), .list-view .number-per-row-5 .list-item:nth-child(5n)').addClass('nth-child-5np');
-    $('.grid-view .number-per-row-6 .list-item:nth-child(6n), .list-view .number-per-row-6 .list-item:nth-child(6n)').addClass('nth-child-6np');
+    $('.number-per-row-3 .list-item:nth-child(3n)').addClass('nth-child-3np');
+    $('.number-per-row-4 .list-item:nth-child(4n)').addClass('nth-child-4np');
+    $('.number-per-row-5 .list-item:nth-child(5n)').addClass('nth-child-5np');
+    $('.number-per-row-6 .list-item:nth-child(6n)').addClass('nth-child-6np');
+    $('#buzz-target-plugin .grid-view .list-item:nth-child(3n)').not('#buzz-target-plugin .content.broker-listings .grid-view .list-item').not('#buzz-target-plugin .content.featured .grid-view .list-item').addClass('nth-child-3np');
     $('#buzz-target-plugin .grid-view .list-item:nth-child(odd)').addClass('odd');
 
 

@@ -63,6 +63,7 @@ class Shortcodes
         $shortcode = 'all_broker_listings';
         $brokerListingsTitle = $atts['title'];
         $brokerListingsClass = $atts['class'];
+        $brokerListingsNumberOfListingPerPage = (int)$atts['numberoflistingperpage'];
         $brokerListingsNumberOfListingPerRow = (int)$atts['numberoflistingperrow'];
         $brokerEmail = $atts['brokeremail'];
 

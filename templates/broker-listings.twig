@@ -13,7 +13,7 @@
         <div class="title-line"></div>
         {% endif %}
 
-        <div class="grid-view {% if featured_class %}custom-title{% endif %}">
+        <div class="grid-view {% if featured_class %}custom-title{% endif %} number-per-row-{{numberPerRow}}">
 
             {% if trans.search_error %}
             <div id="bt-search-error">

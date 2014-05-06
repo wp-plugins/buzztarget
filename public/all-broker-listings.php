@@ -22,17 +22,31 @@ foreach($listings as $key => $val){
         }
     }
 }
+if ($brokerListingsNumberOfListingPerPage < 9){
+    $brokerListingsNumberOfListingPerPage = 9;
+}
+$count_of_pages = ceil(count($broker_listings) / $brokerListingsNumberOfListingPerPage);
 
-$count_of_pages = ceil(count($broker_listings) / $brokerListingsNumberOfListingPerRow);
-
-$listings = $this->listingPagination->getCurrentPageListings(array_values($broker_listings), $brokerListingsNumberOfListingPerRow);
+$listings = $this->listingPagination->getCurrentPageListings(array_values($broker_listings), $brokerListingsNumberOfListingPerPage);
 
 $themeOptions = get_option('buzztarget_theme_options');
+
+$brokerListingsNumberOfListingPerRow = $brokerListingsNumberOfListingPerRow ? $brokerListingsNumberOfListingPerRow : 3;
+if ($brokerListingsNumberOfListingPerRow < 3){
+    $brokerListingsNumberOfListingPerRow = 3;
+}
+if ($brokerListingsNumberOfListingPerRow > 6){
+    $brokerListingsNumberOfListingPerRow = 6;
+}
+if ($brokerListingsNumberOfListingPerRow > 6){
+    $brokerListingsNumberOfListingPerRow = 6;
+}
 
 $vars = array(
     'listings' => $listings,
     'broker_listings_title' => $brokerListingsTitle,
     'broker_listings_class' => $brokerListingsClass,
+    'numberPerPage' => $brokerListingsNumberOfListingPerPage,
     'numberPerRow' => $brokerListingsNumberOfListingPerRow,
     'count_of_slides' => $count_of_pages,
     'theme_options' => $themeOptions,
