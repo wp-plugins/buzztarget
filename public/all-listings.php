@@ -557,6 +557,7 @@ if (isset($_GET['map_view']))
         'show_price_range' => $show_price_range,
         'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
         'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
+        'theme_name' => str_replace(" ", "-", get_current_theme())
         // Saved search values
         //'saved' => $savedSearchValues,
     );

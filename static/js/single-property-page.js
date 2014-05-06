@@ -16,6 +16,23 @@ jQuery(document).ready(function($)
         $('.carousel-navigation-popup').parent().find($('a')).addClass('hidden');
     };
 
+    if($('body').hasClass('inFocus')){
+        var footer = $('#footer');
+        var subfooter = $('#sub_footer');
+        $('body').remove("#footer");
+        $('body').remove("#sub_footer");
+        footer.insertAfter("#content");
+        subfooter.insertAfter("#footer");
+        if($('body').hasClass('full_width')){
+            $('#sidebar').remove();
+        }
+        else if($('body').hasClass('right_sidebar')){
+            var sidebar = $('#sidebar');
+            $('#sidebar').remove();
+            sidebar.insertAfter($('#main'));
+        }
+    }
+
 
 //    var propertyImages = otherImages;
 //

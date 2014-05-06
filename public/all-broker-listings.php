@@ -40,6 +40,7 @@ $vars = array(
     'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
     'property_url' => site_url() . '/property',
     'properties_url' => site_url() . '/properties',
+    'theme_name' => str_replace(" ", "-", get_current_theme())
 );
 
 /*

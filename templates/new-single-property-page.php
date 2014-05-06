@@ -50,8 +50,9 @@ if($property){
 <?php
     }
 ?>
-
-
+<script>
+    jQuery('body').addClass('<?php echo str_replace(' ', '-', get_current_theme());?>');
+</script>
 <div id="buzz-target-plugin">
 <meta name="description" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> on <?php echo $_SERVER['SERVER_NAME'];?>."/>
 <meta property="og:title" content="<?php echo $property_name . ' & '. $property['PropertyTypes'][0]; ?> <?php if (count($spaces) > 0){ echo '$'.$spaces[0]['RentalRate'] . '  / SF'; } ?> | <?php echo $property['Property']['Address']['City'] . ', ' . $property['Property']['Address']['State']; ?> <?php if($property['PropertyPrice']){ echo '| $' . number_format($property['PropertyPrice']); }?> "/>
@@ -96,7 +97,7 @@ if($property){
             <div class="broker-item">
                 <h4>
                     <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
-                    <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" class="icon-mail">
+                    <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo urlencode($property_name); ?>" class="icon-mail">
                         <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png"/>
                     </a>
                 </h4>
@@ -630,7 +631,7 @@ if($property){
                 <div class="broker-item">
                     <h4>
                         <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
-                        <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo $property_name; ?>" target="_blank" class="icon-mail">
+                        <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo urlencode($property_name); ?>" target="_blank" class="icon-mail">
                             <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png">
                         </a>
                     </h4>

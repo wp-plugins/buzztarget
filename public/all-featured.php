@@ -18,6 +18,12 @@ foreach($listings as $key => $val){
         $featured[] = $listings[$key];
     }
 }
+if ($featuredNumberOfListingPerRow < 3){
+    $featuredNumberOfListingPerRow = 3;
+}
+if ($featuredNumberOfListingPerRow > 6){
+    $featuredNumberOfListingPerRow = 6;
+}
 $featuredNumberOfListingPerRow = $featuredNumberOfListingPerRow ? $featuredNumberOfListingPerRow : 3;
 $count_of_slides = ceil(count($featured) / $featuredNumberOfListingPerRow);
 
@@ -43,6 +49,7 @@ $vars = array(
     'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
     'property_url' => site_url() . '/property',
     'properties_url' => site_url() . '/properties',
+    'theme_name' => str_replace(" ", "-", get_current_theme())
 );
 
 parse_str($_SERVER['QUERY_STRING'], $query_string);
