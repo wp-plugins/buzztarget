@@ -23,6 +23,8 @@ find financing or locate space; get deals done.
 The BuzzTarget plugin allows a broker to retrieve his/her listings from BuzzTarget and display it on his/her  WordPress powered site.  The plugin eliminates 
 duplicate entry and unnecessary maintenance of listings on multiple sites.  With this responsive plugin, listings are pulled on a scheduled basis (or on demand).  Listing and 
 Listing Detail pages, Featured Listings and Broker Listings can be created by utilizing simple short codes and widgets.
+
+To see an example of a website using the plugin, please visit: http://credemo.azurewebsites.net/
  
 == Installation ==
 
@@ -56,6 +58,17 @@ Please ensure that your API keys are correct and entered into the correct text b
 = Who do I reach out to in case I have additional questions? =
 
 please send your inquires to support@buzztarget.com
+
+= Do you have any sample websites that use your pugin? =
+
+Yes, we do.  http://credemo.azurewebsites.net/
+
+
+= Will the plugin work with my Theme? =
+
+Our plugin works with many Themes.  Using the CSS editor, you can customize fonts and colors to match your theme.  Please send us an email if you have any custom requirements.
+
+
 
 == Screenshots ==
 
