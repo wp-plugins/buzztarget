@@ -3,8 +3,8 @@ Contributors: buzztarget
 Donate link: http://www.buzztarget.com
 Tags: real estate listings, commercial real estate listings, commercial listing marketing, CRE
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 1.0.4
+Tested up to: 3.9.1
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,9 +20,9 @@ BuzzTarget is perfect for commercial real estate professionals who want to incre
 announce or receive new listings information; call for or receive offers on listings; search for investment opportunities; 
 find financing or locate space; get deals done.
 
-The BuzzTarget plugin allows a broker to retrieve his/her listings from BuzzTarget and display it on his/her WordPress powered site.  The plugin eliminates 
-duplicate entry and unnecessary maintenance of listings on multiple sites.  With this plugin, listings are pulled on a scheduled basis (or on demand).  Listing and 
-Listing Detail pages can be created by utilizing simple short codes.
+The BuzzTarget plugin allows a broker to retrieve his/her listings from BuzzTarget and display it on his/her  WordPress powered site.  The plugin eliminates 
+duplicate entry and unnecessary maintenance of listings on multiple sites.  With this responsive plugin, listings are pulled on a scheduled basis (or on demand).  Listing and 
+Listing Detail pages, Featured Listings and Broker Listings can be created by utilizing simple short codes and widgets.
  
 == Installation ==
 
@@ -42,6 +42,10 @@ To display your BuzzTarget listings on your site perform the following:
 	a. For Sale - [for-sale][/for-sale]
 	b. For Lease - [for-lease][/for-lease]
 	c. All Listings - [all-listings][/all-listings]
+4. Broker Listings Short Code Example:
+	[all-broker-listings title="My Listings"  class="broker-listing-title" numberOfListingPerRow="9" numberOfListingPerRow="4" brokerEmail="broker@domain.com"][/all-broker-listings]
+5. Featured Listings Short Code Example:
+	[all-featured numberOfListingPerRow="3"][/all-featured]
 
 == Frequently Asked Questions ==
 
@@ -55,11 +59,26 @@ please send your inquires to support@buzztarget.com
 
 == Screenshots ==
 
-1. Listing Summary Page.  In this example, advanced search is hidden.
-2. Listing Detail Page.
-3. Listing Admin page
+1. Properties Page in List View.
+2. Property Detail Page in One Column View.
+3. Broker Page with Broker Listings Widget.
+4. Featured Listings Widget.
+5. Contact Registration Widget.
+6. WP-Admin Listings Configuration Page.
+7. WP-Admin Listings Fetch Page.
+8. Responsive / Mobile View.
 
 == Changelog ==
+
+= 2.0.0 =
+* Enhanced Listings View Page - Ability to select from two different View Styles
+* Enhanced Listings Detail Page - Ability to select from two different View Styles
+* Added Featured Listings Widget
+* Added Broker Listings Widget
+* Enabled Responsive compatibility to be able to view on tablets and mobile devices
+* Added CSS Editor to Listings Settings in WP-Admin panel
+* Improved Listings Fetch Mechanism
+
 = 1.0.4 =
 * Added Paging to Broker Listings
 
