@@ -82,6 +82,10 @@ Our plugin works with many Themes.  Using the CSS editor, you can customize font
 8. Responsive / Mobile View.
 
 == Changelog ==
+= 2.0.1 =
+* Added ability to sort by Property Name
+* Option to hide property price from the listings page
+* Fixed performance bugs
 
 = 2.0.0 =
 * Enhanced Listings View Page - Ability to select from two different View Styles
