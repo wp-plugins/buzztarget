@@ -9,6 +9,18 @@ class ListingSort
     {
         $list = false;
         switch ($sort_by_field) {
+            case "name_a_z":
+                $field = 'Property';
+                $subfield = 'PropertyName';
+                $list = true;
+                $reverse = false;
+                break;
+            case "name_z_a":
+                $field = 'Property';
+                $subfield = 'PropertyName';
+                $list = true;
+                $reverse = true;
+                break;
             case "price_a_z":
                 $field = 'PropertyPrice';
                 $reverse = false;
@@ -35,11 +47,13 @@ class ListingSort
                 break;
             case "broker_a_z":
                 $field = 'ListingAgents';
+                $subfield = 0;
                 $reverse = false;
                 $list = true;
                 break;
             case "broker_z_a":
                 $field = 'ListingAgents';
+                $subfield = 0;
                 $reverse = true;
                 $list = true;
                 break;
@@ -67,12 +81,12 @@ class ListingSort
         for ($i=0; $i<$size; $i++) {
             for ($j=0; $j<$size-1-$i; $j++) {
                 if ($list == true){
-                    if ($arr_has_property[$j+1][$field][0] < $arr_has_property[$j][$field][0]) {
+                    if ($this->getVal($arr_has_property[$j+1], $field, $subfield) < $this->getVal($arr_has_property[$j], $field, $subfield)) {
                         $this->swap($arr_has_property, $j, $j+1);
                     }
                 }
                 else{
-                    if ($arr_has_property[$j+1][$field] < $arr_has_property[$j][$field]) {
+                    if ($this->getVal($arr_has_property[$j+1],$field) < $this->getVal($arr_has_property[$j],$field)) {
                         $this->swap($arr_has_property, $j, $j+1);
                     }
                 }
@@ -91,5 +105,18 @@ class ListingSort
         $tmp = $arr[$a];
         $arr[$a] = $arr[$b];
         $arr[$b] = $tmp;
+    }
+
+    public function getVal($obj, $field, $subfiled=null){
+        if(isset($obj[$field])){
+            if(isset($subfiled)){
+                return $obj[$field][$subfiled];
+            }else{
+                return $obj[$field];
+            }
+        }else{
+            return null;
+        }
+
     }
 }

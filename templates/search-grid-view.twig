@@ -174,7 +174,9 @@
             <div class="select-group">
                 <label for="sortBy">Sort By:</label>
                 <select name="sortBy" id="sortBy">
-                    <option {% if default_sort_by is sameas('price_a_z') %} selected="selected"{% endif %} value="price_a_z">Price A to Z</a></option>
+                    <option {% if default_sort_by is sameas('name_a_z') %} selected="selected"{% endif %} value="name_a_z">Name A to Z</option>
+                    <option {% if default_sort_by is sameas('name_z_a') %} selected="selected"{% endif %} value="name_z_a">Name Z to A</option>
+                    <option {% if default_sort_by is sameas('price_a_z') %} selected="selected"{% endif %} value="price_a_z">Price A to Z</option>
                     <option {% if default_sort_by is sameas('price_z_a') %} selected="selected"{% endif %} value="price_z_a">Price Z to A</option>
                     <option {% if default_sort_by is sameas('date_a_z') %} selected="selected"{% endif %} value="date_a_z">Date A to Z</option>
                     <option {% if default_sort_by is sameas('date_z_a') %} selected="selected"{% endif %} value="date_z_a">Date Z to A</option>
@@ -233,24 +235,28 @@
                                     <h4>For Sale</h4>
                                     {% endif %}
                                     <div class="price theme-color">
-                                        {% if property.PropertyPrice is defined %}
-                                        ${{ property.PropertyPrice|number_format(2, '.', ',') }}
+                                        {% if show_price_on_listing is sameas('on') %}
+                                            {% if property.PropertyPrice is defined %}
+                                                {% if property.PropertyPrice > 0 %}
+                                                    ${{ property.PropertyPrice|number_format(2, '.', ',') }}
+                                                {% endif %}
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </div>
                                 <div class="property-name-block">
                                     <h3 class="theme-color property-name">
                                         <a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">
-                                            {{property.Property.PropertyName}}
+                                            {{property.Property.PropertyName|trim}}
                                         </a>
                                     </h3>
                                 </div>
-                                <p class="address"><i>{{ property.Property.Address.Address }}</i></p>
+                                <p class="address"><i>{{ property.Property.Address.Address|trim }}</i></p>
                                 <p class="address">
                                     <i>
-                                        {{ property.Property.Address.City }},
-                                        {{ property.Property.Address.State }}
-                                        {{ property.Property.Address.Zip }}
+                                        {{ property.Property.Address.City|trim }},
+                                        {{ property.Property.Address.State|trim }}
+                                        {{ property.Property.Address.Zip|trim }}
                                     </i>
                                 </p>
 

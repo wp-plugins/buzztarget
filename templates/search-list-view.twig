@@ -36,6 +36,7 @@
                                     content: ''
                                 });
                         var mapInitialized = false;
+                        var latlngbounds = new google.maps.LatLngBounds();
 
                         if (properties.length > 0)
                         {
@@ -82,6 +83,7 @@
 
                                 var lat = properties[i].propertyLat;
                                 var lon = properties[i].propertyLon;
+
                                 if ( lat == undefined || lon == undefined){
                                     property_address = properties[i].propertyCity + ', ' + properties[i].propertyState + ' ' + properties[i].propertyZip;
                                     property_fullAddress = properties[i].propertyAddress;
@@ -129,6 +131,8 @@
                                         mapInitialized = true;
                                     }
 
+                                    latlngbounds.extend(new google.maps.LatLng(lat,lon));
+
                                     var marker = new google.maps.Marker({
                                         position: new google.maps.LatLng(lat, lon),
                                         map: map,
@@ -143,8 +147,22 @@
                                             propertyWindow.open(map, marker);
                                         }
                                     })(marker, propertyWindowContent));
+
                                 }
                             }
+
+                            // map: an instance of GMap3
+                            // latlng: an array of instances of GLatLng
+                            // var latlngbounds = new google.maps.LatLngBounds();
+
+                            // latlng.forEach(function(n){
+                            //    latlngbounds.extend(n);
+                            // // });
+                            // 
+
+                            map.setCenter(latlngbounds.getCenter());
+                            map.fitBounds(latlngbounds);
+
                         }
                         else{
                             mapOptions = {
@@ -171,7 +189,9 @@
         <div class="select-group">
             <label for="sortBy">Sort By:</label>
             <select name="sortBy" id="sortBy">
-                <option {% if default_sort_by is sameas('price_a_z') %} selected="selected"{% endif %} value="price_a_z">Price A to Z</a></option>
+                <option {% if default_sort_by is sameas('name_a_z') %} selected="selected"{% endif %} value="name_a_z">Name A to Z</option>
+                <option {% if default_sort_by is sameas('name_z_a') %} selected="selected"{% endif %} value="name_z_a">Name Z to A</option>
+                <option {% if default_sort_by is sameas('price_a_z') %} selected="selected"{% endif %} value="price_a_z">Price A to Z</option>
                 <option {% if default_sort_by is sameas('price_z_a') %} selected="selected"{% endif %} value="price_z_a">Price Z to A</option>
                 <option {% if default_sort_by is sameas('date_a_z') %} selected="selected"{% endif %} value="date_a_z">Date A to Z</option>
                 <option {% if default_sort_by is sameas('date_z_a') %} selected="selected"{% endif %} value="date_z_a">Date Z to A</option>
@@ -229,16 +249,14 @@
                                     <h4>For Sale</h4>
                                 {% endif %}
                                 <h3 class="theme-color">
-                                    <a href="{{propertyURLDashed}}">
-                                        {{property.Property.PropertyName}}
-                                    </a>
+                                    <a href="{{propertyURLDashed}}">{{property.Property.PropertyName|trim}}</a>
                                 </h3>
-                                <p class="address"><i>{{ property.Property.Address.Address }}</i></p>
+                                <p class="address"><i>{{ property.Property.Address.Address|trim }}</i></p>
                                 <p class="address">
                                     <i>
-                                        {{ property.Property.Address.City }},
-                                        {{ property.Property.Address.State }}
-                                        {{ property.Property.Address.Zip }}
+                                        {{ property.Property.Address.City|trim }},
+                                        {{ property.Property.Address.State|trim }}
+                                        {{ property.Property.Address.Zip|trim }}
                                     </i>
                                 </p>
                                 <p class="broker-name">
@@ -250,8 +268,12 @@
                                 </p>
                             </div>
                             <div class="price theme-color">
-                                {% if property.PropertyPrice is defined %}
-                                ${{ property.PropertyPrice|number_format(2, '.', ',') }}
+                                {% if show_price_on_listing is sameas('on') %}
+                                    {% if property.PropertyPrice is defined %}
+                                        {% if property.PropertyPrice > 0 %}
+                                        ${{ property.PropertyPrice|number_format(2, '.', ',') }}
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         </div>

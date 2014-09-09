@@ -46,9 +46,9 @@
                                             {% elseif property.ListingType is sameas('ForSale') %}
                                             <h4>For Sale</h4>
                                             {% endif %}
-                                            <h3 class="theme-color property-name"><a href="{{propertyURLDashed}}">{{property.Property.PropertyName}}</a></h3>
-                                            <p class="address"><i>{{ property.Property.Address.Address }}</i></p>
-                                            <p class="address"><i>{{ property.Property.Address.City }}, {{ property.Property.Address.State }} {{ property.Property.Address.Zip }}</i></p>
+                                            <h3 class="theme-color property-name"><a href="{{propertyURLDashed}}">{{property.Property.PropertyName|trim}}</a></h3>
+                                            <p class="address"><i>{{ property.Property.Address.Address|trim }}</i></p>
+                                            <p class="address"><i>{{ property.Property.Address.City|trim }}, {{ property.Property.Address.State|trim }} {{ property.Property.Address.Zip|trim }}</i></p>
                                         </div>
                                     </div>
                                 </div>

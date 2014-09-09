@@ -173,7 +173,7 @@ if($property){
                 <h4 class="title info theme-color">Attachments:</h4>
                 <ul class="property-docs">
                     <?php foreach ($propertyDocuments as $doc) {?>
-                    <li><a href="<?php echo $doc['AttachmentPath']?>"><?php echo $doc['AttachmentTitle']?></a></li>
+                    <li><a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a></li>
                     <?php } ?>
                 </ul>
                 <?php } ?>

@@ -82,12 +82,13 @@ class BackEndController
                     'advanced_search',
                     'allow_listing_per_page_change',
                     'default_listing_per_page',
+                    'show_price_on_listing',
                     'show_sort_by',
                     'default_sort_by',
                     'map_view_status',
                 );
 
-                list($listingStyle, $listingDetailStyle, $fullWidthStyle, $advancedSearch, $allow_listing_per_page_change, $default_listing_per_page, $show_sort_by, $default_sort_by, $mapViewStatus) = $this->request->getPostValues($postKeys);
+                list($listingStyle, $listingDetailStyle, $fullWidthStyle, $advancedSearch, $allow_listing_per_page_change, $default_listing_per_page, $show_price_on_listing, $show_sort_by, $default_sort_by, $mapViewStatus) = $this->request->getPostValues($postKeys);
 
                 $listingStyle = ($listingStyle === 'style1' || $listingStyle === 'style2') ? $listingStyle : 'style1';
                 $listingDetailStyle = ($listingDetailStyle === 'style1' || $listingDetailStyle === 'style2') ? $listingDetailStyle : 'style1';
@@ -129,9 +130,11 @@ class BackEndController
 
                 $allow_listing_per_page_change = ($allow_listing_per_page_change === 'on' || $allow_listing_per_page_change === 'off') ? $allow_listing_per_page_change : 'on';
                 $default_listing_per_page = ($default_listing_per_page === '9' || $default_listing_per_page === '12' || $default_listing_per_page === '60') ? $default_listing_per_page : '9';
+                $show_price_on_listing = ($show_price_on_listing === 'on' || $show_price_on_listing === 'off') ? $show_price_on_listing : 'on';
+
 
                 $show_sort_by = ($show_sort_by === 'on' || $show_sort_by === 'off') ? $show_sort_by : 'on';
-                $default_sort_by = ($default_sort_by === 'price_a_z' || $default_sort_by === 'price_z_a' || $default_sort_by === 'date_a_z' || $default_sort_by === 'date_z_a' || $default_sort_by === 'size_a_z' || $default_sort_by === 'size_z_a' || $default_sort_by === 'broker_a_z' || $default_sort_by === 'broker_z_a' || $default_sort_by === 'county_a_z' || $default_sort_by === 'county_z_a') ? $default_sort_by : 'date_z_a';
+                $default_sort_by = ($default_sort_by === 'name_a_z' || $default_sort_by === 'name_z_a' ||$default_sort_by === 'price_a_z' || $default_sort_by === 'price_z_a' || $default_sort_by === 'date_a_z' || $default_sort_by === 'date_z_a' || $default_sort_by === 'size_a_z' || $default_sort_by === 'size_z_a' || $default_sort_by === 'broker_a_z' || $default_sort_by === 'broker_z_a' || $default_sort_by === 'county_a_z' || $default_sort_by === 'county_z_a') ? $default_sort_by : 'date_z_a';
 
                 $mapViewStatus = ($mapViewStatus === 'on' || $mapViewStatus === 'off') ? $mapViewStatus : 'on';
 
@@ -154,6 +157,7 @@ class BackEndController
                     ),
                     'allow_listing_per_page_change' => $allow_listing_per_page_change,
                     'default_listing_per_page' => $default_listing_per_page,
+                    'show_price_on_listing' => $show_price_on_listing,
                     'show_sort_by' => $show_sort_by,
                     'default_sort_by' => $default_sort_by,
                     'map_view_status' => $mapViewStatus,
@@ -309,13 +313,16 @@ class BackEndController
             $vars['theme_options_allow_listing_per_page_change_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE_ON');
             $vars['theme_options_allow_listing_per_page_change_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE_OFF');
             $vars['theme_options_default_listing_per_page'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_LISTING_PER_PAGE');
+            $vars['theme_options_show_price_on_listing'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_SHOW_PRICE_ON_LISTING');
 
             $vars['theme_options_show_sort_by'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SORT_BY');
             $vars['theme_options_show_sort_by_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SORT_BY_ON');
             $vars['theme_options_show_sort_by_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SORT_BY_OFF');
             $vars['theme_options_default_sort_by'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY');
+            $vars['theme_options_default_sort_by_name_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_NAME_A_Z');
+            $vars['theme_options_default_sort_by_name_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_NAME_Z_A');
             $vars['theme_options_default_sort_by_price_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_PRICE_A_Z');
-            $vars['theme_options_default_sort_by_price_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_PRISE_Z_A');
+            $vars['theme_options_default_sort_by_price_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_PRICE_Z_A');
             $vars['theme_options_default_sort_by_date_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_DATE_A_Z');
             $vars['theme_options_default_sort_by_date_z_a'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_DATE_Z_A');
             $vars['theme_options_default_sort_by_size_a_z'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_DEFAULT_SORT_BY_SIZE_A_Z');

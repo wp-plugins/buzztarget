@@ -217,6 +217,15 @@
                                     </select>
                                 </td>
                             </tr>
+                            {# Show Price On Listing (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_show_price_on_listing}}</td>
+                                <td>
+                                    {% set show_price_on_listing = theme_options['show_price_on_listing'] %}
+                                    <input type="radio" name="show_price_on_listing" value="on" {% if show_price_on_listing is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="show_price_on_listing" value="off" {% if show_price_on_listing is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
                         </table>
 
                         {# Sort By #}
@@ -234,6 +243,8 @@
                                 <td>
                                     {% set default_sort_by = theme_options['default_sort_by'] %}
                                     <select name="default_sort_by" id="bt-default-sort-by">
+                                        <option value="name_a_z" {% if default_sort_by is sameas('name_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_name_a_z}}</option>
+                                        <option value="name_z_a" {% if default_sort_by is sameas('name_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_name_z_a}}</option>
                                         <option value="price_a_z" {% if default_sort_by is sameas('price_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_price_a_z}}</option>
                                         <option value="price_z_a" {% if default_sort_by is sameas('price_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_price_z_a}}</option>
                                         <option value="date_a_z" {% if default_sort_by is sameas('date_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_date_a_z}}</option>

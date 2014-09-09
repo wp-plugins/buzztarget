@@ -471,7 +471,9 @@ if (isset($_GET['map_view']))
     else{
         $listing_per_page = $themeOptions['default_listing_per_page'];
     }
+
     $allow_listing_per_page_change = $themeOptions['allow_listing_per_page_change'];
+    $show_price_on_listing = $themeOptions['show_price_on_listing'];
 
     $show_filter_form = $themeOptions['advanced_search']['status'];
     $show_listing_type = $themeOptions['advanced_search']['listing_type'];
@@ -540,6 +542,7 @@ if (isset($_GET['map_view']))
         'properties_url'             => site_url() . '/properties',
         'listing_per_page' => $listing_per_page,
         'allow_listing_per_page_change' => $allow_listing_per_page_change,
+        'show_price_on_listing' => $show_price_on_listing,
         'show_sort_by' => $show_sort_by,
         'default_sort_by' => $default_sort_by,
         'is_limit_changed' => $is_limit_changed,
