@@ -1,0 +1,77 @@
+<script>
+    jQuery('body').addClass('{{theme_name}}');
+</script>
+<div id="buzz-target-plugin">
+<div class="section content featured">
+    <div class="clearfix">
+        {% if (featured_class or featured_title) %}
+            <div class="{% if featured_class and featured_class is not sameas('featured-property-title') %}{{featured_class}}{% else %}featured-property-title theme-bg{% endif %}">
+                <span>{{featured_title}}</span>
+            </div>
+        {% endif %}
+        {% if featured_class is not defined or featured_class is sameas('featured-property-title') %}
+            <div class="title-line"></div>
+        {% endif %}
+
+        <div class="grid-view {% if featured_class %}custom-title{% endif %}">
+
+            {% if trans.search_error %}
+            <div id="bt-search-error">
+                <p>{{trans.search_error}}</p>
+            </div>
+            {% endif %}
+
+            <div class="banner featured-slider number-per-row-{{numberPerRow}}">
+                <ul>
+                    {% for part_properties in listings %}
+                        <li>
+                        {% for property in part_properties %}
+                            {# URL to property page #}
+                            {% set propertyURLDashed = properties_url ~ '/' ~ property.wp_page_id ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+                            <div class="list-item">
+                                <div class="image">
+                                    <a href="{{propertyURLDashed}}">
+                                        {% if property.ListingImages.0.AttachmentPath is defined %}
+                                        <img src="{{property.ListingImages.0.AttachmentPath}}">
+                                        {% else %}
+                                        <img src="http://placehold.it/270x270">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="item-info">
+                                    <div class="clearfix">
+                                        <div class="main-info">
+                                            {% if property.ListingType is sameas('ForLease') %}
+                                            <h4>For Lease</h4>
+                                            {% elseif property.ListingType is sameas('ForSale') %}
+                                            <h4>For Sale</h4>
+                                            {% endif %}
+                                            <h3 class="theme-color property-name"><a href="{{propertyURLDashed}}">{{property.Property.PropertyName|trim}}</a></h3>
+                                            <p class="address"><i>{{ property.Property.Address.Address|trim }}</i></p>
+                                            <p class="address"><i>{{ property.Property.Address.City|trim }}, {{ property.Property.Address.State|trim }} {{ property.Property.Address.Zip|trim }}</i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <script src="//unslider.com/unslider.min.js"></script>
+            <script>
+                jQuery('.featured-slider').unslider({
+                    speed: 500,               //  The speed to animate each slide (in milliseconds)
+                    delay: 3000,              //  The delay between slide animations (in milliseconds)
+                    complete: function() {},  //  A function that gets called after every slide animation
+                    keys: true,               //  Enable keyboard (left, right) arrow shortcuts
+                    dots: true,               //  Display dot navigation
+                    fluid: true              //  Support responsive design. May break non-responsive designs
+                });
+            </script>
+
+        </div>
+    </div>
+</div>
+</div>

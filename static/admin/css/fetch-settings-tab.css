@@ -1,0 +1,104 @@
+/*
+    Fetch Settings Tab
+*/
+
+/*  Fetch Settings Form */
+form#fetchListings
+{
+    padding-left: 5px;
+}
+
+/* Creates space between fetch schedule and listings filter */
+div#bt-fetch-settings-clear
+{
+    margin: 2.0%;
+}
+
+/* Fetch Schedule, Listings Filter headings */
+strong.bt-fetch-settings-sub-head
+{
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Fetch Schedule, Listings Filter headings description */
+p.bt-fetch-settings-sub-head-desc
+{
+    margin: 2px 0px 10px 0px;
+    font-style: italic;
+}
+
+/* Fetch schedule table */
+table#bt-fetch-schedule-table
+{
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* Fetch schedule table rows */
+table#bt-fetch-schedule-table tr
+{
+    height: 35px;
+}
+
+/* Listings Filter Content Excluding Description */
+div#bt-listings-filter-content
+{
+    padding-left: 20px;
+}
+
+/* Listing and statuses container */
+div#bt-listing-statuses-div,
+div#bt-listing-types-div
+{
+    margin-bottom: 20px;
+}
+
+/* Listing types and statuses paragraph */
+p#bt-listing-types,
+p#bt-listing-statuses
+{
+    margin-left: 30px;
+}
+
+/* Listing type and statuses checkboxes */
+p#bt-listing-types input,
+p#bt-listing-statuses input
+{
+    margin-left: 10px;
+}
+
+/* Container for the submit button and loading icon */
+div#fetch-listings-button-container
+{
+    overflow: hidden;
+}
+
+div#fetch-listings-button-container > input:first-child {
+    float: left;
+    margin-right: 5px;
+}
+
+/* The submit button */
+input#fetchListingsSubmit
+{
+    float: left;
+}
+
+/* Modifies button label when fetching listings */
+input.loading
+{
+    color: #ccc !important;
+    font-style: italic;
+}
+
+/* The loading icon when fetching listings */
+div#loading
+{
+    display: none;
+    background-image: url('../images/loading.gif');
+    width: 16px;
+    height: 16px;
+    margin: 4px;
+    float: left;
+}
