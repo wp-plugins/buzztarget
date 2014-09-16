@@ -426,43 +426,46 @@ if($property){
                     <?php }?>
                 </tbody>
             </table>
-            <table class="half">
+
+            <?php
+            if(isset($property['PropertyPrice']) || isset($property['CapRate']) || isset($property['Noi'])){
+            ?>
+            <table class="half last">
                 <tbody>
-                    <?php if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
-                <tr>
-                    <td>Price:</td>
-                    <td> <?php echo '$' . number_format($property['PropertyPrice']); ?></td>
-                </tr>
-                    <?php }?>
-                    <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
-                <tr>
-                    <td>CAP Rate:</td>
-                    <td><?php echo round($property['CapRate'], 2) . '%'; ?></td>
-                </tr>
-                    <?php }?>
-                    <?php if (isset($property['Noi']) && $property['Noi'] != 0){ ?>
-                <tr>
-                    <td>NOI: </td>
-                    <td><?php echo '$' . number_format($property['Noi']); ?></td>
-                </tr>
-                    <?php }?>
+                <?php if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
+                    <tr>
+                        <td>Price:</td>
+                        <td> <?php echo '$' . number_format($property['PropertyPrice']); ?></td>
+                    </tr>
+                <?php }?>
+                <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
+                    <tr>
+                        <td>CAP Rate:</td>
+                        <td><?php echo round($property['CapRate'], 2) . '%'; ?></td>
+                    </tr>
+                <?php }?>
+                <?php if (isset($property['Noi']) && $property['Noi'] != 0){ ?>
+                    <tr>
+                        <td>NOI: </td>
+                        <td><?php echo '$' . number_format($property['Noi']); ?></td>
+                    </tr>
+                <?php }?>
                 </tbody>
             </table>
+            <?php } ?>
+
         </div>
         <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
         <div class="overview">
             <h4 class="title info theme-color">Property Overview</h4>
-
-            <p class="property-description">
-                <?php
-                if (isset($property['PropertyDescription'])){
-                    print $property['PropertyDescription'];
-                }
-                if (isset($property['LocationDescription'])){
-                    print $property['LocationDescription'];
-                }
-                ?>
-            </p>
+            <?php
+            if (isset($property['PropertyDescription'])){
+                print '<p class="property-description">'.$property['PropertyDescription'].'</p>';
+            }
+            if (isset($property['LocationDescription'])){
+                print '<p class="property-description">'.$property['LocationDescription'].'</p>';;
+            }
+            ?>
         </div>
         <?php } ?>
         <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0)) || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0)) || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)) || (isset($property['County']) && $property['County'] != 0) || (isset($property['Zoning']) && $property['Zoning'] != 0 ) || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ) || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ) || (isset($property['YearBuild']) && $property['YearBuild'] != 0 ) || (isset($property['Occupancy']) && $property['Occupancy'] != 0) || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0) || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0) ){ ?>
