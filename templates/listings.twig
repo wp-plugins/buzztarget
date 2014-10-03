@@ -1,0 +1,10 @@
+<script>
+    jQuery('body').addClass('{{theme_name}}');
+</script>
+<div id="buzz-target-plugin">
+{% if theme_options['listing_style'] is sameas('style2') %}
+    {% include 'search-list-view.twig' %}
+{% else %}
+    {% include 'search-grid-view.twig' %}
+{% endif %}
+</div>

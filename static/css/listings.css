@@ -1,0 +1,148 @@
+div#bt-pagination
+{
+	font-size: 14px;
+	text-align: center;
+	margin: 3% 0% 3% 0%;
+}
+
+p#bt-no-for-sale-listings,
+p#bt-no-for-lease-listings
+{
+	text-align: center;
+	font-size: 14px;
+}
+
+/* Listings search/sort */
+div#bt-listings-search
+{
+	overflow: hidden;
+	width: 99.7%;
+	border: 1px solid #ccc;
+	margin-bottom: 4%;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px;
+}
+
+/* Search listings heading */
+div#bt-listings-search h2
+{
+	margin: 0% 0% 0% 1%;
+}
+
+/* Container for the input text control, sort select element and submit button */
+div#bt-listings-search-criteria
+{
+	overflow: hidden;
+	margin-bottom:1%;
+}
+
+
+/* Search listings input text control */
+div#bt-listings-search-criteria input[type=text]
+{
+	float: left;
+	margin: 0% 1% 0% 1%;
+	width: 62%;
+	height: 20px;
+	font-size: 20px;
+}
+
+/* Search listings select element */
+div#bt-listings-search-criteria select
+{
+	height: 35px;
+	float: left;
+}
+
+
+/* Search listings button (submit button/search) element */
+div#bt-listings-search-criteria button
+{
+	float: left;
+	margin: 0% 0% 0% 1%;
+}
+
+/* The text contained within the button, the submit button value */
+button.bt-search span
+{
+	border: 0px !important;
+}
+
+/* Container for properties */
+div#bt-listings
+{
+	width: 100%;
+	overflow: auto;
+}
+
+div#bt-listings h3
+{
+	font-style:italic;
+	margin: 1% 0% 1% 0%;
+	text-align:center;
+}
+
+/* Individual properties */
+div.bt-property
+{
+	float: left;
+	width: 32%;
+	margin-right:2%;
+	margin-bottom: 5%;
+}
+
+/* Every third property */
+div.bt-property:nth-child(3n+3)
+{
+	margin-right:0px;
+}
+
+/* Each property image container */
+div.bt-property-image
+{
+	max-height: 200px;
+	min-height: 200px;
+	background-color: white;
+	border: 1px solid #ccc;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px;
+	margin-bottom: 10px;
+}
+
+/* Property image */
+div.bt-property-image img
+{
+	padding: 2%;
+	max-width: 96%;
+	height: 187px;
+	width: 292px;
+}
+
+a#bt-property-name
+{
+	text-decoration: none;
+}
+
+strong#bt-property-name
+{
+	color: #4089ac;
+	font-size: 16px;
+}
+
+p#bt-property-address
+{
+	margin-top: 10px;
+}
+
+/* Property paragraph elements with no bottom border */
+div.bt-property p.bt-no-bottom-margin
+{
+	margin: 0px;
+}
+
+/*
+ * All listings
+ */
+
+div#bt-advanced-search hr
+{
+	
+}
