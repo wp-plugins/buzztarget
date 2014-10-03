@@ -277,7 +277,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <p class="description">{{property.PropertyDescription}}<a href="{{propertyURLDashed}}">Read More</a></p>
+                        <p class="description">{{property.PropertyDescription|replace({'&nbsp;': ' ',' ':' '})|trim}} <a href="{{propertyURLDashed}}">Read More</a></p>
                     </div>
                 </div>
             {% endfor %}

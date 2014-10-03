@@ -257,7 +257,7 @@ if($property){
                         <?php if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
                         <td><?php echo number_format($property['HouseholdIncome']['RangeFrom']); ?></td>
                         <?php } else{ ?>
-                        <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['PopulationRange']['RangeTo']); ?></td>
+                        <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['HouseholdIncome']['RangeTo']); ?></td>
                         <?php } ?>
                     </tr>
                         <?php } ?>
@@ -546,7 +546,7 @@ if($property){
                 <?php if ($property['HouseholdIncome']['RangeFrom'] == $property['HouseholdIncome']['RangeTo']){ ?>
                 <td><?php echo number_format($property['HouseholdIncome']['RangeFrom']); ?></td>
                 <?php } else{ ?>
-                <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['PopulationRange']['RangeTo']); ?></td>
+                <td><?php echo '$' . number_format($property['HouseholdIncome']['RangeFrom']) . ' - ' . ' $' . number_format($property['HouseholdIncome']['RangeTo']); ?></td>
                 <?php } ?>
             </tr>
                 <?php } ?>
@@ -560,7 +560,9 @@ if($property){
                 <?php foreach($spaces as $space){ ?>
             <tr>
                 <td><?php echo $space['Name'];?></td>
+                <?php if($space['RentalRate']>0){ ?>
                 <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
+                <?php } ?>
                 <td><?php echo number_format($space['Size']) . ' SF'; ?></td>
                 <td><?php echo $space['SpaceType'];?></td>
             </tr>
@@ -623,7 +625,7 @@ if($property){
         <h4 class="title info theme-color">Attachments:</h4>
         <ul class="property-docs">
             <?php foreach ($propertyDocuments as $doc) {?>
-            <li><a href="<?php echo $doc['AttachmentPath']?>"><?php echo $doc['AttachmentTitle']?></a></li>
+            <li><a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a></li>
             <?php } ?>
         </ul>
         <?php } ?>

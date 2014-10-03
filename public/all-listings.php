@@ -597,6 +597,11 @@ if (isset($_GET['map_view']))
 
     $vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 }
+
+function _normaliseString($string){
+    return strtolower(preg_replace('/\s+/', ' ', preg_replace('/[^a-zA-Z0-9\s]/', '', $string)));
+}
+
 function in_multiarray($elem, $array) {
     foreach ($array as $key => $value) {
         if(is_array($value)){
@@ -604,7 +609,7 @@ function in_multiarray($elem, $array) {
                 return true;
         }
         else{
-            if(strripos($value, $elem)) return true;
+            if(strripos(_normaliseString($value), _normaliseString($elem))!==false) return true;
         }
     }
     return false;
