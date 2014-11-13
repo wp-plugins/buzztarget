@@ -976,6 +976,7 @@
     padding-top: 20px;
     border-top: 5px solid #dedede;
     float:left;
+    width: 100%;
 }
 
 #buzz-target-plugin .content.featured .grid-view, #buzz-target-plugin .content.broker-listings .grid-view{

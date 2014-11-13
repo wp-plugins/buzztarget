@@ -2,6 +2,7 @@
 
 get_header();
 
+
 $theme_options = get_option('buzztarget_theme_options');
 $themeColor = $theme_options['theme_color'];
 $listingDetailStyle = $theme_options['listing_detail_style'];
@@ -15,6 +16,7 @@ $post_name = $post->post_name;
 $property_id = array_values(explode('-', $post_name))[0];
 
 $property = $properties[$property_id];
+
 
 if($property){
     $phoneImage = plugin_dir_url(dirname(__FILE__)) . 'static/images/phone.png';
@@ -432,12 +434,16 @@ if($property){
             ?>
             <table class="half last">
                 <tbody>
-                <?php if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
+                <?php if ($theme_options['show_price_on_listing'] == 'on') {
+                    if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
                     <tr>
                         <td>Price:</td>
                         <td> <?php echo '$' . number_format($property['PropertyPrice']); ?></td>
                     </tr>
-                <?php }?>
+                <?php
+                    }
+                }
+                ?>
                 <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
                     <tr>
                         <td>CAP Rate:</td>

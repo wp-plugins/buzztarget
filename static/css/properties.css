@@ -587,7 +587,7 @@
 #buzz-target-plugin .image-overlay {
     opacity: 0;
     filter: alpha(opacity = 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     position: absolute;
     top: 0;
@@ -600,7 +600,7 @@
 .ie8 #buzz-target-plugin .image-overlay {
     background: rgb(0, 0, 0);
     filter: alpha(opacity = 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
 }
 .ie8 #buzz-target-plugin .image-overlay .zoom {
@@ -626,7 +626,7 @@
 .ie8 #buzz-target-plugin .carousel-stage:hover .image-overlay {
     background: rgb(0, 0, 0);
     filter: alpha(opacity=35);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=35)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=35)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=35);
 }
 
@@ -691,7 +691,7 @@
 #buzz-target-plugin .modal {
     opacity: 0;
     filter: alpha(opacity=0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     display: none;
     -webkit-transition: opacity 300ms ease-out;
@@ -703,7 +703,7 @@
 #buzz-target-plugin .modal.visible {
     opacity: 1;
     filter: alpha(opacity=100);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     display: block;
     -webkit-transition: opacity 300ms ease-out;
@@ -719,7 +719,7 @@
     left: 0;
     right: 0;
     background: rgb(0, 0, 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=75)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
     background: rgba(0, 0, 0, 0.75);
     z-index: 10;
@@ -976,6 +976,7 @@
     padding-top: 20px;
     border-top: 5px solid #dedede;
     float:left;
+    width: 100%;
 }
 
 #buzz-target-plugin .content.featured .grid-view, #buzz-target-plugin .content.broker-listings .grid-view{

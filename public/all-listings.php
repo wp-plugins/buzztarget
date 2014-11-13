@@ -75,7 +75,6 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
         if($priceTo){
             $priceTo = (float) $priceTo;
         }
-
         // Saves form submission values
         $search_vars['saved'] = array(
             'address_line_1' => $addressLine1,
