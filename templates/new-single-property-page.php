@@ -434,7 +434,7 @@ if($property){
             ?>
             <table class="half last">
                 <tbody>
-                <?php if ($theme_options['show_price_on_listing'] == 'on') {
+                <?php if ($theme_options['show_price_on_listing'] == 'on' && $property['PropertyPriceIsUndisclosed']==false) {
                     if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
                     <tr>
                         <td>Price:</td>
