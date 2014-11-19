@@ -1,0 +1,71 @@
+{% set advancedSearchStatus = theme_options['advanced_search']['status'] %}
+{# Advanced Search #}
+{% if advancedSearchStatus is sameas('on') %}
+    <div id="bt-advanced-search">
+        <h2 {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.property_search}}</h2>
+        {# Keyword & Address #}
+        <form id="bt_adv_search_form" method="POST" action="{{ url }}?{% if map_view %}map_view=true&{% endif %}search=true">
+            <div id="bt-keyword-address" class="bt-left-float">
+                <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.keyword}}</strong>
+                <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
+                <input type="text" class="bt-input" name="keyword" value="{% if saved.keyword %}{{ saved.keyword }}{% endif %}" />
+                <div class="bt-sml-clear">&nbsp;</div>
+                <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.address}}</strong>
+                <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
+                <input type="text" class="bt-input bt-address-input" name="address_line_1" placeholder="{{trans.advanced_search.address_line_1_placeholder}}" value="{% if saved.address_line_1 %}{{ saved.address_line_1 }}{% endif %}" />
+                <input type="text" class="bt-input bt-address-input" name="address_line_2" placeholder="{{trans.advanced_search.address_city_placeholder}}" value="{% if saved.address_line_2 %}{{ saved.address_line_2 }}{% endif %}" />
+                <input type="text" class="bt-input bt-address-input" name="address_zip_state" placeholder="{{trans.advanced_search.address_state_zip_placeholder}}" value="{% if saved.address_zip_state %}{{ saved.address_zip_state }}{% endif %}" />
+            </div>
+            <div id="bt-keyword-address-listing-property-separator" class="bt-left-float">&nbsp;</div>
+            {# Listing & Property Types #}
+            <div id="bt-listing-property-types" class="bt-left-float">
+                <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.listing_type}}</strong>
+                <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
+                <label><input type="checkbox" name="listing_types[]" {% if 'forlease' in saved.listing_types %} checked="checked" {% endif %} value="forlease" />For Lease</label>
+                <label><input type="checkbox" name="listing_types[]" {% if 'forsale' in saved.listing_types %} checked="checked" {% endif %} value="forsale" />For Sale</label>
+                <div class="bt-sml-clear">&nbsp;</div>
+                <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.property_type}}</strong>
+                <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
+                <label><input type="checkbox" name="property_types[]" {% if 'retail' in saved.property_types %} checked="checked" {% endif %} value="retail" />Retail</label>
+                <label><input type="checkbox" name="property_types[]" {% if 'office' in saved.property_types %} checked="checked" {% endif %} value="office" />Office</label>
+                <label><input type="checkbox" name="property_types[]" {% if 'industrial' in saved.property_types %} checked="checked" {% endif %} value="industrial" />Industrial</label>
+                <label><input type="checkbox" name="property_types[]" {% if 'mixeduse' in saved.property_types %} checked="checked" {% endif %} value="mixeduse" />Mixed Use</label>
+            </div>
+            <div id="bt-listing-property-size-price-separator" class="bt-left-float">&nbsp;</div>
+            {# Size & Price #}
+            <div id="bt-size-price" class="bt-left-float">
+                <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.size}}</strong>
+                <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
+                <input type="text" name="size_from" placeholder="{{trans.advanced_search.size_from_placeholder}}" value="{% if saved.size_from %}{{ saved.size_from }}{% endif %}" />
+                <input type="text" name="size_to" placeholder="{{trans.advanced_search.size_to_placeholder}}" value="{% if saved.size_to %}{{ saved.size_to }}{% endif %}" /> SF
+                <div class="bt-sml-clear">&nbsp;</div>
+                <strong {% if theme_color %} style="color:{{theme_color}} !important;" {% endif %}>{{trans.advanced_search.price}}</strong>
+                <hr class="bt-hr" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>
+                <input type="text" name="price_from" placeholder="{{trans.advanced_search.price_from_placeholder}}" value="{% if saved.price_from %}{{ saved.price_from }}{% endif %}" />
+                <input type="text" name="price_to" placeholder="{{trans.advanced_search.price_to_placeholder}}" value="{% if saved.price_to %}{{ saved.price_to }}{% endif %}" /> $
+                <div class="bt-sml-clear">&nbsp;</div>
+
+                {% set searchButtonCSS = theme_options['advanced_search']['search_button_css'] %}
+                <input type="reset" id="bt-reset" class="button color" style="{% if searchButtonCSS %}background-color:{{searchButtonCSS}} !important; {% endif %}{% if theme_color_overlay_text %}color:{{theme_color_overlay_text}} !important; {% endif %}" value="{{trans.advanced_search.reset_button_label}}" />
+
+                {% set resetButtonCSS = theme_options['advanced_search']['reset_button_css'] %}
+                <input type="submit" class="button color" style="{% if resetButtonCSS %}background-color:{{resetButtonCSS}} !important; {% endif %}{% if theme_color_overlay_text %}color:{{theme_color_overlay_text}} !important; {% endif %}"name="advanced_search_submit" value="{{trans.advanced_search.search_button_label}}" />
+            </div>
+        </form>
+    </div>
+    {# End Advanced Search #}
+
+    {# Advanced Search Bar #}
+    <div id="bt-advanced-search-bar" {% if theme_color %} style="background-color: {{theme_color}};" {% endif %}>
+        <img src="{{hide_advanced_search_image}}" id="bt-toggle-advanced-search" />
+        <p {% if theme_color_overlay_text %} style="color:{{theme_color_overlay_text}}" {% endif %}>{{trans.advanced_search.advanced_search}}</p>
+        <script type="text/javascript">
+            var showAdvancedSearchImg = {{ show_advanced_search_image|json_encode()|raw }},
+            hideAdvancedSearchImg = {{ hide_advanced_search_image|json_encode()|raw }};
+            $("#bt_adv_search_form input[type=reset]").on('click', function(){
+                $("#bt_adv_search_form input:not([type=submit]):not([type=reset])").val("").removeAttr('checked');
+            });
+        </script>
+    </div>
+
+{% endif %} {# endif advancedSearchStatus is sameas('on') #}

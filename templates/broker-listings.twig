@@ -1,0 +1,68 @@
+<script>
+    jQuery('body').addClass('{{theme_name}}');
+</script>
+<div id="buzz-target-plugin">
+<div class="section content broker-listings">
+    <div class="clearfix">
+        {% if (broker_listings_class or broker_listings_title) %}
+            <div class="{% if broker_listings_class and broker_listings_class is not sameas('broker-property-title') %}{{broker_listings_class}}{% else %}broker-property-title theme-bg{% endif %}">
+                <span>{{broker_listings_title}}</span>
+            </div>
+        {% endif %}
+        {% if broker_listings_class is not defined or broker_listings_class is sameas('broker-property-title')  %}
+        <div class="title-line"></div>
+        {% endif %}
+
+        <div class="grid-view {% if featured_class %}custom-title{% endif %} number-per-row-{{numberPerRow}}">
+
+            {% if trans.search_error %}
+            <div id="bt-search-error">
+                <p>{{trans.search_error}}</p>
+            </div>
+            {% endif %}
+
+            {% for property in listings %}
+            {# URL to property page #}
+            {% set propertyURLDashed = properties_url ~ '/' ~ property.wp_page_id ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+            <div class="list-item">
+                <div class="image">
+                    <a href="{{propertyURLDashed}}">
+                        {% if property.ListingImages.0.AttachmentPath is defined %}
+                        <img src="{{property.ListingImages.0.AttachmentPath}}">
+                        {% else %}
+                        <img src="http://placehold.it/270x270">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="item-info">
+                    <div class="clearfix">
+                        <div class="main-info">
+                            <div class="price-block">
+                                {% if property.ListingType is sameas('ForLease') %}
+                                <h4>For Lease</h4>
+                                {% elseif property.ListingType is sameas('ForSale') %}
+                                <h4>For Sale</h4>
+                                {% endif %}
+                            </div>
+                            <div class="property-name-block">
+                                <h3 class="theme-color property-name"><a href="{{propertyURLDashed}}" title="{{property.Property.PropertyName}}">{{property.Property.PropertyName}}</a></h3>
+                            </div>
+                            <div class="address-info">
+                                <div class="address"><i>{{ property.Property.Address.Address }}</i></div>
+                                <div class="address"><i>{{ property.Property.Address.City }}, {{ property.Property.Address.State }} {{ property.Property.Address.Zip }}</i></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{# Pagination #}
+{% include 'pagination.twig' %}
+
+
+</div>
