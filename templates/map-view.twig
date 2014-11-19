@@ -1,0 +1,129 @@
+{% include 'advanced-search-bar.twig' %}
+
+{% include 'view-type-buttons.twig' %}
+
+<div class="bt-sml-clear">&nbsp;</div>
+
+{# Any search result messages will be displayed here #}
+    {% if trans.search_error %}
+        <div id="bt-search-error">
+            <p>{{trans.search_error}}</p>
+        </div>
+    {% endif %}
+
+{% set mapProperties = [] %}
+{% for key, property in listings %}
+    {% set propertyURLDashed = property_url ~ '/' ~ property.Property.PropertyName|replace(' ', '-') %}
+    {%
+        set mapProperties = mapProperties|merge([key,
+        {
+                propertyLat : property.Lat|e,
+                propertyLon : property.Lon,
+                propertyAddress : property.Property.Address.Address,
+                propertyCity : property.Property.Address.City,
+                propertyState : property.Property.Address.State,
+                propertyZip : property.Property.Address.Zip,
+                propertyType: property.ListingType,
+                propertyImage : property.ListingImages.0.AttachmentPath,
+                propertyName : property.Property.PropertyName,
+                propertyStatus : property.Status,
+                propertyDetails : propertyURLDashed,
+            }
+        ])
+    %}
+{% endfor %}
+
+<div id="bt-listings-map">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+        var properties = {{ mapProperties|json_encode()|raw }} ;
+        if (properties)
+        {
+            function initialize()
+            {
+                var mapOptions, 
+                map, 
+                markers = [], 
+                propertyWindow = new google.maps.InfoWindow({
+                    content: ''
+                });
+
+                for (var i = 0; i < properties.length; i++)
+                {
+                    if (properties[i].propertyLat && properties[i].propertyLon)
+                    {
+                        if (i === 1)
+                        {
+                            mapOptions = {
+                                zoom: 10,
+                                center: new google.maps.LatLng(properties[i].propertyLat, properties[i].propertyLon),
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };      
+                            map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                        }
+
+                        var propertyWindowContent = '<div class="bt-gm-property-window">' +
+                                                        '<p>';
+                                                            var propertyType;
+                                                            if (properties[i].propertyType === 'ForSale')
+                                                            {
+                                                                propertyType = 'For Sale'
+                                                            }
+                                                            else if (properties[i].propertyType === 'ForLease')
+                                                            {
+                                                                propertyType = 'For Lease'
+                                                            }
+                                                            propertyWindowContent = propertyWindowContent + propertyType +
+                                                        '</p>' +
+                                                        '<div class="bt-gm-property">' +
+                                                            '<div class="bt-gm-property-image">' +
+                                                                '<img src="' + properties[i].propertyImage + '" />' +
+                                                            '</div>' +
+                                                            '<div class="bt-gm-property-details">' + 
+                                                                '<p>' +
+                                                                    '<a href="' + properties[i].propertyDetails + '" class="bt-gm-link">' + 
+                                                                        properties[i].propertyName + 
+                                                                    '</a>' +
+                                                                '</p>' +
+                                                                '<p>' + 
+                                                                    properties[i].propertyAddress + 
+                                                                '</p>' +
+                                                                '<p>' + 
+                                                                    properties[i].propertyCity + ', ' +
+                                                                    properties[i].propertyState + ' ' +
+                                                                    properties[i].propertyZip +
+                                                                '</p>' +
+                                                                '<p>' +
+                                                                    'Status: ' + properties[i].propertyStatus +
+                                                                    ' | <a href="' + properties[i].propertyDetails + '" class="bt-gm-link">Details</a>' +
+                                                                '</p>' +
+                                                            '</div>' +
+                                                         '</div>' +
+                                                    '</div>';
+                
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(properties[i].propertyLat, properties[i].propertyLon),
+                            map: map,
+                            title: properties[i].propertyAddress + "\n" + 
+                                properties[i].propertyCity + ', ' + 
+                                properties[i].propertyState + ' ' + 
+                                properties[i].propertyZip
+                        });
+                        
+                        google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
+                            return function () {
+                                propertyWindow.setContent(propertyWindowContent);
+                                propertyWindow.open(map, marker);
+                            }
+                        })(marker, propertyWindowContent));
+                    }
+                }
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+            console.log(properties.length);
+        }
+    </script>
+    <div id="bt-map-canvas" style="height: 600px; margin:0px; padding: 0px;"></div>
+</div>
+
+<div class="bt-sml-clear">&nbsp;</div>
