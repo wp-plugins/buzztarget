@@ -4,7 +4,7 @@ Donate link: http://www.buzztarget.com
 Tags: real estate listings, commercial real estate listings, commercial listing marketing, CRE
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Our plugin works with many Themes.  Using the CSS editor, you can customize font
 8. Responsive / Mobile View.
 
 == Changelog ==
+= 2.0.6 =
+* Style changes
+
 = 2.0.5 =
 * Tested with WordPress 4.0
 
