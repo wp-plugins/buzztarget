@@ -272,7 +272,11 @@ if($property){
                         <?php foreach($spaces as $space){ ?>
                     <tr>
                         <td><?php echo $space['Name'];?></td>
+                        <?php if($space['RentalRate']>0) {
+                            if ($property['PropertyPriceIsUndisclosed'] == false) { ?>
                         <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
+                        <?php }
+                          } ?>
                         <td><?php echo number_format($space['Size']) . ' SF'; ?></td>
                         <td><?php echo $space['SpaceType'];?></td>
                     </tr>
