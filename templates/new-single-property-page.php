@@ -273,7 +273,7 @@ if($property){
                     <tr>
                         <td><?php echo $space['Name'];?></td>
                         <?php if($space['RentalRate']>0) {
-                            if ($property['RentalRateIsUndisclosed'] == false) { ?>
+                            if ($space['RentalRateIsUndisclosed'] == false) { ?>
                         <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
                         <?php }
                           } ?>
@@ -571,7 +571,7 @@ if($property){
             <tr>
                 <td><?php echo $space['Name'];?></td>
                 <?php if($space['RentalRate']>0) {
-                    if ($property['RentalRateIsUndisclosed'] == false) { ?>
+                    if ($space['RentalRateIsUndisclosed'] == false) { ?>
                 <td><?php echo '$'.$space['RentalRate'] . '  / PSF'; ?></td>
                 <?php }
                   } ?>
