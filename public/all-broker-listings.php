@@ -12,7 +12,7 @@ if(count($listings)){
         }
     }
 }
-$broker_listings = [];
+$broker_listings = array();
 foreach($listings as $key => $val){
     if(isset($listings[$key]['ListingAgents'])){
         foreach($listings[$key]['ListingAgents'] as $broker_key => $broker_val){

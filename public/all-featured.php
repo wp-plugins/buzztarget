@@ -12,7 +12,7 @@ if(count($listings)){
         }
     }
 }
-$featured = [];
+$featured = array();
 foreach($listings as $key => $val){
     if($listings[$key]['IsFeatured'] == true){
         $featured[] = $listings[$key];

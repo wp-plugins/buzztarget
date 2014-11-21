@@ -421,9 +421,9 @@ if (isset($_GET['map_view']))
         $search_listings = array();
     }
 
-    $broker_list = [];
-    $property_type_list = [];
-    $county_list = [];
+    $broker_list = array();
+    $property_type_list = array();
+    $county_list = array();
     foreach($listings as $property){
         $listingAgents = $property['ListingAgents'];
         $propertyTypes = $property['PropertyTypes'];

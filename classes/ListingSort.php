@@ -67,8 +67,8 @@ class ListingSort
                 break;
         }
 
-        $arr_has_no_property = [];
-        $arr_has_property = [];
+        $arr_has_no_property = array();
+        $arr_has_property = array();
         for ($i=0; $i<count($listings); $i++) {
             if(isset($listings[$i][$field])){
                 $arr_has_property[] = $listings[$i];
