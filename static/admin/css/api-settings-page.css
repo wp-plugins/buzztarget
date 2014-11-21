@@ -1,0 +1,20 @@
+div.bt-api-settings-clear
+{
+    margin: 2%;
+}
+
+h3#bt-api-settings-sub-head
+{
+    margin-bottom: 5px;
+}
+
+table#bt-api-settings-table
+{
+    padding-left: 2.5%;
+    margin-bottom: 10px;
+}
+
+table#bt-api-settings-table tr td input
+{
+    margin-left: 50px;
+}

@@ -1,0 +1,16 @@
+{% set mapViewStatus = theme_options['map_view_status'] %}
+{% if mapViewStatus is sameas('on') %}
+    <div id="bt-list-map-view">
+        <form method="GET" action="">
+
+            <button type="submit" id="bt-list-view" class="button color" style="{% if theme_color %}background-color:{{theme_color}};{% endif %}{% if theme_color_overlay_text %}color: {{theme_color_overlay_text}} !important;{% endif %}">
+                {{ trans.list_view}}
+            </button>
+
+            <button type="submit" id="bt-map-view" class="button color" name="map_view" value="true" style="{% if theme_color %}background-color:{{theme_color}};{% endif %}{% if theme_color_overlay_text %}color: {{theme_color_overlay_text}} !important;{% endif %}">
+                {{ trans.map_view }}
+            </button>
+
+        </form>
+    </div>
+{% endif %}
