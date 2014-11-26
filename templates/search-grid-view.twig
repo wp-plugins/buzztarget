@@ -4,7 +4,7 @@
 
         {% set mapProperties = [] %}
         {% for property in all_properties %}
-        {% set propertyURLDashed = properties_url ~ '/' ~ property.wp_page_id ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+        {% set propertyURLDashed = properties_url ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
         {% set mapProperties = mapProperties|merge([
             {
                     propertyLat : property.Lat|e,
@@ -214,7 +214,7 @@
 
             {% for property in listings %}
                 {# URL to property page #}
-            {% set propertyURLDashed = properties_url ~ '/' ~ property.wp_page_id ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+            {% set propertyURLDashed = properties_url ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
             <div class="list-item">
                     <div class="image">
                         <a href="{{propertyURLDashed}}">
