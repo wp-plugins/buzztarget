@@ -449,8 +449,21 @@ if (isset($_GET['map_view']))
     // otherwise just return the listings for the current page only.
 
     $listings = ($_POST['advanced_search_submit']) ? $search_listings : $listings;
-    $all_properties = $listings;
 
+    $copy = $listings; // create copy to delete dups from
+    $usedListings = array(); // used listings
+
+    for( $i=0; $i<count($listings); $i++ ) {
+
+        if ( in_array( $listings[$i]['ListingId'], $usedListings ) ) {
+            unset($copy[$i]);
+        }
+        else {
+            $usedListings[] = $listings[$i]['ListingId'];
+        }
+    }
+    $all_properties = $copy;
+    $listings = $copy;
 
     if(count($listings)){
         foreach($listings as $key => $val){
@@ -499,7 +512,6 @@ if (isset($_GET['map_view']))
     $listings = $this->listingSort->getSortListings(array_values($listings), $default_sort_by);
 
     $listings = $this->listingPagination->getCurrentPageListings(array_values($listings), $listing_per_page);
-
 
     $vars = array(
         'list_view' => true,
@@ -613,4 +625,4 @@ function in_multiarray($elem, $array) {
     }
     return false;
 }
-echo $this->twig->render('listings.twig', $vars);
+// echo $this->twig->render('listings.twig', $vars);
