@@ -274,7 +274,6 @@ class BackEndController
                 $map_options = array(
                     'markers' => $markers
                     );
-                var_dump($map_options);
                 update_option('buzztarget_map_options', $map_options);
                 //var_dump($map_options);
             }
