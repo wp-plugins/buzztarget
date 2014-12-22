@@ -265,6 +265,19 @@ class BackEndController
                 }
 
             }
+            elseif(isset($_POST['save_map_options'])){
+                // returns specified $_POST key('s) value(s) after being filtered.
+                $postKeys = array(
+                    'map_options_markers'
+                );
+                list ($markers) = $this->request->getPostValues($postKeys);
+                $map_options = array(
+                    'markers' => $markers
+                    );
+                var_dump($map_options);
+                update_option('buzztarget_map_options', $map_options);
+                //var_dump($map_options);
+            }
 
             wp_clear_scheduled_hook('buzztarget_fetch_listings_event');
         }
@@ -350,6 +363,39 @@ class BackEndController
             // Submit Button Label
             $vars['save_css_changes'] = $this->text->__('ADMIN_THEME_CSS_TAB_SAVE_CHANGES');
             $vars['restore_css_changes'] = $this->text->__('ADMIN_THEME_CSS_TAB_RESTORE_CHANGES');
+        }elseif ($tab === 'map_options')
+        {
+            // $test_arr = array(
+            //     'default_marker' => '',
+            //     'additional_markers' => array(
+            //         'industrial' => 'test1',
+            //         'retail' => 'test2')
+            //     );
+            // update_option('buzztarget_map_options', $test_arr);
+
+            // construct the possible property types
+
+            $vars['property_types'] = array();
+            if ($listings = get_option('repl_listings')) {
+                foreach($listings as $listing){
+                    foreach($listing["PropertyTypes"] as $property_type) {
+                        if(!in_array($property_type, $vars['property_types']))
+                            $vars['property_types'][] = $property_type;
+                    }
+                }
+            }
+
+            $vars['map_options'] = get_option('buzztarget_map_options');
+
+            $vars['map_options_heading'] = $this->text->__('ADMIN_MAP_OPTIONS_TAB_HEADING');
+            $vars['map_options_desc'] = $this->text->__('ADMIN_MAP_OPTIONS_TAB_DESC');
+
+            $vars['map_options_markers_heading'] = $this->text->__('ADMIN_MAP_OPTIONS_MARKERS_HEADING');
+            $vars['map_options_markers_desc'] = $this->text->__('ADMIN_MAP_OPTIONS_MARKERS_DESC');
+
+            $vars['map_options_default_marker'] = $this->text->__('ADMIN_MAP_OPTIONS_TAB_DEFAULT_MARKER');
+
+            $vars['map_options_save_changes'] = $this->text->__('ADMIN_MAP_OPTIONS_TAB_SAVE_CHANGES');
         }
         else
         {

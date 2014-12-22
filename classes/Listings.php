@@ -21,7 +21,6 @@ class Listings
         $api_url = $this->config->getValue('api_url');
         $api_key = (isset($api_options['api_key'])) ? $api_options['api_key'] : $this->config->getValue('api_key');
         $api_secret_key = (isset($api_options['api_secret_key'])) ? $api_options['api_secret_key'] : $this->config->getValue('api_secret_key');
-
         if (($ch = curl_init($api_url)))
         {
             $headers = array(

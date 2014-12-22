@@ -32,6 +32,7 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
     }
     else
     {
+        var_dump($listings);
         // Holds any listings which met our criteria
         $listings_maybe_matching_search_criteria = array();
 
@@ -513,6 +514,19 @@ if (isset($_GET['map_view']))
 
     $listings = $this->listingPagination->getCurrentPageListings(array_values($listings), $listing_per_page);
 
+    $map_options = get_option('buzztarget_map_options');
+
+    $show_map_legend = false;
+    foreach($map_options['markers'] as $marker) {
+        if(isset($marker) && strlen($marker) > 0)
+            $show_map_legend = true;
+    }
+
+    foreach($all_properties as $key => $property) {
+        $all_properties[$key]['PropertyMapIcon'] = (isset($map_options['markers'][$property['PropertyTypes'][0]])
+            && strlen($map_options['markers'][$property['PropertyTypes'][0]]) > 0) ? $map_options['markers'][$property['PropertyTypes'][0]] : $map_options['markers']['default'];
+    }
+
     $vars = array(
         'list_view' => true,
         'listings' => $listings,
@@ -546,6 +560,8 @@ if (isset($_GET['map_view']))
             'status' => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_STATUS'),
             'details' => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_DETAILS'),
         ),
+        'map_options' => $map_options,
+        'show_map_legend' => $show_map_legend,
         'theme_options' => $themeOptions,
         'theme_color' => $themeOptions['theme_color'],
         'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
@@ -625,4 +641,4 @@ function in_multiarray($elem, $array) {
     }
     return false;
 }
-// echo $this->twig->render('listings.twig', $vars);
+echo $this->twig->render('listings.twig', $vars);

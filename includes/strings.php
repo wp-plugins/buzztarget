@@ -161,6 +161,16 @@ $strings = array(
     'ADMIN_THEME_CSS_TAB_RESTORE_SUCCESS' => 'Theme CSS restored successfully.',
     'ADMIN_THEME_CSS_TAB_RESTORE_FAILURE' => 'An error occurred attempting to restore the theme CSS. Please try again.',
 
+    // Map Options
+    'ADMIN_MAP_OPTIONS_TAB_HEADING' => 'Map Options.',
+    'ADMIN_MAP_OPTIONS_TAB_DESC' => 'Some Map Options description.',
+    'ADMIN_MAP_OPTIONS_TAB_DEFAULT_MARKER' => 'Default',
+    'ADMIN_MAP_OPTIONS_MARKERS_HEADING' => 'Custom Map markers images.',
+    'ADMIN_MAP_OPTIONS_MARKERS_DESC' => 'You can set custom map markers image URLs for different property types here. Don\'t use big icons!',
+    'ADMIN_MAP_OPTIONS_TAB_SAVE_CHANGES' => 'Save Map Options',
+    'ADMIN_MAP_OPTIONS_TAB_SAVE_SUCCESS' => 'Map options saved successfully.',
+    'ADMIN_MAP_OPTIONS_TAB_SAVE_FAILURE' => 'An error occurred attempting to save the map options. Please try again.',
+
     // Options page
     'ADMIN_SETTINGS_PAGE_TITLE' => 'API Settings',
     'ADMIN_SETTINGS_MENU_TITLE' => 'API Settings',

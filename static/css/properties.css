@@ -949,6 +949,18 @@
     line-height: 12px;
 }
 
+/* Search map legend */
+#buzz-target-plugin .search-map-legend {
+    display: block;
+    margin: -20px 0px 20px 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+#buzz-target-plugin .search-map-legend .info-holder {
+    float: left;
+    margin-left: 10px;
+}
+
 #buzz-target-plugin .input-group .btn {
     background-color: rgba(0, 0, 0, 0.25);
     color: #fff;

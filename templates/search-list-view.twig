@@ -18,6 +18,7 @@
                     propertyName : property.Property.PropertyName,
                     propertyStatus : property.Status,
                     propertyDetails : propertyURLDashed,
+                    propertyIcon : property.PropertyMapIcon
                 }
             ])
         %}
@@ -83,6 +84,7 @@
 
                                 var lat = properties[i].propertyLat;
                                 var lon = properties[i].propertyLon;
+                                var property_icon = properties[i].propertyIcon;
 
                                 if ( lat == undefined || lon == undefined){
                                     property_address = properties[i].propertyCity + ', ' + properties[i].propertyState + ' ' + properties[i].propertyZip;
@@ -107,7 +109,8 @@
                                             var marker = new google.maps.Marker({
                                                 position: new google.maps.LatLng(lat, lon),
                                                 map: map,
-                                                title: property_fullAddress + "\n" + property_address
+                                                title: property_fullAddress + "\n" + property_address,
+                                                icon: property_icon
                                             });
                                             google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
                                                 return function () {
@@ -139,7 +142,8 @@
                                         title: properties[i].propertyAddress + "\n" +
                                                 properties[i].propertyCity + ', ' +
                                                 properties[i].propertyState + ' ' +
-                                                properties[i].propertyZip
+                                                properties[i].propertyZip,
+                                        icon: property_icon
                                     });
                                     google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
                                         return function () {
@@ -182,6 +186,17 @@
             {% endif %}
         </div>
     </div>
+    {% if show_map_legend is sameas(true) %}
+        <div class="clearfix theme-bg search-map-legend" style="">
+            {% for key, marker in map_options.markers %}
+                {% if marker is not sameas('') %}
+                    <div class='info-holder'>
+                        <img src='{{marker}}' /> - {{key}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
 <div class="section content sort">
     <div class="clearfix">

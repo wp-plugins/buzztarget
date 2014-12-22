@@ -35,9 +35,10 @@
     {# Tabs #}
     <div style="margin: 20px;">
         <h3 class="nav-tab-wrapper bt-nav-tab-wrapper">
-            <a href="{{page_url}}" class="nav-tab {% if tab is not sameas('theme_options') and tab is not sameas('theme_css') %} nav-tab-active {% endif %}">Fetch Settings</a>
+            <a href="{{page_url}}" class="nav-tab {% if tab is not sameas('theme_options') and tab is not sameas('theme_css') and tab is not sameas('map_options') %} nav-tab-active {% endif %}">Fetch Settings</a>
             <a href="{{page_url}}&tab=theme_options" class="nav-tab {% if tab is sameas('theme_options') %} nav-tab-active {% endif %}">Theme Options</a>
             <a href="{{page_url}}&tab=theme_css" class="nav-tab {% if tab is sameas('theme_css') %} nav-tab-active {% endif %}">CSS</a>
+            <a href="{{page_url}}&tab=map_options" class="nav-tab {% if tab is sameas('map_options') %} nav-tab-active {% endif %}">Map Options</a>
         </h3>
 
         {# Tab Content #}
@@ -277,6 +278,38 @@
                         </table>
                         <input type="submit" name="save_theme_css" class="button-primary" value="{{save_css_changes}}" />
                         <input type="submit" name="restore_theme_css" class="button-secondary" value="{{restore_css_changes}}" />
+                    </div>
+                </form>
+            {% elseif tab is sameas('map_options') %}
+            {# Map Options #}
+                <form method="POST" id="saveMapOptions" action="#">
+                    <strong id="bt-theme-css-sub-head">{{map_options_heading}}</strong>
+                    {# Not needed yet <p id="bt-theme-css-sub-head-desc">{{map_options_desc}}</p> #}
+                    <div id="bt-theme-css">
+
+                        {# Not needed yet <strong id="bt-theme-css-sub-head">{{map_options_markers_heading}}</strong> #}
+                        <p id="bt-theme-css-sub-head-desc">{{map_options_markers_desc}}</p>
+                        <table id="bt-theme-css-table" class="bt-theme-css-table">
+                            <tr>
+                                <td>
+                                    {{map_options_default_marker}}
+                                </td>
+                                <td>
+                                    <input type="text" name="map_options_markers[default]" value="{{map_options['markers']['default']}}" />
+                                </td>
+                            </tr>
+                            {% for property_type in property_types %}
+                            <tr>
+                                <td>
+                                    {{property_type}}
+                                </td>
+                                <td>
+                                    <input type="text" name="map_options_markers[{{property_type}}]" value="{{map_options['markers'][property_type]}}" />
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <input type="submit" name="save_map_options" class="button-primary" value="{{map_options_save_changes}}" />
                     </div>
                 </form>
             {# Fetch Settings (Default) #}
