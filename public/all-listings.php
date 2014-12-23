@@ -32,7 +32,6 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
     }
     else
     {
-        var_dump($listings);
         // Holds any listings which met our criteria
         $listings_maybe_matching_search_criteria = array();
 
