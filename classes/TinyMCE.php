@@ -12,6 +12,7 @@ class TinyMCE
 
         add_filter("mce_external_plugins", array($this, 'mceExternalPlugins')); 
         add_filter('mce_buttons', array($this, 'mceButtons'));
+        wp_enqueue_script('jquery-ui-dialog');
     }
 
     /**

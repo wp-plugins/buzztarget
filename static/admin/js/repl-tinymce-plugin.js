@@ -5,12 +5,12 @@ jQuery(document).ready(function($) {
 				$('<div id="replSelectShortcodeDialog" title="Select Shortcode" style="display:none;"><p>Select which shortcode to use:</p></div>')
 				.appendTo('body');
 				$('#replSelectShortcodeDialog').dialog({
-				 	buttons: {
-				 		"All Listings": function () {
-				 			content = '[all-listings][/all-listings]';
-				 			tinymce.execCommand('mceInsertContent', false, content);
-				 			$(this).dialog('close');
-				 		},
+					buttons: {
+						"All Listings": function () {
+							content = '[all-listings][/all-listings]';
+							tinymce.execCommand('mceInsertContent', false, content);
+							$(this).dialog('close');
+						},
 						"For Sale": function() {
 							content = '[for-sale][/for-sale]';
 							tinymce.execCommand('mceInsertContent', false, content);
