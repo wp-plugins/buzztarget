@@ -13,7 +13,10 @@ $property_name = get_the_title();
 $post_id = get_the_ID();
 $post = get_post($post_id);
 $post_name = $post->post_name;
-$property_id = array_values(explode('-', $post_name))[0];
+
+// these two do not work within one line
+$property_id = array_values(explode('-', $post_name));
+$property_id = $property_id[0];
 
 $property = $properties[$property_id];
 

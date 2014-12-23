@@ -287,7 +287,7 @@
                                     {% if show_price_on_listing is sameas('on') %}
                                         {% if property.PropertyPrice is defined %}
                                             {% if property.PropertyPrice > 0 %}
-                                            ${{ property.PropertyPrice|number_format(2, '.', ',') }}
+                                            ${{ property.PropertyPrice|number_format(0, '.', ',') }}
                                             {% endif %}
                                         {% endif %}
                                     {% endif %}
