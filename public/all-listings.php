@@ -15,6 +15,13 @@ switch($shortcode){
 $search_listings = null;
 $search_vars = array();
 
+
+$propertyTypeDisabled = !!$propertyTypeFilter;
+if ($propertyTypeFilter) {
+    $_POST['property_type'] = $propertyTypeFilter;
+    $_POST['advanced_search_submit'] = true;
+}
+
 // Search form submission
 
 if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
@@ -498,6 +505,10 @@ if (isset($_GET['map_view']))
     $show_keyword = $themeOptions['advanced_search']['keyword'];
     $show_size_range = $themeOptions['advanced_search']['size_range'];
     $show_price_range = $themeOptions['advanced_search']['price_range'];
+
+    if ($propertyTypeDisabled) {
+        $show_property_type = 'off';
+    }
 
     $show_sort_by = $themeOptions['show_sort_by'];
     $is_sort_by_changed = 'false';

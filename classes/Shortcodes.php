@@ -26,6 +26,7 @@ class Shortcodes
         add_shortcode('all-listings', array($this, 'showAllListings'));
         add_shortcode('all-featured', array($this, 'showAllFeatured'));
         add_shortcode('all-broker-listings', array($this, 'showAllBrokerListings'));
+
     }
 
     /**
@@ -37,10 +38,11 @@ class Shortcodes
      *
      * @since 1.0.0
      */
-    public function showAllListings()
+    public function showAllListings($atts)
     {
         global $shortcode;
         $shortcode = 'all_listing';
+        $propertyTypeFilter = ucfirst($atts['type']);
         require_once $this->config->getValue('public_path') . 'all-listings.php';
     }
 
@@ -71,17 +73,19 @@ class Shortcodes
         return $cont;
     }
 
-    public function showForLeaseListings()
+    public function showForLeaseListings($atts)
     {
         global $shortcode;
         $shortcode = 'lease_listing';
+        $propertyTypeFilter = ucfirst($atts['type']);
         require_once $this->config->getValue('public_path') . 'all-listings.php';
     }
 
-    public function showForSaleListings()
+    public function showForSaleListings($atts)
     {
         global $shortcode;
         $shortcode = 'sale_listing';
+        $propertyTypeFilter = ucfirst($atts['type']);
         require_once $this->config->getValue('public_path') . 'all-listings.php';
     }
 
