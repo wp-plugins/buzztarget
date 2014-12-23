@@ -516,10 +516,14 @@ if (isset($_GET['map_view']))
     $map_options = get_option('buzztarget_map_options');
 
     $show_map_legend = false;
+    // Temporarily disabled the displaying of map legend
+    /*
     foreach($map_options['markers'] as $marker) {
         if(isset($marker) && strlen($marker) > 0)
             $show_map_legend = true;
     }
+    */
+
 
     foreach($all_properties as $key => $property) {
         $all_properties[$key]['PropertyMapIcon'] = (isset($map_options['markers'][$property['PropertyTypes'][0]])
