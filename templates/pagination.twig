@@ -1,0 +1,61 @@
+{# ONLY show pagination if there is more than 1 page for now #}
+{% if pagination.total_pages is not sameas(1) %}
+    {# Pagination #}
+    <div class="section content pagination">
+        <div class="clearfix">
+            <div class="pagination-list">
+                {% set searchPart = '' %}
+                {% if show_sort_by is sameas('on') and is_sort_by_changed is sameas ('true') %}
+                    {% set searchPart = searchPart ~ '&sort_by=' ~ default_sort_by %}
+                {% endif %}
+
+                {% if allow_listing_per_page_change is sameas('on') and is_limit_changed is sameas ('true') %}
+                    {% set searchPart = searchPart ~ '&limit_per_page=' ~ listing_per_page %}
+                {% endif %}
+                 {#Next and Previous Page URLs#}
+                {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page ~ searchPart %}
+                {# Prev page no #}
+                {% set previousPage = pagination.current_page - 1 %}
+
+                {# Display previous page if it exists #}
+                    {% for i in previousPage-4..previousPage %}
+                        {% if i > 0 %}
+                            {% set previousPageURL = pagination.listings_current_page_url ~ i ~ searchPart %}
+                            {% set previousPage = i %}
+                            <a href="javascript:void(0)" class="" onclick="get_content('{{previousPageURL}}');">{{previousPage}}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                {# Current page #}
+                {% set currentPageURL = pagination.listings_current_page_url ~ pagination.current_page ~ searchPart %}
+
+                <a href="javascript:void(0)" class="theme-bg" onclick="get_content('{{currentPageURL}}');">{{ pagination.current_page }}</a>
+
+                {# Next page pages #}
+                {% if previousPage is not sameas(0) %}
+                    {% set end = 3 %}
+                {% else %}
+                    {% set end = 4 %}
+                {% endif %}
+
+                {% for i in 1..end %}
+                    {% set nextPage = pagination.current_page + i %}
+                    {% set nextPageURL = pagination.listings_current_page_url ~ nextPage ~ searchPart %}
+
+                    {% if nextPage <= pagination.total_pages %}
+                        <a href="javascript:void(0)" class="" onclick="get_content('{{nextPageURL}}');">{{nextPage}}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {# Previous URL #}
+                {% set previousPageURL = pagination.listings_current_page_url ~ pagination.previous_page ~ searchPart %}
+
+                <a href="javascript:void(0)" id="bt-pagination-lt" class="" onclick="get_content('{{previousPageURL}}');">&lt;</a>
+
+                {# Next URL #}
+                {% set nextPageURL = pagination.listings_current_page_url ~ pagination.next_page ~ searchPart %}
+                <a href="javascript:void(0)" id="bt-pagination-gt" class="" onclick="get_content('{{nextPageURL}}');">></a>
+            </div>
+        </div>
+    </div>
+{% endif %}
