@@ -24,6 +24,7 @@ class Shortcodes
         add_shortcode('for-sale', array($this, 'showForSaleListings'));
         add_shortcode('for-lease', array($this, 'showForLeaseListings'));
         add_shortcode('all-listings', array($this, 'showAllListings'));
+        add_shortcode('listings-map', array($this, 'showListingsMap'));
         add_shortcode('all-featured', array($this, 'showAllFeatured'));
         add_shortcode('all-broker-listings', array($this, 'showAllBrokerListings'));
 
@@ -42,8 +43,18 @@ class Shortcodes
     {
         global $shortcode;
         $shortcode = 'all_listing';
-        $propertyTypeFilter = ucfirst($atts['type']);
+        $propertyTypeFilter = (isset($atts['type'])) ? ucfirst($atts['type']) : NULL;
         require_once $this->config->getValue('public_path') . 'all-listings.php';
+    }
+
+    public function showListingsMap($atts)
+    {
+        global $shortcode;
+        $shortcode = 'listings_map';
+        $propertyTypeFilter = (isset($atts['type'])) ? ucfirst($atts['type']) : NULL;
+        $widgetWidth = (isset($atts['width'])) ? ucfirst($atts['width']) : 400;
+        $widgetHeight = (isset($atts['height'])) ? ucfirst($atts['height']) : 400;
+        require_once $this->config->getValue('public_path') . 'listings-map.php';
     }
 
     public function showAllFeatured($atts)

@@ -39,6 +39,15 @@ jQuery(document).ready(function($) {
 							tinymce.execCommand('mceInsertContent', false, content);
 							$(this).dialog('close');
 						},
+						"Map": function () {
+							content = '[listings-map';
+							if($('#replSelectShortcodeDialog').find('#property_type').val().length > 0) {
+								content += ' type="'+$('#replSelectShortcodeDialog').find('#property_type').val()+'"';
+							}
+							content += '][/listings-map]';
+							tinymce.execCommand('mceInsertContent', false, content);
+							$(this).dialog('close');
+						},
 						Cancel: function() {
 							$(this).dialog('close');
 						}
