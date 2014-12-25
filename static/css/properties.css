@@ -1965,3 +1965,8 @@ a.bt-gm-link {
 .Twenty-Fourteen #buzz-target-plugin .container {
      margin-left: 20%;
 }
+
+/* a fix for yellow Google street view icon on Google map */
+.map img {
+    max-width: none !important;
+}
