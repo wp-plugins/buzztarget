@@ -48,6 +48,16 @@ jQuery(document).ready(function($) {
 							tinymce.execCommand('mceInsertContent', false, content);
 							$(this).dialog('close');
 						},
+						"Featured": function () {
+							content = '[all-featured][/all-featured]';
+							tinymce.execCommand('mceInsertContent', false, content);
+							$(this).dialog('close');
+						},
+						"Broker listings": function () {
+							content = '[all-broker-listings][/all-broker-listings]';
+							tinymce.execCommand('mceInsertContent', false, content);
+							$(this).dialog('close');
+						},
 						Cancel: function() {
 							$(this).dialog('close');
 						}
