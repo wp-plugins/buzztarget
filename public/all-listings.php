@@ -455,7 +455,7 @@ if (isset($_GET['map_view']))
     // Return listings matching search criteria if a search has been requested
     // otherwise just return the listings for the current page only.
 
-    $listings = ($_POST['advanced_search_submit']) ? $search_listings : $listings;
+    $listings = (isset($_POST['advanced_search_submit'])) ? $search_listings : $listings;
 
     $copy = $listings; // create copy to delete dups from
     $usedListings = array(); // used listings
@@ -478,6 +478,7 @@ if (isset($_GET['map_view']))
             if($draft_page->post_status != 'publish'){
                 unset($listings[$key]);
             }
+            Listing::sortListingImages($listing);
         }
     }
 
@@ -536,9 +537,11 @@ if (isset($_GET['map_view']))
     */
 
 
-    foreach($all_properties as $key => $property) {
-        $all_properties[$key]['PropertyMapIcon'] = (isset($map_options['markers'][$property['PropertyTypes'][0]])
+    foreach($all_properties as $key => &$property) {
+        $property['PropertyMapIcon'] = (isset($map_options['markers'][$property['PropertyTypes'][0]])
             && strlen($map_options['markers'][$property['PropertyTypes'][0]]) > 0) ? $map_options['markers'][$property['PropertyTypes'][0]] : $map_options['markers']['default'];
+
+        Listing::sortListingImages($property);
     }
 
     $vars = array(
@@ -577,8 +580,8 @@ if (isset($_GET['map_view']))
         'map_options' => $map_options,
         'show_map_legend' => $show_map_legend,
         'theme_options' => $themeOptions,
-        'theme_color' => $themeOptions['theme_color'],
-        'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
+        'theme_color' => (isset($themeOptions['theme_color'])) ? $themeOptions['theme_color'] : NULL,
+        'theme_overlay_text_color' => (isset($themeOptions['theme_color_overlay_text'])) ? $themeOptions['theme_color_overlay_text'] : NULL,
         'property_url' => site_url() . '/property',
         'properties_url'             => site_url() . '/properties',
         'listing_per_page' => $listing_per_page,

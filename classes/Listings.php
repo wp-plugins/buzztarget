@@ -2,16 +2,210 @@
 
 namespace BuzzTargetLive;
 
-class Listings
+class Listings implements \Iterator, \ArrayAccess
 {
+    private $position = 0;
+    private $container = array();
     protected $config;
 
     public function __construct(Config $config)
     {
+        $this->position = 0;
         $this->config = $config;
     }
 
-    public function getListings()
+    public function __debugInfo() {
+        return $this->container;
+    }
+
+    public static function getSearchParameters() { // returns available parameter values for use in search
+        $listings = get_option('repl_listings');
+    }
+
+    public static function all() { // returns all listings, that are in the database
+        $object = new self(new Config);
+        $object->container = array();
+        foreach(get_option('repl_listings') as $listing) {
+            $object->container[] = new Listing($listing);
+        }
+        return $object;
+    }
+
+    public static function where(array $filter) { // returns filtered listings by input parameters
+        $object = new self(new Config);
+        $object->container = array();
+        foreach(get_option('repl_listings') as $listing) {
+            $matched = true;
+
+            $forLease = (strtolower($listing['ListingType']) == 'forlease') ? true : false;
+            $forSale = (strtolower($listing['ListingType']) == 'forsale') ? true : false;
+
+            if(!($forLease || $forSale)){
+                $forLease = true;
+                $forSale = true;
+            }
+
+            if(count($filter)){
+                foreach($filter as $key => $value){
+                    switch($key){
+                        case 'address_line_1': // address
+                            if (! isset($listing['Property']['Address']['Address'])
+                                || strripos($listing['Property']['Address']['Address'], $value) === false){
+                                $matched = false;
+                            }
+                            break;
+                        case 'address_line_2': // city
+                            if (!isset($listing['Property']['Address']['City'])
+                                || strripos(str_replace(array(',',' '), array("",""), $value), str_replace(array(',',' '), array("",""), $listing['Property']['Address']['City'])) === false){
+                                $matched = false;
+                            }
+                            break;
+                        case 'county': // address
+                            if (! isset($listing['County'])
+                                || strripos($listing['County'], $value) === false){
+                                $matched = false;
+                            }
+                            break;
+                        case 'address_zip_state': // state & zip
+                            if(!isset($listing['Property']['Address']['State']) && !isset($listing['Property']['Address']['Zip'])){
+                                $matched = false;
+                            }else{
+                                $stateZip = "";
+                                if(isset($listing['Property']['Address']['State'])){
+                                    $stateZip = $listing['Property']['Address']['State'];
+                                }
+                                if(isset($listing['Property']['Address']['Zip'])){
+                                    $stateZip .= $listing['Property']['Address']['Zip'];
+                                }
+                                $addrStateZip = str_replace(array(',',' '), array("",""), $value);
+
+                                if (strripos($stateZip, $addrStateZip) === false){
+                                    $matched = false;
+                                }
+                            }
+                            break;
+                        case 'property_type':
+                            if(!isset($listing['PropertyTypes'])){
+                                $matched = false;
+                            }else{
+                                if(!isset($listing['PropertyTypes']) || !in_array($value, $listing['PropertyTypes'])) {
+                                    $matched = false;
+                                }
+                            }
+                            break;
+                        case 'broker':
+                            if(!isset($listing['ListingAgents'])){
+                                $matched = false;
+                            }else{
+                                for($i = 0; $i < count($listing['ListingAgents']); ++$i){
+                                    if($listing['ListingAgents'][$i]['FirstName'] . ' ' . $listing['ListingAgents'][$i]['LastName'] == $value){
+                                        break;
+                                    }
+                                }
+                                if($i >= count($listing['ListingAgents'])){
+                                    $matched = false;
+                                }
+                            }
+                            break;
+                        case 'keyword':
+                            if(!in_multiarray($value, $listing)){
+                                $matched = false;
+                            }
+                            break;
+                        case 'size_from': //&& $listing['TotalLotSize'] <= $sizeTo |  && $availableSpaceSize[1] <= $sizeTo
+                            if ($forSale){
+                                if(!isset($listing['TotalLotSize'])
+                                   || $listing['TotalLotSize'] < $value ){
+                                    $matched = false;
+                                }
+                            }elseif($forLease){
+                                if(! isset($listing['SpacesToLease'])){
+                                    $matched = false;
+                                }else{
+                                    $availableSpaceSize = $getAvailableSpaceSize($listing['SpacesToLease']);
+                                    if ($availableSpaceSize[0] < $value){
+                                        $matched = false;
+                                    }
+                                }
+                            }
+                            break;
+                        case 'size_to':
+                            if ($forSale){
+                                if(!isset($listing['TotalLotSize'])
+                                    || $listing['TotalLotSize'] > $value ){
+                                    $matched = false;
+                                }
+                            }elseif($forLease){
+                                if(! isset($listing['SpacesToLease'])){
+                                    $matched = false;
+                                }else{
+                                    $availableSpaceSize = $getAvailableSpaceSize($listing['SpacesToLease']);
+                                    if ($availableSpaceSize[1] > $value){
+                                        $matched = false;
+                                    }
+                                }
+                            }
+                            break;
+                        case 'price_from':
+                            if ($forSale){
+                                if(!isset($listing['PropertyPrice'])
+                                    || $listing['PropertyPrice'] < $value){
+                                    $matched = false;
+                                }
+                            }elseif ($forLease){
+                                if(! isset($listing['SpacesToLease'])){
+                                    $matched = false;
+                                }else{
+                                    $spacePrice = $getSpacePrice($listing['SpacesToLease']);
+                                    if ($spacePrice[0] < $value){
+                                        $matched = false;
+                                    }
+                                }
+                            }
+                            break;
+                        case 'price_to':
+                            if ($forSale){
+                                if(!isset($listing['PropertyPrice'])
+                                    || $listing['PropertyPrice'] > $value){
+                                    $matched = false;
+                                }
+                            }elseif ($forLease){
+                                if(! isset($listing['SpacesToLease'])){
+                                    $matched = false;
+                                }else{
+                                    $spacePrice = $getSpacePrice($listing['SpacesToLease']);
+                                    if ($spacePrice[1] > $value){
+                                        $matched = false;
+                                    }
+                                }
+                            }
+                            break;
+                        case 'listing_types':
+                            if (is_array($value) && !empty($value)){
+                                for($i = 0; $i < count($value); ++$i){
+                                    if ($value[$i] == strtolower($listing['ListingType'])){
+                                        break;
+                                    }
+                                }
+                                if($i >= count($listing['ListingType'])){
+                                    $matched = false;
+                                }
+                            }
+                            break;
+                    }
+
+                }
+                if($matched){
+                    $object->container[] = new Listing($listing);;
+                }
+            }
+        }
+        return $object;
+    }
+
+    public static function get() {} // returns a listing by id
+
+    public function getListings() // loads listings from API
     {
 
         // Get options
@@ -55,13 +249,13 @@ class Listings
                 // Include any types that are allowed
                 if (isset($listing['ListingType']))
                 {
-                    if ($allowedListingTypes 
+                    if ($allowedListingTypes
                         && in_array(strtolower($listing['ListingType']), $allowedListingTypes))
                     {
                         //Include any statuses that are allowed
                         if (isset($listing['Status']))
                         {
-                            if ($allowedListingStatuses 
+                            if ($allowedListingStatuses
                                 && in_array(strtolower($listing['Status']), $allowedListingStatuses))
                             {
                                 $_listings[] = $listing;
@@ -119,7 +313,7 @@ class Listings
 //                delete_option('repl_properties');
 //            }
 
-            // Create a new post for each property and save them 
+            // Create a new post for each property and save them
             $properties = array();
 
             $existingPosts = $wpdb->get_results("SELECT * FROM `{$wpdb->posts}` WHERE `post_type` = 'properties';", ARRAY_A);
@@ -205,6 +399,54 @@ class Listings
             return true;
         }
         return false;
+    }
+
+    public function count() {
+        return count($this->container);
+    }
+
+    ///////////////////////////////////////
+    // below are interfaces implementation methods to make the class act as a usual array
+    ///////////////////////////////////////
+
+    function rewind() {
+        $this->position = 0;
+    }
+
+    function current() {
+        return $this->container[$this->position];
+    }
+
+    function key() {
+        return $this->position;
+    }
+
+    function next() {
+        ++$this->position;
+    }
+
+    function valid() {
+        return isset($this->container[$this->position]);
+    }
+
+    public function offsetSet($offset, $value) {
+        if (is_null($offset)) {
+            $this->container[] = $value;
+        } else {
+            $this->container[$offset] = $value;
+        }
+    }
+
+    public function offsetExists($offset) {
+        return isset($this->container[$offset]);
+    }
+
+    public function offsetUnset($offset) {
+        unset($this->container[$offset]);
+    }
+
+    public function offsetGet($offset) {
+        return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
 
 }
