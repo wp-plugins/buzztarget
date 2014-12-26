@@ -1970,3 +1970,7 @@ a.bt-gm-link {
 .map img {
     max-width: none !important;
 }
+
+.property-attachment-icon {
+    height: 25px !important;
+}

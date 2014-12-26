@@ -178,7 +178,11 @@ if($property){
                 <h4 class="title info theme-color">Attachments:</h4>
                 <ul class="property-docs">
                     <?php foreach ($propertyDocuments as $doc) {?>
-                    <li><a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a></li>
+                    <li>
+                        <?php preg_match('/\.(\w+)$/', $doc['AttachmentPath'], $matches); ?>
+                        <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
+                        <a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a>
+                    </li>
                     <?php } ?>
                 </ul>
                 <?php } ?>
@@ -625,6 +629,7 @@ if($property){
                         center: new google.maps.LatLng(lat, lon),
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
+                    
                     map = new google.maps.Map(document.getElementById('bt-single-property-map-canvas'), mapOptions);
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(lat, lon),
@@ -640,7 +645,11 @@ if($property){
         <h4 class="title info theme-color">Attachments:</h4>
         <ul class="property-docs">
             <?php foreach ($propertyDocuments as $doc) {?>
-            <li><a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a></li>
+            <li>
+                <?php preg_match('/\.(\w+)$/', $doc['AttachmentPath'], $matches); ?>
+                <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
+                <a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a>
+            </li>
             <?php } ?>
         </ul>
         <?php } ?>
