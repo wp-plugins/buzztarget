@@ -1,13 +1,12 @@
 <?php
+namespace BuzzTargetLive;
 
 get_header();
 
-
 $theme_options = get_option('buzztarget_theme_options');
-$themeColor = $theme_options['theme_color'];
+$themeColor = (isset($theme_options['theme_color'])) ? $theme_options['theme_color'] : NULL;
 $listingDetailStyle = $theme_options['listing_detail_style'];
 
-$properties = get_option('repl_properties');
 $property_name = get_the_title();
 
 $post_id = get_the_ID();
@@ -18,8 +17,7 @@ $post_name = $post->post_name;
 $property_id = array_values(explode('-', $post_name));
 $property_id = $property_id[0];
 
-$property = $properties[$property_id];
-
+$property = Listings::getProperty($property_id);
 
 if($property){
     $phoneImage = plugin_dir_url(dirname(__FILE__)) . 'static/images/phone.png';

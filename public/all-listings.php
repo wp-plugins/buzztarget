@@ -16,13 +16,12 @@ $search_listings = null;
 $search_vars = array();
 
 
-$propertyTypeDisabled = !!$propertyTypeFilter;
-if ($propertyTypeFilter) {
-    $_POST['property_type'] = $propertyTypeFilter;
+$property_type_disabled = !!$property_type_filter;
+if ($property_type_filter) {
+    $_POST['property_type'] = $property_type_filter;
     $_POST['advanced_search_submit'] = true;
 }
 
-// Search form submission
 
 if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
 {
@@ -31,631 +30,247 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
     }else{
         $_SESSION["wp-search"] = serialize($_POST);
     }
-    // Listings could not be retrieved from database, or none have been
-    // fetched yet.
-    if (!$listings = get_option('repl_listings'))
-    {
-        $search_vars['trans']['search_error'] = $this->text->__('ADVANCED_SEARCH_NO_LISTINGS');
+
+    // $_POST keys
+    $post_keys = array(
+        'address_line_1',
+        'address_line_2',
+        'county',
+        'address_zip_state',
+        'property_type',
+        'broker',
+        'keyword',
+        'size_from', 'size_to',
+        'price_from', 'price_to'
+    );
+    // $_POST filter for key(s)
+    $post_filters = 'wp_strip_all_tags';
+    // Get $_POST values from key(s)
+    list($address_line1,
+        $address_line2,
+        $county,
+        $address_zip_state,
+        $property_type,
+        $broker,
+        $keyword,
+        $size_from, $size_to,
+        $price_from, $price_to) = $this->request->getPostValues($post_keys, $post_filters);
+
+    // Fetch listing types separately
+    list($listingTypes) = $this->request->getPostValues(array('listing_types'));
+
+    if($size_from){
+        $size_from = (float) $size_from;
     }
-    else
-    {
-        // Holds any listings which met our criteria
-        $listings_maybe_matching_search_criteria = array();
+    if($size_to){
+        $size_to = (float) $size_to;
+    }
+    if($price_from){
+        $price_from = (float) $price_from;
+    }
+    if($price_to){
+        $price_to = (float) $price_to;
+    }
+    // Saves form submission values
+    $search_vars['saved'] = array(
+        'address_line_1' => $address_line1,
+        'address_line_2' => $address_line2,
+        'county' => $county,
+        'address_zip_state' => $address_zip_state,
+        'property_type' => $property_type,
+        'broker' => $broker,
+        'keyword' => $keyword,
+        'size_from' => $size_from,
+        'size_to' => $size_to,
+        'price_from' => $price_from,
+        'price_to' => $price_to,
+        'listing_types' => $listingTypes
+    );
 
-        // $_POST keys
-        $postKeys = array(
-            'address_line_1',
-            'address_line_2',
-            'county',
-            'address_zip_state',
-            'property_type',
-            'broker',
-            'keyword',
-            'size_from', 'size_to',
-            'price_from', 'price_to'
-        );
-        // $_POST filter for key(s)
-        $postFilters = 'wp_strip_all_tags';
-        // Get $_POST values from key(s)
-        list($addressLine1,
-            $addressLine2,
-            $county,
-            $addressZipState,
-            $propertyType,
-            $broker,
-            $keyword,
-            $sizeFrom, $sizeTo,
-            $priceFrom, $priceTo) = $this->request->getPostValues($postKeys, $postFilters);
-
-        // Fetch listing types separately
-        list($listingTypes) = $this->request->getPostValues(array('listing_types'));
-
-        if($sizeFrom){
-            $sizeFrom = (float) $sizeFrom;
+    // Create search criteria array
+    foreach($search_vars['saved'] as $key => $value){
+        if(is_array($value) && !empty($value)){
+            $search_criteria[$key] = $value;
+        }elseif(is_numeric($value) && $value != 0){
+            $search_criteria[$key] = $value;
+        }elseif(is_string($value) && trim($value) != ""){
+            $search_criteria[$key] = trim($value);
         }
-        if($sizeTo){
-            $sizeTo = (float) $sizeTo;
-        }
-        if($priceFrom){
-            $priceFrom = (float) $priceFrom;
-        }
-        if($priceTo){
-            $priceTo = (float) $priceTo;
-        }
-        // Saves form submission values
-        $search_vars['saved'] = array(
-            'address_line_1' => $addressLine1,
-            'address_line_2' => $addressLine2,
-            'county' => $county,
-            'address_zip_state' => $addressZipState,
-            'property_type' => $propertyType,
-            'broker' => $broker,
-            'keyword' => $keyword,
-            'size_from' => $sizeFrom,
-            'size_to' => $sizeTo,
-            'price_from' => $priceFrom,
-            'price_to' => $priceTo,
-            'listing_types' => $listingTypes
-        );
+    }
 
-        // Save search criteria
-        update_option('buzztarget_saved_search_values', $search_vars['saved']);
+    $listings = Listings::where($search_criteria);
+    $properties = Listings::where($search_criteria);
 
-        // Create search criteria array
-        foreach($search_vars['saved'] as $key => $value){
-            if(is_array($value) && !empty($value)){
-                $search_criteria[$key] = $value;
-            }elseif(is_numeric($value) && $value != 0){
-                $search_criteria[$key] = $value;
-            }elseif(is_string($value) && trim($value) != ""){
-                $search_criteria[$key] = trim($value);
-            }
-        }
+    if($listings->count() < 1) {
+        $search_vars['trans']['search_error'] = $this->text->__('ADVANCED_SEARCH_NO_RESULTS_FOUND');
+    }
+} else {
+    $listings = Listings::all();
+    $properties = Listings::all();
+}
 
-        $getAvailableSpaceSize = function ($spacesToLease) {
-            $sizes = array();
-            foreach ($spacesToLease as $space)
-            {
-                if (isset($space['Size']))
-                {
-                    $sizes[] = $space['Size'];
-                }
-            }
-            unset($space);
-            return array(min($sizes), max($sizes));
-        };
 
-        $getSpacePrice = function ($spacesToLease) {
-            $rates = array();
-            foreach ($spacesToLease as $space)
-            {
-                if (isset($space['RentalRate']))
-                {
-                    $rates[] = $space['RentalRate'];
-                }
-            }
-            unset($space);
-            return array(min($rates), max($rates));
-        };
+$theme_options = get_option('buzztarget_theme_options');
 
-        foreach ($listings as $key => $listing)
-        {
-            $matched = true;
-
-            $forLease = (strtolower($listing['ListingType']) == 'forlease') ? true : false;
-            $forSale = (strtolower($listing['ListingType']) == 'forsale') ? true : false;
-
-            if(!($forLease || $forSale)){
-                $forLease = true;
-                $forSale = true;
-            }
-
-            if(count($search_criteria) && count($listing)){
-                foreach($search_criteria as $s_criteria => $value){
-                    switch($s_criteria){
-                        case 'address_line_1': // address
-                            if (! isset($listing['Property']['Address']['Address'])
-                                || strripos($listing['Property']['Address']['Address'], $value) === false){
-                                $matched = false;
-                            }
-                            break;
-                        case 'address_line_2': // city
-                            if (!isset($listing['Property']['Address']['City'])
-                                || strripos(str_replace(array(',',' '), array("",""), $value), str_replace(array(',',' '), array("",""), $listing['Property']['Address']['City'])) === false){
-                                $matched = false;
-                            }
-                            break;
-                        case 'county': // address
-                            if (! isset($listing['County'])
-                                || strripos($listing['County'], $value) === false){
-                                $matched = false;
-                            }
-                            break;
-                        case 'address_zip_state': // state & zip
-                            if(!isset($listing['Property']['Address']['State']) && !isset($listing['Property']['Address']['Zip'])){
-                                $matched = false;
-                            }else{
-                                $stateZip = "";
-                                if(isset($listing['Property']['Address']['State'])){
-                                    $stateZip = $listing['Property']['Address']['State'];
-                                }
-                                if(isset($listing['Property']['Address']['Zip'])){
-                                    $stateZip .= $listing['Property']['Address']['Zip'];
-                                }
-                                $addrStateZip = str_replace(array(',',' '), array("",""), $value);
-
-                                if (strripos($stateZip, $addrStateZip) === false){
-                                    $matched = false;
-                                }
-                            }
-                            break;
-                        case 'property_type':
-                            if(!isset($listing['PropertyTypes'])){
-                                $matched = false;
-                            }else{
-                                for($i = 0; $i < count($listing['PropertyTypes']); ++$i){
-                                    if($listing['PropertyTypes'][$i] == $value){
-                                        break;
-                                    }
-                                }
-                                if($i >= count($listing['PropertyTypes'])){
-                                    $matched = false;
-                                }
-                            }
-                            break;
-                        case 'broker':
-                            if(!isset($listing['ListingAgents'])){
-                                $matched = false;
-                            }else{
-                                for($i = 0; $i < count($listing['ListingAgents']); ++$i){
-                                    if($listing['ListingAgents'][$i]['FirstName'] . ' ' . $listing['ListingAgents'][$i]['LastName'] == $value){
-                                        break;
-                                    }
-                                }
-                                if($i >= count($listing['ListingAgents'])){
-                                    $matched = false;
-                                }
-                            }
-                            break;
-                        case 'keyword':
-                            if(!in_multiarray($value, $listing)){
-                                $matched = false;
-                            }
-                            break;
-                        case 'size_from': //&& $listing['TotalLotSize'] <= $sizeTo |  && $availableSpaceSize[1] <= $sizeTo
-                            if ($forSale){
-                                if(!isset($listing['TotalLotSize'])
-                                   || $listing['TotalLotSize'] < $value ){
-                                    $matched = false;
-                                }
-                            }elseif($forLease){
-                                if(! isset($listing['SpacesToLease'])){
-                                    $matched = false;
-                                }else{
-                                    $availableSpaceSize = $getAvailableSpaceSize($listing['SpacesToLease']);
-                                    if ($availableSpaceSize[0] < $value){
-                                        $matched = false;
-                                    }
-                                }
-                            }
-                            break;
-                        case 'size_to':
-                            if ($forSale){
-                                if(!isset($listing['TotalLotSize'])
-                                    || $listing['TotalLotSize'] > $value ){
-                                    $matched = false;
-                                }
-                            }elseif($forLease){
-                                if(! isset($listing['SpacesToLease'])){
-                                    $matched = false;
-                                }else{
-                                    $availableSpaceSize = $getAvailableSpaceSize($listing['SpacesToLease']);
-                                    if ($availableSpaceSize[1] > $value){
-                                        $matched = false;
-                                    }
-                                }
-                            }
-                            break;
-                        case 'price_from':
-                            if ($forSale){
-                                if(!isset($listing['PropertyPrice'])
-                                    || $listing['PropertyPrice'] < $value){
-                                    $matched = false;
-                                }
-                            }elseif ($forLease){
-                                if(! isset($listing['SpacesToLease'])){
-                                    $matched = false;
-                                }else{
-                                    $spacePrice = $getSpacePrice($listing['SpacesToLease']);
-                                    if ($spacePrice[0] < $value){
-                                        $matched = false;
-                                    }
-                                }
-                            }
-                            break;
-                        case 'price_to':
-                            if ($forSale){
-                                if(!isset($listing['PropertyPrice'])
-                                    || $listing['PropertyPrice'] > $value){
-                                    $matched = false;
-                                }
-                            }elseif ($forLease){
-                                if(! isset($listing['SpacesToLease'])){
-                                    $matched = false;
-                                }else{
-                                    $spacePrice = $getSpacePrice($listing['SpacesToLease']);
-                                    if ($spacePrice[1] > $value){
-                                        $matched = false;
-                                    }
-                                }
-                            }
-                            break;
-                        case 'listing_types':
-                            if (is_array($value) && !empty($value)){
-                                for($i = 0; $i < count($value); ++$i){
-                                    if ($value[$i] == strtolower($listing['ListingType'])){
-                                        break;
-                                    }
-                                }
-                                if($i >= count($listing['ListingType'])){
-                                    $matched = false;
-                                }
-                            }
-                            break;
-                    }
-
-                }
-                if($matched){
-                    $search_listings[] = $listing;
-                }
-            }else{
-                $search_listings = $listings;
-            }
-        }
-
-        if (is_array($search_listings) && !empty($search_listings))
-        {
-            // Save search listings to database
-            update_option('buzztarget_saved_search_listings', $search_listings);
-        }
-        else
-        {
-            $search_vars['trans']['search_error'] = $this->text->__('ADVANCED_SEARCH_NO_RESULTS_FOUND');
-
-            // Delete cached search values
-            delete_option('buzztarget_saved_search_values');
-
-            // Delete cached search listings
-            delete_option('buzztarget_saved_search_listings');
+if($listings->count()){
+    foreach($listings as $key => $val){
+        $draft_page = get_post($val['wp_page_id']);
+        if($draft_page->post_status != 'publish'){
+            $listings->remove($key);
         }
     }
 }
 
+$is_limit_changed = 'false';
+if(isset($_GET['limit_per_page'])){
+    $is_limit_changed = 'true';
+    $listing_per_page = $_GET['limit_per_page'];
+}
+else{
+    $listing_per_page = $theme_options['default_listing_per_page'];
+}
+
+$allow_listing_per_page_change = $theme_options['allow_listing_per_page_change'];
+$show_price_on_listing = $theme_options['show_price_on_listing'];
+
+$show_filter_form = $theme_options['advanced_search']['status'];
+$show_listing_type = $theme_options['advanced_search']['listing_type'];
+$show_street = $theme_options['advanced_search']['street'];
+$show_city = $theme_options['advanced_search']['city'];
+$show_county = $theme_options['advanced_search']['county'];
+$show_zip = $theme_options['advanced_search']['zip'];
+$show_property_type = $theme_options['advanced_search']['property_type'];
+$show_broker = $theme_options['advanced_search']['broker'];
+$show_keyword = $theme_options['advanced_search']['keyword'];
+$show_size_range = $theme_options['advanced_search']['size_range'];
+$show_price_range = $theme_options['advanced_search']['price_range'];
+
+if ($property_type_disabled) {
+    $show_property_type = 'off';
+}
+
+$show_sort_by = $theme_options['show_sort_by'];
+$is_sort_by_changed = 'false';
+if(isset($_GET['sort_by'])){
+    $is_sort_by_changed = 'true';
+    $default_sort_by = $_GET['sort_by'];
+}
+else{
+    $default_sort_by = $theme_options['default_sort_by'];
+}
+
+$listings->order($default_sort_by);
+
+$listings->paginate((isset($_GET['current_page'])) ? $_GET['current_page'] : 1, $listing_per_page);
+
+$map_options = get_option('buzztarget_map_options');
+
+$show_map_legend = false;
+// Temporarily disabled the displaying of map legend
 /*
- * Map View
- */
-if (isset($_GET['map_view']))
-{
-    $listings            = get_option('repl_listings');
+foreach($map_options['markers'] as $marker) {
+    if(isset($marker) && strlen($marker) > 0)
+        $show_map_legend = true;
+}
+*/
 
-    $listings = ($_POST['advanced_search_submit']) ? $search_listings : $listings;
+foreach($properties as $listing) {
+    $listing->getMapIcon($map_options);
+}
 
-    $themeOptions = get_option('buzztarget_theme_options');
+$filter_values = Listings::getSearchParameters();
 
-    $vars = array(
-        'listings'  => $listings,
-        'map_view'  => true,
-        'trans'     => array(
-            'advanced_search' => array(
-                'property_search' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_SEARCH'),
-                'keyword' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_KEYWORD'),
-                'address' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS'),
-                'address_line_1_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_ADDRESS_LINE_1_PLACEHOLDER'),
-                'address_city_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_CITY_PLACEHOLDER'),
-                'address_state_zip_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_STATE_ZIP_PLACEHOLDER'),
-                'listing_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_LISTING_TYPE'),
-                'property_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_TYPE'),
-                'size' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE'),
-                'size_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_FROM_PLACEHOLDER'),
-                'size_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_TO_PLACEHOLDER'),
-                'price' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE'),
-                'price_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE_FROM_PLACEHOLDER'),
-                'price_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE_TO_PLACEHOLDER'),
-                'reset_button_label' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_RESET_BUTTON_LABEL'),
-                'search_button_label' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SEARCH_BUTTON_LABEL'),
-                'advanced_search' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH'),
-            ),
-            'list_view' => $this->text->__('ALL_LISTINGS_PAGE_LIST_VIEW_BUTTON_LABEL'),
-            'map_view'  => $this->text->__('ALL_LISTINGS_PAGE_MAP_VIEW_BUTTON_LABEL'),
-            'status'    => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_STATUS'),
-            'details'   => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_DETAILS'),
+$vars = array(
+    'list_view' => true,
+    'all_properties' => $properties,
+    'listings' => $listings,
+    'broker_list' => $filter_values['broker'],
+    'property_type_list' => $filter_values['property_type'],
+    'county_list' => $filter_values['county'],
+    // Most text
+    'trans' => array(
+        'advanced_search' => array(
+            'property_search' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_SEARCH'),
+            'keyword' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_KEYWORD'),
+            'address' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS'),
+            'address_line_1_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_ADDRESS_LINE_1_PLACEHOLDER'),
+            'address_city_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_CITY_PLACEHOLDER'),
+            'address_state_zip_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_STATE_ZIP_PLACEHOLDER'),
+            'listing_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_LISTING_TYPE'),
+            'property_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_TYPE'),
+            'size' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE'),
+            'size_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_FROM_PLACEHOLDER'),
+            'size_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_TO_PLACEHOLDER'),
+            'price' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE'),
+            'price_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE_FROM_PLACEHOLDER'),
+            'price_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE_TO_PLACEHOLDER'),
+            'reset_button_label' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_RESET_BUTTON_LABEL'),
+            'search_button_label' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SEARCH_BUTTON_LABEL'),
+            'advanced_search' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH'),
         ),
-        'theme_options' => $themeOptions,
-        'theme_color' => $themeOptions['theme_color'],
-        'theme_overlay_text_color' => $themeOptions['theme_color_overlay_text'],
-        'property_url' => site_url() . '/property',
-        'properties_url'             => site_url() . '/properties',
-        'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
-        'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
-        //'saved' => $savedSearchValues,
-    );
+        'list_view' => $this->text->__('ALL_LISTINGS_PAGE_LIST_VIEW_BUTTON_LABEL'),
+        'map_view' => $this->text->__('ALL_LISTINGS_PAGE_MAP_VIEW_BUTTON_LABEL'),
+        'status' => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_STATUS'),
+        'details' => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_DETAILS'),
+    ),
+    'map_options' => $map_options,
+    'show_map_legend' => $show_map_legend,
+    'theme_options' => $theme_options,
+    'theme_color' => (isset($theme_options['theme_color'])) ? $theme_options['theme_color'] : NULL,
+    'theme_overlay_text_color' => (isset($theme_options['theme_color_overlay_text'])) ? $theme_options['theme_color_overlay_text'] : NULL,
+    'property_url' => site_url() . '/property',
+    'properties_url' => site_url() . '/properties',
+    'listing_per_page' => $listing_per_page,
+    'allow_listing_per_page_change' => $allow_listing_per_page_change,
+    'show_price_on_listing' => $show_price_on_listing,
+    'show_sort_by' => $show_sort_by,
+    'default_sort_by' => $default_sort_by,
+    'is_limit_changed' => $is_limit_changed,
+    'is_sort_by_changed' => $is_sort_by_changed,
+    'show_filter_form' => $show_filter_form,
+    'show_listing_type' => $show_listing_type,
+    'show_street' => $show_street,
+    'show_city' => $show_city,
+    'show_county' => $show_county,
+    'show_zip' => $show_zip,
+    'show_property_type' => $show_property_type,
+    'show_broker' => $show_broker,
+    'show_keyword' => $show_keyword,
+    'show_size_range' => $show_size_range,
+    'show_price_range' => $show_price_range,
+    'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
+    'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
+    'theme_name' => str_replace(" ", "-", get_current_theme())
+    // Saved search values
+    //'saved' => $savedSearchValues,
+);
 
-    $vars = array_merge_recursive($vars, $search_vars);
+$vars = array_merge_recursive($vars, $search_vars);
 
-    /*
-     * Pagination
-     */
-    $currentPage = $this->listingPagination->getCurrentPage();
-    $totalPages = $this->listingPagination->getTotalPages();
+$current_page = $listings->getCurrentPage();
+$total_pages = $listings->getTotalPages();
 
-    $_currentPage = $currentPage;
-    $nextPage = (($_cPage = $_currentPage) + 1 > $totalPages) ? $_currentPage : $_cPage + 1;
-    $previousPage = (($_cPage = $_currentPage) - 1 === 0) ? $_currentPage : $_cPage - 1;
+$_current_page = $current_page;
+$next_page = (($_c_page = $_current_page) + 1 > $total_pages) ? $_current_page : $_c_page + 1;
+$previous_page = (($_c_page = $_current_page) - 1 === 0) ? $_current_page : $_c_page - 1;
 
-    $start = $this->listingPagination->getStart();
-    $end = $this->listingPagination->getEnd();
-
-    $vars['pagination'] = array(
-        'current_page' => $currentPage,
-        'total_pages' => absint($totalPages),
-        'next_page' => $nextPage,
-        'previous_page' => $previousPage,
-        'start' => $start,
-        'end' => $end,
-        'listings_current_page_url' =>  site_url() . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '?map_view=true&current_page=',
-    );
-
-    $vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-}else{
-/*
- * List View
- */
-    if (isset($_GET['list_view']) && $_GET['list_view'] === 'main' && !isset($_POST['advanced_search_submit']))
-    {
-        // Delete cached search values
-        delete_option('buzztarget_saved_search_values');
-
-        // Delete cached search listings
-        delete_option('buzztarget_saved_search_listings');
-    }
-
-    // Attempt to fetch cached listings.
-    if (!$listings = get_option('repl_listings'))
-        return;
-
-    if(!is_array($search_listings)){
-        $search_listings = array();
-    }
-
-    $broker_list = array();
-    $property_type_list = array();
-    $county_list = array();
-    foreach($listings as $property){
-        $listingAgents = $property['ListingAgents'];
-        $propertyTypes = $property['PropertyTypes'];
-        $county = $property['County'];
-        foreach($listingAgents as $agent){
-            $broker = $agent['FirstName'] . ' ' . $agent['LastName'];
-            if (!in_array($broker, $broker_list)) {
-                $broker_list[] = $broker;
-            }
-        }
-        foreach($propertyTypes as $property){
-            $propertyType = $property;
-            if ($propertyType && !in_array($propertyType, $property_type_list)) {
-                $property_type_list[] = $propertyType;
-            }
-        }
-        if ($county && !in_array($county, $county_list)) {
-            $county_list[] = $county;
-        }
-    }
-
-    // Return listings matching search criteria if a search has been requested
-    // otherwise just return the listings for the current page only.
-
-    $listings = (isset($_POST['advanced_search_submit'])) ? $search_listings : $listings;
-
-    $copy = $listings; // create copy to delete dups from
-    $usedListings = array(); // used listings
-
-    for( $i=0; $i<count($listings); $i++ ) {
-
-        if ( in_array( $listings[$i]['ListingId'], $usedListings ) ) {
-            unset($copy[$i]);
-        }
-        else {
-            $usedListings[] = $listings[$i]['ListingId'];
-        }
-    }
-    $all_properties = $copy;
-    $listings = $copy;
-
-    if(count($listings)){
-        foreach($listings as $key => $val){
-            $draft_page = get_post($listings[$key]['wp_page_id']);
-            if($draft_page->post_status != 'publish'){
-                unset($listings[$key]);
-            }
-            Listing::sortListingImages($listing);
-        }
-    }
-
-    $themeOptions = get_option('buzztarget_theme_options');
-    $is_limit_changed = 'false';
-    if(isset($_GET['limit_per_page'])){
-        $is_limit_changed = 'true';
-        $listing_per_page = $_GET['limit_per_page'];
-    }
-    else{
-        $listing_per_page = $themeOptions['default_listing_per_page'];
-    }
-
-    $allow_listing_per_page_change = $themeOptions['allow_listing_per_page_change'];
-    $show_price_on_listing = $themeOptions['show_price_on_listing'];
-
-    $show_filter_form = $themeOptions['advanced_search']['status'];
-    $show_listing_type = $themeOptions['advanced_search']['listing_type'];
-    $show_street = $themeOptions['advanced_search']['street'];
-    $show_city = $themeOptions['advanced_search']['city'];
-    $show_county = $themeOptions['advanced_search']['county'];
-    $show_zip = $themeOptions['advanced_search']['zip'];
-    $show_property_type = $themeOptions['advanced_search']['property_type'];
-    $show_broker = $themeOptions['advanced_search']['broker'];
-    $show_keyword = $themeOptions['advanced_search']['keyword'];
-    $show_size_range = $themeOptions['advanced_search']['size_range'];
-    $show_price_range = $themeOptions['advanced_search']['price_range'];
-
-    if ($propertyTypeDisabled) {
-        $show_property_type = 'off';
-    }
-
-    $show_sort_by = $themeOptions['show_sort_by'];
-    $is_sort_by_changed = 'false';
-    if(isset($_GET['sort_by'])){
-        $is_sort_by_changed = 'true';
-        $default_sort_by = $_GET['sort_by'];
-    }
-    else{
-        $default_sort_by = $themeOptions['default_sort_by'];
-    }
-
-    $listings = $this->listingSort->getSortListings(array_values($listings), $default_sort_by);
-
-    $listings = $this->listingPagination->getCurrentPageListings(array_values($listings), $listing_per_page);
-
-    $map_options = get_option('buzztarget_map_options');
-
-    $show_map_legend = false;
-    // Temporarily disabled the displaying of map legend
-    /*
-    foreach($map_options['markers'] as $marker) {
-        if(isset($marker) && strlen($marker) > 0)
-            $show_map_legend = true;
-    }
-    */
+$start = $listings->getStart();
+$end = $listings->getEnd();
 
 
-    foreach($all_properties as $key => &$property) {
-        $property['PropertyMapIcon'] = (isset($map_options['markers'][$property['PropertyTypes'][0]])
-            && strlen($map_options['markers'][$property['PropertyTypes'][0]]) > 0) ? $map_options['markers'][$property['PropertyTypes'][0]] : $map_options['markers']['default'];
+parse_str($_SERVER['QUERY_STRING'], $query_string);
+$rdr_str = (array_key_exists('search', $query_string))? '?search=true&current_page=' : '?current_page=';
 
-        Listing::sortListingImages($property);
-    }
+$vars['pagination'] = array(
+    'current_page' => $current_page,
+    'total_pages' => absint($total_pages),
+    'next_page' => $next_page,
+    'previous_page' => $previous_page,
+    'start' => $start,
+    'end' => $end,
+    'listings_current_page_url' =>  site_url() . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . $rdr_str,
+);
 
-    $vars = array(
-        'list_view' => true,
-        'listings' => $listings,
-        'all_properties' => $all_properties,
-        'broker_list' => $broker_list,
-        'property_type_list' => $property_type_list,
-        'county_list' => $county_list,
-        // Most text
-        'trans' => array(
-            'advanced_search' => array(
-                'property_search' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_SEARCH'),
-                'keyword' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_KEYWORD'),
-                'address' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS'),
-                'address_line_1_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_ADDRESS_LINE_1_PLACEHOLDER'),
-                'address_city_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_CITY_PLACEHOLDER'),
-                'address_state_zip_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_ADDRESS_STATE_ZIP_PLACEHOLDER'),
-                'listing_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_LISTING_TYPE'),
-                'property_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_TYPE'),
-                'size' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE'),
-                'size_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_FROM_PLACEHOLDER'),
-                'size_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_TO_PLACEHOLDER'),
-                'price' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE'),
-                'price_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE_FROM_PLACEHOLDER'),
-                'price_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE_TO_PLACEHOLDER'),
-                'reset_button_label' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_RESET_BUTTON_LABEL'),
-                'search_button_label' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SEARCH_BUTTON_LABEL'),
-                'advanced_search' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH'),
-            ),
-            'list_view' => $this->text->__('ALL_LISTINGS_PAGE_LIST_VIEW_BUTTON_LABEL'),
-            'map_view' => $this->text->__('ALL_LISTINGS_PAGE_MAP_VIEW_BUTTON_LABEL'),
-            'status' => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_STATUS'),
-            'details' => $this->text->__('ALL_LISTINGS_PAGE_PROPERTY_DETAILS'),
-        ),
-        'map_options' => $map_options,
-        'show_map_legend' => $show_map_legend,
-        'theme_options' => $themeOptions,
-        'theme_color' => (isset($themeOptions['theme_color'])) ? $themeOptions['theme_color'] : NULL,
-        'theme_overlay_text_color' => (isset($themeOptions['theme_color_overlay_text'])) ? $themeOptions['theme_color_overlay_text'] : NULL,
-        'property_url' => site_url() . '/property',
-        'properties_url'             => site_url() . '/properties',
-        'listing_per_page' => $listing_per_page,
-        'allow_listing_per_page_change' => $allow_listing_per_page_change,
-        'show_price_on_listing' => $show_price_on_listing,
-        'show_sort_by' => $show_sort_by,
-        'default_sort_by' => $default_sort_by,
-        'is_limit_changed' => $is_limit_changed,
-        'is_sort_by_changed' => $is_sort_by_changed,
-        'show_filter_form' => $show_filter_form,
-        'show_listing_type' => $show_listing_type,
-        'show_street' => $show_street,
-        'show_city' => $show_city,
-        'show_county' => $show_county,
-        'show_zip' => $show_zip,
-        'show_property_type' => $show_property_type,
-        'show_broker' => $show_broker,
-        'show_keyword' => $show_keyword,
-        'show_size_range' => $show_size_range,
-        'show_price_range' => $show_price_range,
-        'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
-        'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
-        'theme_name' => str_replace(" ", "-", get_current_theme())
-        // Saved search values
-        //'saved' => $savedSearchValues,
-    );
-
-    $vars = array_merge_recursive($vars, $search_vars);
-
-    /*
-     * Pagination
-     */
-
-    $currentPage = $this->listingPagination->getCurrentPage();
-    $totalPages = $this->listingPagination->getTotalPages();
-
-    $_currentPage = $currentPage;
-    $nextPage = (($_cPage = $_currentPage) + 1 > $totalPages) ? $_currentPage : $_cPage + 1;
-    $previousPage = (($_cPage = $_currentPage) - 1 === 0) ? $_currentPage : $_cPage - 1;
-
-    $start = $this->listingPagination->getStart();
-    $end = $this->listingPagination->getEnd();
-
-
-    parse_str($_SERVER['QUERY_STRING'], $query_string);
-    $rdr_str = (array_key_exists('search', $query_string))? '?search=true&current_page=' : '?current_page=';
-
-    $vars['pagination'] = array(
-        'current_page' => $currentPage,
-        'total_pages' => absint($totalPages),
-        'next_page' => $nextPage,
-        'previous_page' => $previousPage,
-        'start' => $start,
-        'end' => $end,
-        'listings_current_page_url' =>  site_url() . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . $rdr_str,
-    );
-
-    $vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-}
-
-function _normaliseString($string){
-    return strtolower(preg_replace('/\s+/', ' ', preg_replace('/[^a-zA-Z0-9\s]/', '', $string)));
-}
-
-function in_multiarray($elem, $array) {
-    foreach ($array as $key => $value) {
-        if(is_array($value)){
-            if(in_multiarray($elem, $value))
-                return true;
-        }
-        else{
-            if(strripos(_normaliseString($value), _normaliseString($elem))!==false) return true;
-        }
-    }
-    return false;
-}
+$vars['url'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 echo $this->twig->render('listings.twig', $vars);
+?>

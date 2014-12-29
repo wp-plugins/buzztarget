@@ -8,6 +8,12 @@ class Listings implements \Iterator, \ArrayAccess
     private $container = array();
     protected $config;
 
+    // pagination
+    protected $currentPage;
+    protected $totalPages;
+    protected $positionStart;
+    protected $positionEnd;
+
     public function __construct(Config $config)
     {
         $this->position = 0;
@@ -19,7 +25,30 @@ class Listings implements \Iterator, \ArrayAccess
     }
 
     public static function getSearchParameters() { // returns available parameter values for use in search
+        $params_list = array(
+            'county' => array(),
+            'property_type' => array(),
+            'broker' => array()
+            );
         $listings = get_option('repl_listings');
+        foreach($listings as $listing){
+            foreach($listing['ListingAgents'] as $agent){
+                $broker = $agent['FirstName'] . ' ' . $agent['LastName'];
+                if (!in_array($broker, $params_list['broker'])) {
+                    $params_list['broker'][] = $broker;
+                }
+            }
+            foreach($listing['PropertyTypes'] as $propertyType){
+                if ($propertyType && !in_array($propertyType, $params_list['property_type'])) {
+                    $params_list['property_type'][] = $propertyType;
+                }
+            }
+            if ($listing['County'] && !in_array($listing['County'], $params_list['county'])) {
+                $params_list['county'][] = $county;
+            }
+        }
+
+        return $params_list;
     }
 
     public static function all() { // returns all listings, that are in the database
@@ -32,6 +61,32 @@ class Listings implements \Iterator, \ArrayAccess
     }
 
     public static function where(array $filter) { // returns filtered listings by input parameters
+        $getAvailableSpaceSize = function ($spacesToLease) {
+            $sizes = array();
+            foreach ($spacesToLease as $space)
+            {
+                if (isset($space['Size']))
+                {
+                    $sizes[] = $space['Size'];
+                }
+            }
+            unset($space);
+            return array(min($sizes), max($sizes));
+        };
+
+        $getSpacePrice = function ($spacesToLease) {
+            $rates = array();
+            foreach ($spacesToLease as $space)
+            {
+                if (isset($space['RentalRate']))
+                {
+                    $rates[] = $space['RentalRate'];
+                }
+            }
+            unset($space);
+            return array(min($rates), max($rates));
+        };
+
         $object = new self(new Config);
         $object->container = array();
         foreach(get_option('repl_listings') as $listing) {
@@ -196,14 +251,24 @@ class Listings implements \Iterator, \ArrayAccess
 
                 }
                 if($matched){
-                    $object->container[] = new Listing($listing);;
+                    $object->container[] = new Listing($listing);
                 }
             }
         }
         return $object;
     }
 
-    public static function get() {} // returns a listing by id
+    public static function getListing($id) {
+        $listings = get_option('repl_listings');
+        $listing = $listings[$id];
+        return new Listing($listings[$id]);
+    } // returns a listing by id
+
+    public static function getProperty($id) {
+        $listings = get_option('repl_properties');
+        $listing = $listings[$id];
+        return new Listing($listings[$id]);
+    } // returns a property by id
 
     public function getListings() // loads listings from API
     {
@@ -401,8 +466,192 @@ class Listings implements \Iterator, \ArrayAccess
         return false;
     }
 
+    public function remove($key) {
+        unset($this->container[$key]);
+        return $this;
+    }
+
     public function count() {
         return count($this->container);
+    }
+
+    ///////////////////////////////////////
+    // Listings sorting implementation
+    ///////////////////////////////////////
+
+    public function order($sort_by_field)
+    {
+        $list = false;
+        switch ($sort_by_field) {
+            case "name_a_z":
+                $field = 'Property';
+                $subfield = 'PropertyName';
+                $list = true;
+                $reverse = false;
+                break;
+            case "name_z_a":
+                $field = 'Property';
+                $subfield = 'PropertyName';
+                $list = true;
+                $reverse = true;
+                break;
+            case "price_a_z":
+                $field = 'PropertyPrice';
+                $reverse = false;
+                break;
+            case "price_z_a":
+                $field = 'PropertyPrice';
+                $reverse = true;
+                break;
+            case "date_a_z":
+                $field = 'Updated';
+                $reverse = false;
+                break;
+            case "date_z_a":
+                $field = 'Updated';
+                $reverse = true;
+                break;
+            case "size_a_z":
+                $field = 'TotalLotSize';
+                $reverse = false;
+                break;
+            case "size_z_a":
+                $field = 'TotalLotSize';
+                $reverse = true;
+                break;
+            case "broker_a_z":
+                $field = 'ListingAgents';
+                $subfield = 0;
+                $reverse = false;
+                $list = true;
+                break;
+            case "broker_z_a":
+                $field = 'ListingAgents';
+                $subfield = 0;
+                $reverse = true;
+                $list = true;
+                break;
+            case "county_a_z":
+                $field = 'County';
+                $reverse = false;
+                break;
+            case "county_z_a":
+                $field = 'County';
+                $reverse = true;
+                break;
+        }
+
+        $arr_has_no_property = array();
+        $arr_has_property = array();
+        for ($i=0; $i<count($this->container); $i++) {
+            if(isset($this->container[$i][$field])){
+                $arr_has_property[] = $this->container[$i];
+            }
+            else{
+                $arr_has_no_property[] = $this->container[$i];
+            }
+        }
+        $size =count($arr_has_property);
+        for ($i=0; $i<$size; $i++) {
+            for ($j=0; $j<$size-1-$i; $j++) {
+                if ($list == true){
+                    if ($this->getVal($arr_has_property[$j+1], $field, $subfield) < $this->getVal($arr_has_property[$j], $field, $subfield)) {
+                        $this->swap($arr_has_property, $j, $j+1);
+                    }
+                }
+                else{
+                    if ($this->getVal($arr_has_property[$j+1],$field) < $this->getVal($arr_has_property[$j],$field)) {
+                        $this->swap($arr_has_property, $j, $j+1);
+                    }
+                }
+            }
+        }
+
+        if($reverse == true){
+            $arr_has_property = array_reverse($arr_has_property);
+        }
+        $this->container = array_merge($arr_has_property, $arr_has_no_property);
+
+        return $this;
+    }
+
+    private function swap(&$arr, $a, $b) {
+        $tmp = $arr[$a];
+        $arr[$a] = $arr[$b];
+        $arr[$b] = $tmp;
+    }
+
+    private function getVal($obj, $field, $subfiled=null){
+        if(isset($obj[$field])){
+            if(isset($subfiled)){
+                return $obj[$field][$subfiled];
+            }else{
+                return $obj[$field];
+            }
+        }else{
+            return null;
+        }
+
+    }
+
+    ///////////////////////////////////////
+    // Listings pagination implementation
+    ///////////////////////////////////////
+
+    public function paginate($page = 1, $limit = 9)
+    {
+
+        $listingsCount = count($this->container);
+
+        $totalPages = ($listingsCount > $limit) ? $listingsCount / $limit : 1;
+
+        if (is_float($totalPages))
+            $totalPages = ceil($totalPages);
+
+        $currentPage = absint($page);
+
+        $end = $limit * $currentPage;
+
+        $start = absint($end - $limit);
+
+        $currentPageListings = array();
+
+        for ($i = $start; $i < $end; $i++)
+        {
+            if (isset($this->container[$i]))
+            {
+                $currentPageListings[] = $this->container[$i];
+            }
+        }
+
+        $this->container = $currentPageListings;
+
+        $this->currentPage   = $currentPage;
+        $this->totalPages    = $totalPages;
+        $this->positionStart = $start;
+        $this->positionEnd   = $end;
+
+        return $this;
+    }
+
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
+    }
+
+    public function getTotalPages()
+    {
+        return $this->totalPages;
+    }
+
+    public function getStart()
+    {
+        return $this->positionStart;
+    }
+
+    public function getEnd()
+    {
+        return $this->positionEnd;
     }
 
     ///////////////////////////////////////
@@ -450,3 +699,22 @@ class Listings implements \Iterator, \ArrayAccess
     }
 
 }
+
+function _normaliseString($string){
+    return strtolower(preg_replace('/\s+/', ' ', preg_replace('/[^a-zA-Z0-9\s]/', '', $string)));
+}
+
+function in_multiarray($elem, $array) {
+    foreach ($array as $key => $value) {
+        if(is_array($value)){
+            if(in_multiarray($elem, $value))
+                return true;
+        }
+        else{
+            if(strripos(_normaliseString($value), _normaliseString($elem))!==false) return true;
+        }
+    }
+    return false;
+}
+
+?>

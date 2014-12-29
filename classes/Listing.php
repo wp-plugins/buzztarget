@@ -30,19 +30,10 @@ class Listing implements \ArrayAccess {
                 $new_images[$image["OrdinalNumber"]] = $image;
             }
             $this->attributes['ListingImages'] = $new_images;
+            ksort($this->attributes['ListingImages']);
         }
-    }
 
-    public static function sortListingImages(&$listing) { // DEPRECATED: delete this as soon as all listing queries are migrated to the ORM model
-        if(isset($listing['ListingImages']) && count($listing['ListingImages'])) {
-            $new_images = array();
-            foreach($listing['ListingImages'] as $image) {
-                $new_images[$image["OrdinalNumber"]] = $image;
-            }
-            $listing['ListingImages'] = $new_images;
-        }
-        return $listing;
-
+        return $this;
     }
 
     ///////////////////////////////////////
