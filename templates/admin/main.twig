@@ -227,6 +227,14 @@
                                     <input type="radio" name="show_price_on_listing" value="off" {% if show_price_on_listing is sameas('off') %} checked {% endif %}> Off
                                 </td>
                             </tr>
+                            <tr>
+                                <td>{{theme_options_show_document_icons_on_listing}}</td>
+                                <td>
+                                    {% set show_document_icons_on_listing = theme_options['show_document_icons_on_listing'] %}
+                                    <input type="radio" name="show_document_icons_on_listing" value="on" {% if show_document_icons_on_listing is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="show_document_icons_on_listing" value="off" {% if show_document_icons_on_listing is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
                         </table>
 
                         {# Sort By #}

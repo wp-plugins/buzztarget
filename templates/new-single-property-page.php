@@ -179,9 +179,13 @@ if($property){
                 <ul class="property-docs">
                     <?php foreach ($propertyDocuments as $doc) {?>
                     <li>
-                        <?php preg_match('/\.(\w+)$/', $doc['AttachmentPath'], $matches); ?>
-                        <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
-                        <a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a>
+                        <a href="<?php echo $doc['AttachmentPath']?>" target="_blank">
+                            <?php if (isset($theme_options['show_document_icons_on_listing']) && $theme_options['show_document_icons_on_listing'] == 'on') { ?>
+                                <?php preg_match('/\.(\w+)$/', $doc['AttachmentPath'], $matches); ?>
+                                <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
+                            <?php } ?>
+                            <?php echo $doc['AttachmentTitle']?>
+                        </a>
                     </li>
                     <?php } ?>
                 </ul>
@@ -646,9 +650,13 @@ if($property){
         <ul class="property-docs">
             <?php foreach ($propertyDocuments as $doc) {?>
             <li>
-                <?php preg_match('/\.(\w+)$/', $doc['AttachmentPath'], $matches); ?>
-                <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
-                <a href="<?php echo $doc['AttachmentPath']?>" target="_blank"><?php echo $doc['AttachmentTitle']?></a>
+                <a href="<?php echo $doc['AttachmentPath']?>" target="_blank">
+                    <?php if (isset($theme_options['show_document_icons_on_listing']) && $theme_options['show_document_icons_on_listing'] == 'on') { ?>
+                        <?php preg_match('/\.(\w+)$/', $doc['AttachmentPath'], $matches); ?>
+                        <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
+                    <?php } ?>
+                    <?php echo $doc['AttachmentTitle']?>
+                </a>
             </li>
             <?php } ?>
         </ul>
