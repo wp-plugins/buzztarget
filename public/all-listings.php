@@ -98,15 +98,17 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
         }
     }
 
-    $listings = Listings::where($search_criteria);
-    $properties = Listings::where($search_criteria);
+    if(isset($search_criteria)) {
+        $listings = Listings::where($search_criteria);
+    } else {
+        $listings = Listings::all();
+    }
 
     if($listings->count() < 1) {
         $search_vars['trans']['search_error'] = $this->text->__('ADVANCED_SEARCH_NO_RESULTS_FOUND');
     }
 } else {
     $listings = Listings::all();
-    $properties = Listings::all();
 }
 
 
@@ -120,6 +122,8 @@ if($listings->count()){
         }
     }
 }
+
+$properties = clone $listings;
 
 $is_limit_changed = 'false';
 if(isset($_GET['limit_per_page'])){
