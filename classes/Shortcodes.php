@@ -88,7 +88,7 @@ class Shortcodes
     {
         global $shortcode;
         $shortcode = 'lease_listing';
-        $propertyTypeFilter = ucfirst($atts['type']);
+        $property_type_filter = ucfirst($atts['type']);
         require_once $this->config->getValue('public_path') . 'all-listings.php';
     }
 
@@ -96,7 +96,7 @@ class Shortcodes
     {
         global $shortcode;
         $shortcode = 'sale_listing';
-        $propertyTypeFilter = ucfirst($atts['type']);
+        $property_type_filter = ucfirst($atts['type']);
         require_once $this->config->getValue('public_path') . 'all-listings.php';
     }
 }
