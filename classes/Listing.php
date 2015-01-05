@@ -29,8 +29,11 @@ class Listing implements \ArrayAccess {
             foreach($this->attributes['ListingImages'] as $image) {
                 $new_images[$image["OrdinalNumber"]] = $image;
             }
-            $this->attributes['ListingImages'] = $new_images;
-            ksort($this->attributes['ListingImages']);
+            ksort($new_images);
+            $this->attributes['ListingImages'] = array();
+            foreach($new_images as $image) {
+                $this->attributes['ListingImages'][] = $image;
+            }
         }
 
         return $this;

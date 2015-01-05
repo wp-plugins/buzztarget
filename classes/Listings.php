@@ -43,8 +43,8 @@ class Listings implements \Iterator, \ArrayAccess
                     $params_list['property_type'][] = $propertyType;
                 }
             }
-            if ($listing['County'] && !in_array($listing['County'], $params_list['county'])) {
-                $params_list['county'][] = $county;
+            if ($listing['County'] && $listing['County'] != "" && !in_array($listing['County'], $params_list['county'])) {
+                $params_list['county'][] = $listing['County'];
             }
         }
 
