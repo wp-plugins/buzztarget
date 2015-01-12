@@ -418,6 +418,9 @@ if($property){
             </div>
         </div>
         <h4 class="title info theme-color"><?php echo $property_name; ?></h4>
+        <?php if ($property['PropertyPriceIsUndisclosed'] == false && (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0)){ ?>
+            <span class="price theme-color">Price: $<?php echo $property['PropertyPrice']; ?></span>
+        <? } ?>
         <div class="clearfix main-info">
             <table class="half">
                 <tbody>
@@ -443,20 +446,10 @@ if($property){
             </table>
 
             <?php
-            if(isset($property['PropertyPrice']) || isset($property['CapRate']) || isset($property['Noi'])){
+            if((isset($property['CapRate']) && $property['CapRate'] != 0) || (isset($property['Noi']) && $property['Noi'] != 0)){
             ?>
             <table class="half last">
                 <tbody>
-                <?php if ($property['PropertyPriceIsUndisclosed'] == false) {
-                    if (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0){ ?>
-                    <tr>
-                        <td>Price:</td>
-                        <td> <?php echo '$' . number_format($property['PropertyPrice']); ?></td>
-                    </tr>
-                <?php
-                    }
-                }
-                ?>
                 <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
                     <tr>
                         <td>CAP Rate:</td>

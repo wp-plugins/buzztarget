@@ -532,8 +532,8 @@
     float: right;
 }
 .ie8 #buzz-target-plugin .column.half.even{
-    margin-right: 0;
-    float: right;
+  margin-right: 0;
+  float: right;
 }
 
 #buzz-target-plugin .column.half:nth-child(even) h3{
@@ -587,7 +587,7 @@
 #buzz-target-plugin .image-overlay {
     opacity: 0;
     filter: alpha(opacity = 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     position: absolute;
     top: 0;
@@ -600,7 +600,7 @@
 .ie8 #buzz-target-plugin .image-overlay {
     background: rgb(0, 0, 0);
     filter: alpha(opacity = 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
 }
 .ie8 #buzz-target-plugin .image-overlay .zoom {
@@ -626,7 +626,7 @@
 .ie8 #buzz-target-plugin .carousel-stage:hover .image-overlay {
     background: rgb(0, 0, 0);
     filter: alpha(opacity=35);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=35)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=35)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=35);
 }
 
@@ -691,7 +691,7 @@
 #buzz-target-plugin .modal {
     opacity: 0;
     filter: alpha(opacity=0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     display: none;
     -webkit-transition: opacity 300ms ease-out;
@@ -703,7 +703,7 @@
 #buzz-target-plugin .modal.visible {
     opacity: 1;
     filter: alpha(opacity=100);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     display: block;
     -webkit-transition: opacity 300ms ease-out;
@@ -719,7 +719,7 @@
     left: 0;
     right: 0;
     background: rgb(0, 0, 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=75)';
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
     background: rgba(0, 0, 0, 0.75);
     z-index: 10;
@@ -919,6 +919,10 @@
     -moz-box-sizing: border-box;
     padding: 7px 6px;
     border: none;
+    -moz-box-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 #buzz-target-plugin .search-filter .input-group select{
@@ -934,6 +938,10 @@
     border: none;
     background-image: none;
     cursor: pointer;
+    -moz-box-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 #buzz-target-plugin .search-filter .input-group label {
@@ -941,12 +949,25 @@
     line-height: 20px;
     display: inline;
     vertical-align: top;
+    color: #FFFFFF;
 }
 
 #buzz-target-plugin .search-filter .input-group input[type='checkbox'] {
     display: inline-block;
     margin: 0;
     line-height: 12px;
+}
+
+/* Search map legend */
+#buzz-target-plugin .search-map-legend {
+    display: block;
+    margin: -20px 0px 20px 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+#buzz-target-plugin .search-map-legend .info-holder {
+    float: left;
+    margin-left: 10px;
 }
 
 #buzz-target-plugin .input-group .btn {
@@ -1114,7 +1135,7 @@
     height: 450px;
 }
 #buzz-target-plugin .content.broker-listings .grid-view .list-item .item-info .price-block h4 {
-    width: 100%;
+     width: 100%;
 }
 
 #buzz-target-plugin .grid-view .list-item.nth-child-3np{
@@ -1951,5 +1972,14 @@ a.bt-gm-link {
     max-width: 940px;
 }
 .Twenty-Fourteen #buzz-target-plugin .container {
-    margin-left: 20%;
+     margin-left: 20%;
+}
+
+/* a fix for yellow Google street view icon on Google map */
+.map img {
+    max-width: none !important;
+}
+
+.property-attachment-icon {
+    height: 25px !important;
 }

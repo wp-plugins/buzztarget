@@ -919,6 +919,10 @@
     -moz-box-sizing: border-box;
     padding: 7px 6px;
     border: none;
+    -moz-box-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 #buzz-target-plugin .search-filter .input-group select{
@@ -934,6 +938,10 @@
     border: none;
     background-image: none;
     cursor: pointer;
+    -moz-box-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 #buzz-target-plugin .search-filter .input-group label {
@@ -941,6 +949,7 @@
     line-height: 20px;
     display: inline;
     vertical-align: top;
+    color: #FFFFFF;
 }
 
 #buzz-target-plugin .search-filter .input-group input[type='checkbox'] {
