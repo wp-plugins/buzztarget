@@ -60,7 +60,15 @@ class FrontEndScripts
     }
 
     public function wpFormBuzzTargetCss() {
-        if ($css = get_option('buzztarget_css')) {
+        $css = get_option('buzztarget_css');
+        if (!isset($css) || strlen($css) < 1) { // try to load that from custom properties.css
+            $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
+            // check wether custom properties.css exists and read from there
+            if(file_exists($file)) {
+                $css = file_get_contents($file);
+            }
+        }
+        if(isset($css) && strlen($css) > 0) {
             $css = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css );
             $css = str_replace( array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css );
             echo "<style type='text/css'>";
