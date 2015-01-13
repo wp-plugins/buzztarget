@@ -194,49 +194,49 @@ if($property){
                 <h4 class="title info theme-color">Property Information</h4>
                 <table>
                     <tbody>
-                        <?php if (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0){ ?>
+                        <?php if (isset($property['GrossLeasableArea'])){ ?>
                     <tr>
                         <td>Total Building SF:</td>
                         <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0){ ?>
+                        <?php if (isset($property['TotalLotSize'])){ ?>
                     <tr>
                         <td>Total Lot Size SF:</td>
                         <td><?php echo number_format($property['TotalLotSize']); ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['Occupancy']) && $property['Occupancy'] != 0){ ?>
+                        <?php if (isset($property['Occupancy'])){ ?>
                     <tr>
                         <td>Occupancy:</td>
                         <td><?php echo $property['Occupancy'] . '%'; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['YearBuild']) && $property['YearBuild'] != 0 ){ ?>
+                        <?php if (isset($property['YearBuild'])){ ?>
                     <tr>
                         <td>Year Built:</td>
                         <td><?php echo $property['YearBuild']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ){ ?>
+                        <?php if (isset($property['YearRenovated'])){ ?>
                     <tr>
                         <td>Year Renovated:</td>
                         <td><?php echo $property['YearRenovated']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ){ ?>
+                        <?php if (isset($property['ParkingSpace'])){ ?>
                     <tr>
                         <td>Parking Space:</td>
                         <td><?php echo $property['ParkingSpace']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['Zoning']) && $property['Zoning'] != 0 ){ ?>
+                        <?php if (isset($property['Zoning'])){ ?>
                     <tr>
                         <td>Zoning:</td>
                         <td><?php echo $property['Zoning']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['County']) && $property['County'] != 0){ ?>
+                        <?php if (isset($property['County'])){ ?>
                     <tr>
                         <td>County:</td>
                         <td><?php echo $property['County']; ?></td>
@@ -331,7 +331,7 @@ if($property){
                 zip = <?php echo json_encode($property['Property']['Address']['Zip']); ?>;
             function initialize() {
                 var mapOptions = {
-                    zoom: 10,
+                    zoom: 12,
                     center: new google.maps.LatLng(lat, lon),
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
@@ -484,49 +484,49 @@ if($property){
         <h4 class="title info theme-color">Property Information</h4>
         <table>
             <tbody>
-                <?php if (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0){ ?>
+                <?php if (isset($property['GrossLeasableArea'])){ ?>
             <tr>
                 <td>Total Building SF:</td>
                 <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
             </tr>
                 <?php } ?>
-                <?php  if (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0){ ?>
+                <?php  if (isset($property['TotalLotSize'])){ ?>
             <tr>
                 <td>Total Lot Size SF:</td>
                 <td><?php echo number_format($property['TotalLotSize']); ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['Occupancy']) && $property['Occupancy'] != 0){ ?>
+                <?php if (isset($property['Occupancy'])){ ?>
             <tr>
                 <td>Occupancy:</td>
                 <td><?php echo $property['Occupancy'] . '%'; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['YearBuild']) && $property['YearBuild'] != 0){ ?>
+                <?php if (isset($property['YearBuild'])){ ?>
             <tr>
                 <td>Year Built:</td>
                 <td><?php echo $property['YearBuild']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['YearRenovated']) && $property['YearRenovated'] != 0){ ?>
+                <?php if (isset($property['YearRenovated'])){ ?>
             <tr>
                 <td>Year Renovated:</td>
                 <td><?php echo $property['YearRenovated']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0){ ?>
+                <?php if (isset($property['ParkingSpace'])){ ?>
             <tr>
                 <td>Parking Space:</td>
                 <td><?php echo $property['ParkingSpace']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['Zoning']) && $property['Zoning'] != 0){ ?>
+                <?php if (isset($property['Zoning'])){ ?>
             <tr>
                 <td>Zoning:</td>
                 <td><?php echo $property['Zoning']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['County']) && $property['County'] != 0){ ?>
+                <?php if (isset($property['County'])){ ?>
             <tr>
                 <td>County:</td>
                 <td><?php echo $property['County']; ?></td>
@@ -620,7 +620,7 @@ if($property){
                     zip = <?php echo json_encode($property['Property']['Address']['Zip']); ?>;
                 function initialize() {
                     var mapOptions = {
-                        zoom: 10,
+                        zoom: 12,
                         center: new google.maps.LatLng(lat, lon),
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
@@ -659,7 +659,7 @@ if($property){
                 <div class="broker-item">
                     <h4>
                         <span class="name"><?php echo $broker['FirstName'] . ' ' . $broker['LastName']; ?></span>
-                        <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo urlencode($property_name); ?>" target="_blank" class="icon-mail">
+                        <a href="mailto:<?php echo $broker['Email']; ?>?subject=<?php echo str_replace('+', '%20', urlencode($property_name)); ?>" target="_blank" class="icon-mail">
                             <img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/envelope.png">
                         </a>
                     </h4>
