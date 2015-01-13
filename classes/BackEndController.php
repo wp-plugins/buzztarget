@@ -244,10 +244,8 @@ class BackEndController
             }
             elseif(isset($_POST['save_theme_css']) || isset($_POST['restore_theme_css'])){
                 if(isset($_POST['save_theme_css'])){
-                    $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
-                    $cssFileContent = $_POST['theme-css-text'];
 
-                    if(file_put_contents($file, str_replace("\'", "'", str_replace("\"", "'", $cssFileContent)))){
+                    if(update_option('buzztarget_css', $_POST['theme-css-text'])){
                         $vars['theme_css_save_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_SAVE_SUCCESS');
                     }
                     else{
@@ -255,11 +253,10 @@ class BackEndController
                     }
                 }
                 if(isset($_POST['restore_theme_css'])){
-                    $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
                     $originalFile = WP_PLUGIN_DIR . '/buzztarget/static/css/properties_original.css';
                     $cssOriginalFileContent = file_get_contents($originalFile);
 
-                    if(file_put_contents($file, str_replace("\"", "'", $cssOriginalFileContent))){
+                    if(update_option('buzztarget_css', $cssOriginalFileContent)){
                         $vars['theme_css_restore_result'] = $this->text->__('ADMIN_THEME_CSS_TAB_RESTORE_SUCCESS');
                     }
                     else{
@@ -355,10 +352,21 @@ class BackEndController
         }
         elseif ($tab === 'theme_css')
         {
-            $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
-            $cssFileContent = file_get_contents($file);
+            $cssContent = get_option('buzztarget_css');
+            // ensure the CSS is present in database
+            if(strlen($cssContent) < 1) {
+                $file = WP_PLUGIN_DIR . '/buzztarget/static/css/properties.css';
+                // check wether custom properties.css exists and read from there
+                if(file_exists($file)) {
+                    $cssFileContent = file_get_contents($file);
+                } else { // otherwise read the original file
+                    $cssFileContent = file_get_contents(WP_PLUGIN_DIR . '/buzztarget/static/css/properties_original.css');
+                }
+                update_option('buzztarget_css', $cssFileContent);
+                $cssContent = $cssFileContent;
+            }
 
-            $vars['css_file_content'] = $cssFileContent;
+            $vars['css_file_content'] = $cssContent;
 
             $vars['theme_css_heading'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_CSS_HEADING');
             $vars['theme_css_desc'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_CSS_DESC');
