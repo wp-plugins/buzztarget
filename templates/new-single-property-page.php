@@ -196,14 +196,14 @@ if($property){
                     <tbody>
                         <?php if (isset($property['GrossLeasableArea'])){ ?>
                     <tr>
-                        <td>Total Building SF:</td>
-                        <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
+                        <td>Total Building <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
+                        <td><?php echo $property->getSize('GrossLeasableArea', true, $theme_options['show_size_in_acres']); ?></td>
                     </tr>
                         <?php } ?>
                         <?php if (isset($property['TotalLotSize'])){ ?>
                     <tr>
-                        <td>Total Lot Size SF:</td>
-                        <td><?php echo number_format($property['TotalLotSize']); ?></td>
+                        <td>Total Lot Size <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
+                        <td><?php echo $property->getSize('TotalLotSize', true, $theme_options['show_size_in_acres']); ?></td>
                     </tr>
                         <?php } ?>
                         <?php if (isset($property['Occupancy'])){ ?>
@@ -486,14 +486,14 @@ if($property){
             <tbody>
                 <?php if (isset($property['GrossLeasableArea'])){ ?>
             <tr>
-                <td>Total Building SF:</td>
-                <td><?php echo number_format($property['GrossLeasableArea']); ?></td>
+                <td>Total Building <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
+                <td><?php echo $property->getSize('GrossLeasableArea', true, $theme_options['show_size_in_acres']); ?></td>
             </tr>
                 <?php } ?>
                 <?php  if (isset($property['TotalLotSize'])){ ?>
             <tr>
-                <td>Total Lot Size SF:</td>
-                <td><?php echo number_format($property['TotalLotSize']); ?></td>
+                <td>Total Lot Size <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
+                <td><?php echo $property->getSize('TotalLotSize', true, $theme_options['show_size_in_acres']); ?></td>
             </tr>
                 <?php } ?>
                 <?php if (isset($property['Occupancy'])){ ?>

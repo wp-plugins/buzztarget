@@ -200,6 +200,14 @@
                         {# Listing Per Page #}
                         <table id="bt-allow-listing-change-table" class="bt-theme-options-table">
                             <tr>
+                                <td>{{theme_options_show_size_in_acres}}</td>
+                                <td>
+                                    {% set show_size_in_acres = theme_options['show_size_in_acres'] %}
+                                    <input type="radio" name="show_size_in_acres" value="acres" {% if show_size_in_acres is sameas('acres') %} checked {% endif %}> Yes
+                                    <input type="radio" name="show_size_in_acres" value="sf" {% if show_size_in_acres is sameas('sf') %} checked {% endif %}> No
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>{{theme_options_allow_listing_per_page_change}}</td>
                                 <td>
                                     {% set allow_listing_per_page_change = theme_options['allow_listing_per_page_change'] %}

@@ -80,6 +80,7 @@ class BackEndController
                     'listing_detail_style',
                     'full_width_style',
                     'advanced_search',
+                    'show_size_in_acres',
                     'allow_listing_per_page_change',
                     'default_listing_per_page',
                     'show_price_on_listing',
@@ -89,7 +90,7 @@ class BackEndController
                     'show_document_icons_on_listing'
                 );
 
-                list($listingStyle, $listingDetailStyle, $fullWidthStyle, $advancedSearch, $allow_listing_per_page_change, $default_listing_per_page, $show_price_on_listing, $show_sort_by, $default_sort_by, $mapViewStatus, $show_document_icons_on_listing) = $this->request->getPostValues($postKeys);
+                list($listingStyle, $listingDetailStyle, $fullWidthStyle, $advancedSearch, $show_size_in_acres, $allow_listing_per_page_change, $default_listing_per_page, $show_price_on_listing, $show_sort_by, $default_sort_by, $mapViewStatus, $show_document_icons_on_listing) = $this->request->getPostValues($postKeys);
 
                 $listingStyle = ($listingStyle === 'style1' || $listingStyle === 'style2') ? $listingStyle : 'style1';
                 $listingDetailStyle = ($listingDetailStyle === 'style1' || $listingDetailStyle === 'style2') ? $listingDetailStyle : 'style1';
@@ -128,7 +129,7 @@ class BackEndController
                 $advancedSearchPriceRange = (isset($advancedSearch['price_range'])
                     && ($advancedSearch['price_range'] === 'on' || $advancedSearch['price_range'] === 'off')) ? $advancedSearch['price_range'] : 'on';
 
-
+                $show_size_in_acres = ($show_size_in_acres === 'acres' || $show_size_in_acres === 'sf') ? $show_size_in_acres : 'sf';
                 $allow_listing_per_page_change = ($allow_listing_per_page_change === 'on' || $allow_listing_per_page_change === 'off') ? $allow_listing_per_page_change : 'on';
                 $default_listing_per_page = ($default_listing_per_page === '9' || $default_listing_per_page === '12' || $default_listing_per_page === '60') ? $default_listing_per_page : '9';
                 $show_price_on_listing = ($show_price_on_listing === 'on' || $show_price_on_listing === 'off') ? $show_price_on_listing : 'on';
@@ -157,6 +158,7 @@ class BackEndController
                         'size_range' => $advancedSearchSizeRange,
                         'price_range' => $advancedSearchPriceRange
                     ),
+                    'show_size_in_acres' => $show_size_in_acres,
                     'allow_listing_per_page_change' => $allow_listing_per_page_change,
                     'default_listing_per_page' => $default_listing_per_page,
                     'show_price_on_listing' => $show_price_on_listing,
@@ -321,6 +323,7 @@ class BackEndController
             $vars['theme_options_advanced_search_size_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_SIZE_RANGE');
             $vars['theme_options_advanced_search_price_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_PRICE_RANGE');
 
+            $vars['theme_options_show_size_in_acres'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_SHOW_SIZE_IN_ACRES');
             $vars['theme_options_allow_listing_per_page_change'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE');
             $vars['theme_options_allow_listing_per_page_change_on'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE_ON');
             $vars['theme_options_allow_listing_per_page_change_off'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_ALLOW_LISTING_PER_PAGE_CHANGE_OFF');

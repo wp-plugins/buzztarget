@@ -22,6 +22,7 @@ if ($property_type_filter) {
     $_POST['advanced_search_submit'] = true;
 }
 
+$theme_options = get_option('buzztarget_theme_options');
 
 if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
 {
@@ -60,10 +61,10 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
     list($listingTypes) = $this->request->getPostValues(array('listing_types'));
 
     if($size_from){
-        $size_from = (float) $size_from;
+        $size_from = (float) ($theme_options['show_size_in_acres'] == 'acres') ? $size_from * 43560 : $size_from;
     }
     if($size_to){
-        $size_to = (float) $size_to;
+        $size_to = (float) ($theme_options['show_size_in_acres'] == 'acres') ? $size_to * 43560 : $size_to;
     }
     if($price_from){
         $price_from = (float) $price_from;
@@ -110,9 +111,6 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
 } else {
     $listings = Listings::all();
 }
-
-
-$theme_options = get_option('buzztarget_theme_options');
 
 if($listings->count()){
     foreach($listings as $key => $val){

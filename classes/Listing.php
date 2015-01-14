@@ -23,6 +23,19 @@ class Listing implements \ArrayAccess {
         return $this->attributes['PropertyMapIcon'];
     }
 
+    public function getSize($type, $format = false, $units = "SF") {
+        $size = 0;
+        if($type == "building" || $type == "GrossLeasableArea")
+            $size = $this->attributes["GrossLeasableArea"];
+        else if ($type == "lot" || $type == "TotalLotSize")
+            $size = $this->attributes["TotalLotSize"];
+        if($units == "Acres" || $units == "acres")
+            $size = $size / 43560;
+        if($format)
+            return number_format($size, ($units == "Acres" || $units == "acres") ? 2 : 0, ".", ",");
+        return $size;
+    }
+
     private function sortImages() {
         if(isset($this->attributes['ListingImages']) && count($this->attributes['ListingImages'])) {
             $new_images = array();
