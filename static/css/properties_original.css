@@ -1989,3 +1989,7 @@ a.bt-gm-link {
 div.detail-price {
     margin-top: 20px;
 }
+
+#buzz-target-plugin .container {
+     float: none;
+}
