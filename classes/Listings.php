@@ -54,7 +54,10 @@ class Listings implements \Iterator, \ArrayAccess
     public static function all() { // returns all listings, that are in the database
         $object = new self(new Config);
         $object->container = array();
+        $duplicates = array();
         foreach(get_option('repl_listings') as $listing) {
+            if(in_array($listing['ListingId'], $duplicates)) continue;
+            $duplicates[] = $listing['ListingId'];
             $object->container[] = new Listing($listing);
         }
         return $object;
@@ -89,7 +92,10 @@ class Listings implements \Iterator, \ArrayAccess
 
         $object = new self(new Config);
         $object->container = array();
+        $duplicates = array();
         foreach(get_option('repl_listings') as $listing) {
+            if(in_array($listing['ListingId'], $duplicates)) continue;
+
             $matched = true;
 
             $forLease = (strtolower($listing['ListingType']) == 'forlease') ? true : false;
@@ -251,6 +257,7 @@ class Listings implements \Iterator, \ArrayAccess
 
                 }
                 if($matched){
+                    $duplicates[] = $listing['ListingId'];
                     $object->container[] = new Listing($listing);
                 }
             }

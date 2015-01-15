@@ -314,10 +314,12 @@
 
 #buzz-target-plugin h3 {
     margin: 0;
+    position: static;
 }
 
 #buzz-target-plugin h4 {
     margin: 5px 0;
+    position: static;
 }
 
 #buzz-target-plugin .title.info {
@@ -1982,4 +1984,8 @@ a.bt-gm-link {
 
 .property-attachment-icon {
     height: 25px !important;
+}
+
+div.detail-price {
+    margin-top: 20px;
 }

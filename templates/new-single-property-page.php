@@ -35,6 +35,10 @@ if($property){
     $currentImage = 1;
     $imagesCount = count($otherImages);
 
+    echo "<pre>";
+    var_dump($property);
+    echo "</pre>";
+
     $siteUrl = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 ?>
@@ -189,15 +193,29 @@ if($property){
                 </ul>
                 <?php } ?>
             </div>
-            <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0)) || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0)) || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)) || (isset($property['County']) && $property['County'] != 0) || (isset($property['Zoning']) && $property['Zoning'] != 0 ) || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ) || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ) || (isset($property['YearBuild']) && $property['YearBuild'] != 0 ) || (isset($property['Occupancy']) && $property['Occupancy'] != 0) || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0) || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0) ){ ?>
+            <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0))
+                || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0))
+                || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0))
+                || isset($property['County'])
+                || isset($property['Zoning'])
+                || isset($property['Utilities'])
+                || isset($property['Divisible'])
+                || ((isset($property['DivisibleMax']) && $property['DivisibleMax'] != 0) && (isset($property['DivisibleMin']) && $property['DivisibleMin'] != 0))
+                || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 )
+                || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 )
+                || (isset($property['YearBuild']) && $property['YearBuild'] != 0 )
+                || (isset($property['Occupancy']) && $property['Occupancy'] != 0)
+                || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0)
+                || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0)
+            ){ ?>
             <div class="column half property-info">
                 <h4 class="title info theme-color">Property Information</h4>
                 <table>
                     <tbody>
                         <?php if (isset($property['GrossLeasableArea'])){ ?>
                     <tr>
-                        <td>Total Building <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
-                        <td><?php echo $property->getSize('GrossLeasableArea', true, $theme_options['show_size_in_acres']); ?></td>
+                        <td>Total Building SF:</td>
+                        <td><?php echo $property->getSize('GrossLeasableArea', true, 'SF'); ?></td>
                     </tr>
                         <?php } ?>
                         <?php if (isset($property['TotalLotSize'])){ ?>
@@ -240,6 +258,27 @@ if($property){
                     <tr>
                         <td>County:</td>
                         <td><?php echo $property['County']; ?></td>
+                    </tr>
+                        <?php } ?>
+
+                        <?php if (isset($property['Utilities'])){ ?>
+                    <tr>
+                        <td>Utilities:</td>
+                        <td><?php echo $property['Utilities']; ?></td>
+                    </tr>
+                        <?php } ?>
+
+                        <?php if (isset($property['Divisible'])){ ?>
+                    <tr>
+                        <td>Divisible:</td>
+                        <td><?php echo $property['Divisible']; ?></td>
+                    </tr>
+                        <?php } ?>
+
+                        <?php if ((isset($property['DivisibleMax']) && $property['DivisibleMax'] != 0) && (isset($property['DivisibleMin']) && $property['DivisibleMin'] != 0)){ ?>
+                    <tr>
+                        <td>Divisible Max/Min:</td>
+                        <td><?php echo $property['DivisibleMax']; ?>/<?php echo $property['DivisibleMin']; ?> Acres</td>
                     </tr>
                         <?php } ?>
                         <?php if (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)){ ?>
@@ -418,9 +457,6 @@ if($property){
             </div>
         </div>
         <h4 class="title info theme-color"><?php echo $property_name; ?></h4>
-        <?php if ($property['PropertyPriceIsUndisclosed'] == false && (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0)){ ?>
-            <span class="price theme-color">Price: $<?php echo $property['PropertyPrice']; ?></span>
-        <? } ?>
         <div class="clearfix main-info">
             <table class="half">
                 <tbody>
@@ -436,7 +472,7 @@ if($property){
                         <?php echo $property['Property']['Address']['Zip']; ?>
                     </td>
                 </tr>
-                    <?php if (isset($property['County']) && $property['County'] != 0){ ?>
+                    <?php if (isset($property['County'])){ ?>
                 <tr>
                     <td>County: </td>
                     <td><?php echo $property['County'] ?></td>
@@ -445,26 +481,21 @@ if($property){
                 </tbody>
             </table>
 
-            <?php
-            if((isset($property['CapRate']) && $property['CapRate'] != 0) || (isset($property['Noi']) && $property['Noi'] != 0)){
-            ?>
-            <table class="half last">
-                <tbody>
-                <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
-                    <tr>
-                        <td>CAP Rate:</td>
-                        <td><?php echo round($property['CapRate'], 2) . '%'; ?></td>
-                    </tr>
-                <?php }?>
-                <?php if (isset($property['Noi']) && $property['Noi'] != 0){ ?>
-                    <tr>
-                        <td>NOI: </td>
-                        <td><?php echo '$' . number_format($property['Noi']); ?></td>
-                    </tr>
-                <?php }?>
-                </tbody>
-            </table>
-            <?php } ?>
+            <?php if ($property['PropertyPriceIsUndisclosed'] == false && (isset($property['PropertyPrice']) && $property['PropertyPrice'] != 0)){ ?>
+                <div class="detail-price theme-color">Price: $<?php echo number_format($property['PropertyPrice']); ?></div>
+            <? } ?>
+            <?php if (isset($property['PricePerAcre']) && $property['PricePerAcre'] != 0){ ?>
+                <div>Price Per Acre: $<?php echo number_format($property['PricePerAcre']); ?></div>
+            <?php }?>
+            <?php if (isset($property['PropertyTaxes']) && $property['PropertyTaxes'] != 0){ ?>
+                <div>Property Taxes: $<?php echo number_format($property['PropertyTaxes']); ?></div>
+            <?php }?>
+            <?php if (isset($property['CapRate']) && $property['CapRate'] != 0){ ?>
+                <div>CAP Rate: <?php echo round($property['CapRate'], 2) . '%'; ?></div>
+            <?php }?>
+            <?php if (isset($property['Noi']) && $property['Noi'] != 0){ ?>
+                <div>NOI: <?php echo '$' . number_format($property['Noi']); ?></div>
+            <?php }?>
 
         </div>
         <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
@@ -480,14 +511,28 @@ if($property){
             ?>
         </div>
         <?php } ?>
-        <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0)) || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0)) || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0)) || (isset($property['County']) && $property['County'] != 0) || (isset($property['Zoning']) && $property['Zoning'] != 0 ) || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 ) || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 ) || (isset($property['YearBuild']) && $property['YearBuild'] != 0 ) || (isset($property['Occupancy']) && $property['Occupancy'] != 0) || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0) || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0) ){ ?>
+        <?php if ((isset($property['HouseholdIncome']) && ($property['HouseholdIncome']['RangeFrom'] != 0 || $property['HouseholdIncome']['RangeTo'] != 0))
+            || (isset($property['PopulationRange']) && ($property['PopulationRange']['RangeFrom'] != 0 || $property['PopulationRange']['RangeTo'] != 0))
+            || (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom'] != 0 || $property['TrafficCounts']['RangeTo'] != 0))
+            || isset($property['County'])
+            || isset($property['Zoning'])
+            || isset($property['Utilities'])
+            || isset($property['Divisible'])
+            || ((isset($property['DivisibleMax']) && $property['DivisibleMax'] != 0) && (isset($property['DivisibleMin']) && $property['DivisibleMin'] != 0))
+            || (isset($property['ParkingSpace']) && $property['ParkingSpace'] != 0 )
+            || (isset($property['YearRenovated']) && $property['YearRenovated'] != 0 )
+            || (isset($property['YearBuild']) && $property['YearBuild'] != 0 )
+            || (isset($property['Occupancy']) && $property['Occupancy'] != 0)
+            || (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0)
+            || (isset($property['GrossLeasableArea']) && $property['GrossLeasableArea'] != 0)
+        ){ ?>
         <h4 class="title info theme-color">Property Information</h4>
         <table>
             <tbody>
                 <?php if (isset($property['GrossLeasableArea'])){ ?>
             <tr>
-                <td>Total Building <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
-                <td><?php echo $property->getSize('GrossLeasableArea', true, $theme_options['show_size_in_acres']); ?></td>
+                <td>Total Building SF:</td>
+                <td><?php echo $property->getSize('GrossLeasableArea', true, 'SF'); ?></td>
             </tr>
                 <?php } ?>
                 <?php  if (isset($property['TotalLotSize'])){ ?>
@@ -532,6 +577,28 @@ if($property){
                 <td><?php echo $property['County']; ?></td>
             </tr>
                 <?php } ?>
+
+                <?php if (isset($property['Utilities'])){ ?>
+            <tr>
+                <td>Utilities:</td>
+                <td><?php echo $property['Utilities']; ?></td>
+            </tr>
+                <?php } ?>
+
+                <?php if (isset($property['Divisible'])){ ?>
+            <tr>
+                <td>Divisible:</td>
+                <td><?php echo $property['Divisible']; ?></td>
+            </tr>
+                <?php } ?>
+
+                <?php if ((isset($property['DivisibleMax']) && $property['DivisibleMax'] != 0) && (isset($property['DivisibleMin']) && $property['DivisibleMin'] != 0)){ ?>
+            <tr>
+                <td>Divisible Max/Min:</td>
+                <td><?php echo $property['DivisibleMax']; ?>/<?php echo $property['DivisibleMin']; ?> Acres</td>
+            </tr>
+                <?php } ?>
+
                 <?php if (isset($property['TrafficCounts']) && ($property['TrafficCounts']['RangeFrom']!=0 || $property['TrafficCounts']['RangeTo']!=0)){ ?>
             <tr>
                 <td>Traffic Count:</td>
@@ -624,7 +691,7 @@ if($property){
                         center: new google.maps.LatLng(lat, lon),
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                    
+
                     map = new google.maps.Map(document.getElementById('bt-single-property-map-canvas'), mapOptions);
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(lat, lon),
