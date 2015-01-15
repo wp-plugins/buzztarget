@@ -35,10 +35,6 @@ if($property){
     $currentImage = 1;
     $imagesCount = count($otherImages);
 
-    echo "<pre>";
-    var_dump($property);
-    echo "</pre>";
-
     $siteUrl = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 ?>
