@@ -173,10 +173,24 @@ class Listings implements \Iterator, \ArrayAccess
                                 $matched = false;
                             }
                             break;
+                        case 'total_size_from':
+                            $value = ($filter['total_size_by'] == 'acres') ? $value * 43560 : $value;
+                            if(!isset($listing['TotalLotSize'])
+                               || $listing['TotalLotSize'] < $value ){
+                                $matched = false;
+                            }
+                            break;
+                        case 'total_size_to':
+                            $value = ($filter['total_size_by'] == 'acres') ? $value * 43560 : $value;
+                            if(!isset($listing['TotalLotSize'])
+                               || $listing['TotalLotSize'] > $value ){
+                                $matched = false;
+                            }
+                            break;
                         case 'size_from': //&& $listing['TotalLotSize'] <= $sizeTo |  && $availableSpaceSize[1] <= $sizeTo
                             if ($forSale){
-                                if(!isset($listing['TotalLotSize'])
-                                   || $listing['TotalLotSize'] < $value ){
+                                if(!isset($listing['GrossLeasableArea'])
+                                   || $listing['GrossLeasableArea'] < $value ){
                                     $matched = false;
                                 }
                             }elseif($forLease){
@@ -192,8 +206,8 @@ class Listings implements \Iterator, \ArrayAccess
                             break;
                         case 'size_to':
                             if ($forSale){
-                                if(!isset($listing['TotalLotSize'])
-                                    || $listing['TotalLotSize'] > $value ){
+                                if(!isset($listing['GrossLeasableArea'])
+                                    || $listing['GrossLeasableArea'] > $value ){
                                     $matched = false;
                                 }
                             }elseif($forLease){

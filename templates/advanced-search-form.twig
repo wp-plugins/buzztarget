@@ -88,6 +88,25 @@
                     </div>
                 </div>
             {% endif %}
+            {% if show_total_size_range is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group half">
+                        <input type="text" placeholder="Lot Size From" id="totalSizeFrom" name="total_size_from" value="{{ saved.total_size_from }}" />
+                    </div>
+                    <div class="input-group half">
+                        <input type="text" placeholder="Lot Size To" id="totalSizeTo" name="total_size_to" value="{{ saved.total_size_to }}" />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="input-group">
+                        <label>Search total lot size by:</label>
+                        <input type="radio"  id="byAcres" name="total_size_by" {% if saved.total_size_by is sameas('acres') %} checked="checked" {% endif %} value="acres" />
+                        <label for="byAcres">Acres</label>
+                        <input type="radio" id="bySF"  name="total_size_by" {% if saved.total_size_by != 'acres' %} checked="checked" {% endif %} value="sf" />
+                        <label for="bySF">SF</label>
+                    </div>
+                </div>
+            {% endif %}
             {% if show_price_range is sameas('on') %}
                 <div class="clearfix">
                     <div class="input-group half">

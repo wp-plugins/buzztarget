@@ -185,6 +185,16 @@
                                 </td>
                             </tr>
 
+                            {# Advanced Search Lot Range (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_total_size_range}}</td>
+                                <td>
+                                    {% set advanced_search_total_size_range = theme_options['advanced_search']['total_size_range'] %}
+                                    <input type="radio" name="advanced_search[total_size_range]" value="on" {% if advanced_search_total_size_range is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[total_size_range]" value="off" {% if advanced_search_total_size_range is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
                             {# Advanced Search Price Range (ON/OFF) #}
                             <tr>
                                 <td>{{theme_options_advanced_search_price_range}}</td>

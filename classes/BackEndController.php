@@ -126,6 +126,9 @@ class BackEndController
                 $advancedSearchSizeRange = (isset($advancedSearch['size_range'])
                     && ($advancedSearch['size_range'] === 'on' || $advancedSearch['size_range'] === 'off')) ? $advancedSearch['size_range'] : 'on';
 
+                $advancedSearchTotalSizeRange = (isset($advancedSearch['total_size_range'])
+                    && ($advancedSearch['total_size_range'] === 'on' || $advancedSearch['total_size_range'] === 'off')) ? $advancedSearch['total_size_range'] : 'on';
+
                 $advancedSearchPriceRange = (isset($advancedSearch['price_range'])
                     && ($advancedSearch['price_range'] === 'on' || $advancedSearch['price_range'] === 'off')) ? $advancedSearch['price_range'] : 'on';
 
@@ -156,6 +159,7 @@ class BackEndController
                         'broker' => $advancedSearchBroker,
                         'keyword' => $advancedSearchKeyword,
                         'size_range' => $advancedSearchSizeRange,
+                        'total_size_range' => $advancedSearchTotalSizeRange,
                         'price_range' => $advancedSearchPriceRange
                     ),
                     'show_size_in_acres' => $show_size_in_acres,
@@ -320,6 +324,7 @@ class BackEndController
             $vars['theme_options_advanced_search_property_type'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_PROPERTY_TYPE');
             $vars['theme_options_advanced_search_broker'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_BROKER');
             $vars['theme_options_advanced_search_keyword'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_KEYWORD');
+            $vars['theme_options_advanced_search_total_size_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_TOTAL_SIZE_RANGE');
             $vars['theme_options_advanced_search_size_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_SIZE_RANGE');
             $vars['theme_options_advanced_search_price_range'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_ADVANCED_SEARCH_PRICE_RANGE');
 

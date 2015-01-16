@@ -42,6 +42,8 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
         'broker',
         'keyword',
         'size_from', 'size_to',
+        'total_size_from', 'total_size_to',
+        'total_size_by',
         'price_from', 'price_to'
     );
     // $_POST filter for key(s)
@@ -55,16 +57,24 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
         $broker,
         $keyword,
         $size_from, $size_to,
+        $total_size_from, $total_size_to,
+        $total_size_by,
         $price_from, $price_to) = $this->request->getPostValues($post_keys, $post_filters);
 
     // Fetch listing types separately
     list($listingTypes) = $this->request->getPostValues(array('listing_types'));
 
     if($size_from){
-        $size_from = (float) ($theme_options['show_size_in_acres'] == 'acres') ? $size_from * 43560 : $size_from;
+        $size_from = (float) $size_from;
     }
     if($size_to){
-        $size_to = (float) ($theme_options['show_size_in_acres'] == 'acres') ? $size_to * 43560 : $size_to;
+        $size_to = (float) $size_to;
+    }
+    if($total_size_from){
+        $total_size_from = (float) $total_size_from;
+    }
+    if($total_size_to){
+        $total_size_to = (float) $total_size_to;
     }
     if($price_from){
         $price_from = (float) $price_from;
@@ -83,6 +93,9 @@ if (isset($_POST['advanced_search_submit']) || isset($_GET['search']))
         'keyword' => $keyword,
         'size_from' => $size_from,
         'size_to' => $size_to,
+        'total_size_from' => $total_size_from,
+        'total_size_to' => $total_size_to,
+        'total_size_by' => $total_size_by,
         'price_from' => $price_from,
         'price_to' => $price_to,
         'listing_types' => $listingTypes
@@ -145,6 +158,7 @@ $show_property_type = $theme_options['advanced_search']['property_type'];
 $show_broker = $theme_options['advanced_search']['broker'];
 $show_keyword = $theme_options['advanced_search']['keyword'];
 $show_size_range = $theme_options['advanced_search']['size_range'];
+$show_total_size_range = $theme_options['advanced_search']['total_size_range'];
 $show_price_range = $theme_options['advanced_search']['price_range'];
 
 if ($property_type_disabled) {
@@ -201,6 +215,8 @@ $vars = array(
             'listing_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_LISTING_TYPE'),
             'property_type' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PROPERTY_TYPE'),
             'size' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE'),
+            'total_size_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_TOTAL_SIZE_FROM_PLACEHOLDER'),
+            'total_size_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_TOTAL_SIZE_TO_PLACEHOLDER'),
             'size_from_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_FROM_PLACEHOLDER'),
             'size_to_placeholder' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_SIZE_TO_PLACEHOLDER'),
             'price' => $this->text->__('ALL_LISTINGS_PAGE_ADVANCED_SEARCH_PRICE'),
@@ -239,6 +255,7 @@ $vars = array(
     'show_broker' => $show_broker,
     'show_keyword' => $show_keyword,
     'show_size_range' => $show_size_range,
+    'show_total_size_range' => $show_total_size_range,
     'show_price_range' => $show_price_range,
     'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
     'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
