@@ -71,6 +71,7 @@ class FrontEndScripts
         if(isset($css) && strlen($css) > 0) {
             $css = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css );
             $css = str_replace( array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css );
+            $css = str_replace('\\', '', $css);
             echo "<style type='text/css'>";
             echo $css;
             echo "</style>";

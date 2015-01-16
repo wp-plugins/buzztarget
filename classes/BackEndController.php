@@ -369,7 +369,7 @@ class BackEndController
                 $cssContent = $cssFileContent;
             }
 
-            $vars['css_file_content'] = $cssContent;
+            $vars['css_file_content'] = str_replace('\\', '', $cssContent);
 
             $vars['theme_css_heading'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_CSS_HEADING');
             $vars['theme_css_desc'] = $this->text->__('ADMIN_THEME_OPTIONS_TAB_THEME_CSS_DESC');

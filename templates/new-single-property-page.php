@@ -1,6 +1,4 @@
 <?php
-namespace BuzzTargetLive;
-
 get_header();
 
 $theme_options = get_option('buzztarget_theme_options');
@@ -17,7 +15,7 @@ $post_name = $post->post_name;
 $property_id = array_values(explode('-', $post_name));
 $property_id = $property_id[0];
 
-$property = Listings::getProperty($property_id);
+$property = BuzzTargetLive\Listings::getProperty($property_id);
 
 if($property){
     $phoneImage = plugin_dir_url(dirname(__FILE__)) . 'static/images/phone.png';
@@ -30,10 +28,21 @@ if($property){
     endforeach;
 
     $propertyDocuments = $property['ListingDocuments'];
+    $propertyLinks = array();
+    if(isset($property['Link1Title']) && isset($property['Link1Url']))
+        $propertyLinks[] = array('Url' => $property['Link1Url'], 'Title' => $property['Link1Title']);
+    if(isset($property['Link2Title']) && isset($property['Link2Url']))
+        $propertyLinks[] = array('Url' => $property['Link2Url'], 'Title' => $property['Link2Title']);
+    if(isset($property['Link3Title']) && isset($property['Link3Url']))
+        $propertyLinks[] = array('Url' => $property['Link3Url'], 'Title' => $property['Link3Title']);
     $spaces = $property['SpacesToLease'];
 
     $currentImage = 1;
     $imagesCount = count($otherImages);
+
+    echo "<pre>";
+    var_dump($property);
+    echo "</pre>";
 
     $siteUrl = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
@@ -183,6 +192,20 @@ if($property){
                                 <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
                             <?php } ?>
                             <?php echo $doc['AttachmentTitle']?>
+                        </a>
+                    </li>
+                    <?php } ?>
+                </ul>
+                <?php } ?>
+
+
+                <?php if (count($propertyLinks) > 0) {?>
+                <h4 class="title info theme-color">Listing Links:</h4>
+                <ul class="property-docs">
+                    <?php foreach ($propertyLinks as $doc) {?>
+                    <li>
+                        <a href="<?php echo $doc['Url']?>" target="_blank">
+                            <?php echo $doc['Title']?>
                         </a>
                     </li>
                     <?php } ?>
@@ -710,6 +733,20 @@ if($property){
                         <img src='<?php echo plugin_dir_url(dirname(__FILE__)) . 'static/images/'.$matches[1].'-50.png';?>' class='property-attachment-icon' />
                     <?php } ?>
                     <?php echo $doc['AttachmentTitle']?>
+                </a>
+            </li>
+            <?php } ?>
+        </ul>
+        <?php } ?>
+
+
+        <?php if (count($propertyLinks) > 0) {?>
+        <h4 class="title info theme-color">Listing Links:</h4>
+        <ul class="property-docs">
+            <?php foreach ($propertyLinks as $doc) {?>
+            <li>
+                <a href="<?php echo $doc['Url']?>" target="_blank">
+                    <?php echo $doc['Title']?>
                 </a>
             </li>
             <?php } ?>
