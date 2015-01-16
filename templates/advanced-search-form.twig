@@ -100,9 +100,9 @@
                 <div class="clearfix">
                     <div class="input-group">
                         <label>Search total lot size by:</label>
-                        <input type="radio"  id="byAcres" name="total_size_by" {% if saved.total_size_by is sameas('acres') %} checked="checked" {% endif %} value="acres" />
+                        <input type="radio"  id="byAcres" name="total_size_by" {% if selected_total_size_by is sameas('acres') %} checked="checked" {% endif %} value="acres" />
                         <label for="byAcres">Acres</label>
-                        <input type="radio" id="bySF"  name="total_size_by" {% if saved.total_size_by != 'acres' %} checked="checked" {% endif %} value="sf" />
+                        <input type="radio" id="bySF"  name="total_size_by" {% if selected_total_size_by != 'acres' %} checked="checked" {% endif %} value="sf" />
                         <label for="bySF">SF</label>
                     </div>
                 </div>

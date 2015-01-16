@@ -196,6 +196,10 @@ foreach($properties as $listing) {
 
 $filter_values = Listings::getSearchParameters();
 
+$selected_total_size_by = $theme_options['show_size_in_acres'];
+if($search_criteria && $search_criteria['total_size_by'])
+    $selected_total_size_by = $search_criteria['total_size_by'];
+
 $vars = array(
     'list_view' => true,
     'all_properties' => $properties,
@@ -257,6 +261,7 @@ $vars = array(
     'show_size_range' => $show_size_range,
     'show_total_size_range' => $show_total_size_range,
     'show_price_range' => $show_price_range,
+    'selected_total_size_by' => $selected_total_size_by,
     'show_advanced_search_image' => $this->config->getValue('static_url') . 'images/show-advanced-search.png',
     'hide_advanced_search_image' => $this->config->getValue('static_url') . 'images/hide-advanced-search.png',
     'theme_name' => str_replace(" ", "-", get_current_theme())
