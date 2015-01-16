@@ -40,10 +40,6 @@ if($property){
     $currentImage = 1;
     $imagesCount = count($otherImages);
 
-    echo "<pre>";
-    var_dump($property);
-    echo "</pre>";
-
     $siteUrl = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 ?>
@@ -283,7 +279,7 @@ if($property){
                         <?php if (isset($property['Utilities'])){ ?>
                     <tr>
                         <td>Utilities:</td>
-                        <td><?php echo $property['Utilities']; ?></td>
+                        <td><?php echo ($property['Utilities']) ? 'Yes' : 'No'; ?></td>
                     </tr>
                         <?php } ?>
 
@@ -600,7 +596,7 @@ if($property){
                 <?php if (isset($property['Utilities'])){ ?>
             <tr>
                 <td>Utilities:</td>
-                <td><?php echo $property['Utilities']; ?></td>
+                <td><?php echo ($property['Utilities']) ? 'Yes' : 'No'; ?></td>
             </tr>
                 <?php } ?>
 
