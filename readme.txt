@@ -4,7 +4,7 @@ Donate link: http://www.buzztarget.com
 Tags: real estate listings, commercial real estate listings, commercial listing marketing, CRE
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.0.8
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,8 +82,15 @@ Our plugin works with many Themes.  Using the CSS editor, you can customize font
 8. Responsive / Mobile View.
 
 == Changelog ==
+
+= 3.0.0 =
+* Added: 
+  - Customizable pins on the Map
+  - New Listings Map widgets
+  - Introduced Attachment Icons
+  - Introduced ability to search by Acres
+
 = 2.0.7 =
-* Customizable pins on the Map
 * Enhanced Short Code generator to allow for filtering listings by property type and listing type
 
 = 2.0.6 =

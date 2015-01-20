@@ -8,7 +8,7 @@ define('BUZZTARTGET_USE_LIVE_API', true);
     Plugin Name: BuzzTarget
     Plugin URI: www.buzztarget.com
     Description: A Commercial Real Estate Property Listing plugin for WordPress
-    Version: 2.0.8
+    Version: 3.0.0
     Author: BuzzTarget
     Author URI: www.buzztarget.com
     License: GPLv2 or later
