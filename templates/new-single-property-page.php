@@ -120,6 +120,10 @@ if($property){
             <span class='st_sharethis' displayText=''></span>
 
             <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
+
+            <?php if (count($propertyDocuments) > 0) {?>
+                <a class="attachment-clip" href="<?php echo $propertyDocuments[0]['AttachmentPath']?>" target='_blank'><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png"></a>
+            <?php } ?>
         </div>
         <?php if (isset($property['PropertyDescription']) || isset($property['LocationDescription'])){ ?>
         <div class="overview">
@@ -469,6 +473,10 @@ if($property){
                 <span class='st_sharethis' displayText=''></span>
 
                 <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
+
+                <?php if (count($propertyDocuments) > 0) {?>
+                    <a class="attachment-clip" href="<?php echo $propertyDocuments[0]['AttachmentPath']?>" target='_blank'><img width='16' src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png"></a>
+                <?php } ?>
             </div>
         </div>
         <h4 class="title info theme-color"><?php echo $property_name; ?></h4>

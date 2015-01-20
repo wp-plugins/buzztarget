@@ -512,7 +512,7 @@
 }
 
 #buzz-target-plugin .stButton .sharethis {
-    background-image: url('../images/sharethis_16_gray.png')!important;
+    background-image: url('/wp-content/plugins/buzztarget/static/images/sharethis_16_gray.png')!important;
 }
 
 #buzz-target-plugin .column {
