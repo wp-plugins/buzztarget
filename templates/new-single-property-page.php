@@ -290,7 +290,7 @@ if($property){
                         <?php if (isset($property['Divisible'])){ ?>
                     <tr>
                         <td>Divisible:</td>
-                        <td><?php echo $property['Divisible']; ?></td>
+                        <td><?php echo ($property['Divisible']) ? 'Yes' : 'No';; ?></td>
                     </tr>
                         <?php } ?>
 
@@ -611,7 +611,7 @@ if($property){
                 <?php if (isset($property['Divisible'])){ ?>
             <tr>
                 <td>Divisible:</td>
-                <td><?php echo $property['Divisible']; ?></td>
+                <td><?php echo ($property['Divisible']) ? 'Yes' : 'No'; ?></td>
             </tr>
                 <?php } ?>
 
