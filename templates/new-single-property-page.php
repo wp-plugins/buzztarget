@@ -470,13 +470,15 @@ if($property){
                 <script type="text/javascript">var switchTo5x=true;</script>
                 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
                 <script type="text/javascript">stLight.options({publisher: "3d7a2d4f-e80b-4e92-a0dc-3005fb9f74d7", doNotHash: true, doNotCopy: false, hashAddressBar: false, onhover: false});</script>
-                <span class='st_sharethis' displayText=''></span>
-
-                <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png"></a>
-
                 <?php if (count($propertyDocuments) > 0) {?>
-                    <a class="attachment-clip" href="<?php echo $propertyDocuments[0]['AttachmentPath']?>" target='_blank'><img width='16' src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png"></a>
+                    <a class="attachment-clip" href="<?php echo $propertyDocuments[0]['AttachmentPath']?>" target='_blank'><img width='16' src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" title="Listing Attachment"></a>
                 <?php } ?>
+				
+				<span class='st_sharethis' displayText=''></span>
+
+                <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" title="Print"></a>
+
+
             </div>
         </div>
         <h4 class="title info theme-color"><?php echo $property_name; ?></h4>
