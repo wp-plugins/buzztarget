@@ -1,0 +1,447 @@
+<div class="wrap">
+    <div id="icon-generic" class="icon32"></div>
+    <h2>{{ listings_page_heading }}</h2>
+
+
+    {% if fetch_listings_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ fetch_listings_result }}</strong>
+            </p>
+        </div>
+    {% elseif save_theme_options_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ save_theme_options_result }}</strong>
+            </p>
+        </div>
+
+    {% elseif theme_css_save_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ theme_css_save_result }}</strong>
+            </p>
+        </div>
+    {% elseif theme_css_restore_result %}
+        <div id="setting-error-settings_updated" class="updated settings-error">
+            <p>
+                <strong>{{ theme_css_restore_result }}</strong>
+            </p>
+        </div>
+    {% endif %}
+
+    <p> {{ listings_page_description }}</p>
+
+    {# Tabs #}
+    <div style="margin: 20px;">
+        <h3 class="nav-tab-wrapper bt-nav-tab-wrapper">
+            <a href="{{page_url}}" class="nav-tab {% if tab is not sameas('theme_options') and tab is not sameas('theme_css') and tab is not sameas('map_options') %} nav-tab-active {% endif %}">Fetch Settings</a>
+            <a href="{{page_url}}&tab=theme_options" class="nav-tab {% if tab is sameas('theme_options') %} nav-tab-active {% endif %}">Theme Options</a>
+            <a href="{{page_url}}&tab=theme_css" class="nav-tab {% if tab is sameas('theme_css') %} nav-tab-active {% endif %}">CSS</a>
+            <a href="{{page_url}}&tab=map_options" class="nav-tab {% if tab is sameas('map_options') %} nav-tab-active {% endif %}">Map Options</a>
+        </h3>
+
+        {# Tab Content #}
+        <div id="bt-tab-content">
+            {# Theme Options #}
+            {% if tab is sameas('theme_options') %}
+                <form method="POST" id="saveThemeOptions" action="#">
+                    <strong id="bt-theme-options-sub-head">{{theme_options_heading}}</strong>
+                    <p id="bt-theme-options-sub-head-desc">{{theme_options_desc}}</p>
+                    <div id="bt-theme-options">
+                        {# Listing Style #}
+                        <table id="bt-listing-style-table" class="bt-theme-options-table">
+                            <tr>
+                                <td>{{theme_options_listing_style}}</td>
+                                <td>
+                                    {% set listing_style = theme_options['listing_style'] %}
+                                    <select name="listing_style" id="bt-listing-style">
+                                        <option value="style1" {% if listing_style is sameas('style1') %} selected="selected" {% endif %}>{{theme_options_listing_style_1}}</option>
+                                        <option value="style2" {% if listing_style is sameas('style2') %} selected="selected" {% endif %}>{{theme_options_listing_style_2}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{theme_options_listing_detail_style}}</td>
+                                <td>
+                                    {% set listing_detail_style = theme_options['listing_detail_style'] %}
+                                    <select name="listing_detail_style" id="bt-listing-detail-style">
+                                        <option value="style1" {% if listing_detail_style is sameas('style1') %} selected="selected" {% endif %}>{{theme_options_listing_detail_style_1}}</option>
+                                        <option value="style2" {% if listing_detail_style is sameas('style2') %} selected="selected" {% endif %}>{{theme_options_listing_detail_style_2}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{theme_options_full_width}}</td>
+                                <td>
+                                    {% set full_width_style = theme_options['full_width_style'] %}
+                                    <input type="radio" name="full_width_style" value="on" {% if full_width_style is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="full_width_style" value="off" {% if full_width_style is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                        </table>
+
+                        {# Advanced Search Status (ON/OFF) #}
+                        <table id="bt-advanced-search-status-table" class="bt-theme-options-table">
+                            <tr>
+                                <td>{{theme_options_advanced_search}}</td>
+                                <td>
+                                    {% set advanced_search_status = theme_options['advanced_search']['status'] %}
+                                    <input type="radio" name="advanced_search[status]" value="on" {% if advanced_search_status is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[status]" value="off" {% if advanced_search_status is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                        </table>
+
+                        {# Advanced Search Listing Type (ON/OFF) #}
+                        <table id="bt-advanced-search-listing-type-table" class="bt-theme-options-table advanced-search-fields">
+                            {# Advanced Search Listing Type (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_listing_type}}</td>
+                                <td>
+                                    {% set advanced_search_listing_type = theme_options['advanced_search']['listing_type'] %}
+                                    <input type="radio" name="advanced_search[listing_type]" value="on" {% if advanced_search_listing_type is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[listing_type]" value="off" {% if advanced_search_listing_type is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Street (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_street}}</td>
+                                <td>
+                                    {% set advanced_search_street = theme_options['advanced_search']['street'] %}
+                                    <input type="radio" name="advanced_search[street]" value="on" {% if advanced_search_street is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[street]" value="off" {% if advanced_search_street is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search City (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_city}}</td>
+                                <td>
+                                    {% set advanced_search_city = theme_options['advanced_search']['city'] %}
+                                    <input type="radio" name="advanced_search[city]" value="on" {% if advanced_search_city is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[city]" value="off" {% if advanced_search_city is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search County (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_county}}</td>
+                                <td>
+                                    {% set advanced_search_county = theme_options['advanced_search']['county'] %}
+                                    <input type="radio" name="advanced_search[county]" value="on" {% if advanced_search_county is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[county]" value="off" {% if advanced_search_county is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Zip (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_zip}}</td>
+                                <td>
+                                    {% set advanced_search_zip = theme_options['advanced_search']['zip'] %}
+                                    <input type="radio" name="advanced_search[zip]" value="on" {% if advanced_search_zip is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[zip]" value="off" {% if advanced_search_zip is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Property Type (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_property_type}}</td>
+                                <td>
+                                    {% set advanced_search_property_type = theme_options['advanced_search']['property_type'] %}
+                                    <input type="radio" name="advanced_search[property_type]" value="on" {% if advanced_search_property_type is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[property_type]" value="off" {% if advanced_search_property_type is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Broker (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_broker}}</td>
+                                <td>
+                                    {% set advanced_search_broker = theme_options['advanced_search']['broker'] %}
+                                    <input type="radio" name="advanced_search[broker]" value="on" {% if advanced_search_broker is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[broker]" value="off" {% if advanced_search_broker is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Keyword (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_keyword}}</td>
+                                <td>
+                                    {% set advanced_search_keyword = theme_options['advanced_search']['keyword'] %}
+                                    <input type="radio" name="advanced_search[keyword]" value="on" {% if advanced_search_keyword is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[keyword]" value="off" {% if advanced_search_keyword is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Size Range (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_size_range}}</td>
+                                <td>
+                                    {% set advanced_search_size_range = theme_options['advanced_search']['size_range'] %}
+                                    <input type="radio" name="advanced_search[size_range]" value="on" {% if advanced_search_size_range is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[size_range]" value="off" {% if advanced_search_size_range is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Lot Range (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_total_size_range}}</td>
+                                <td>
+                                    {% set advanced_search_total_size_range = theme_options['advanced_search']['total_size_range'] %}
+                                    <input type="radio" name="advanced_search[total_size_range]" value="on" {% if advanced_search_total_size_range is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[total_size_range]" value="off" {% if advanced_search_total_size_range is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+
+                            {# Advanced Search Price Range (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_advanced_search_price_range}}</td>
+                                <td>
+                                    {% set advanced_search_price_range = theme_options['advanced_search']['price_range'] %}
+                                    <input type="radio" name="advanced_search[price_range]" value="on" {% if advanced_search_price_range is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="advanced_search[price_range]" value="off" {% if advanced_search_price_range is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        {# Listing Per Page #}
+                        <table id="bt-allow-listing-change-table" class="bt-theme-options-table">
+                            <tr>
+                                <td>{{theme_options_show_size_in_acres}}</td>
+                                <td>
+                                    {% set show_size_in_acres = theme_options['show_size_in_acres'] %}
+                                    <input type="radio" name="show_size_in_acres" value="acres" {% if show_size_in_acres is sameas('acres') %} checked {% endif %}> Yes
+                                    <input type="radio" name="show_size_in_acres" value="sf" {% if show_size_in_acres is sameas('sf') %} checked {% endif %}> No
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{theme_options_allow_listing_per_page_change}}</td>
+                                <td>
+                                    {% set allow_listing_per_page_change = theme_options['allow_listing_per_page_change'] %}
+                                    <input type="radio" name="allow_listing_per_page_change" value="on" {% if allow_listing_per_page_change is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="allow_listing_per_page_change" value="off" {% if allow_listing_per_page_change is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{theme_options_default_listing_per_page}}</td>
+                                <td>
+                                    {% set default_listing_per_page = theme_options['default_listing_per_page'] %}
+                                    <select name="default_listing_per_page" id="bt-default-listing-per-page">
+                                        <option value="9" {% if default_listing_per_page is sameas('9') %} selected="selected" {% endif %}>9</option>
+                                        <option value="12" {% if default_listing_per_page is sameas('12') %} selected="selected" {% endif %}>12</option>
+                                        <option value="60" {% if default_listing_per_page is sameas('60') %} selected="selected" {% endif %}>60</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            {# Show Price On Listing (ON/OFF) #}
+                            <tr>
+                                <td>{{theme_options_show_price_on_listing}}</td>
+                                <td>
+                                    {% set show_price_on_listing = theme_options['show_price_on_listing'] %}
+                                    <input type="radio" name="show_price_on_listing" value="on" {% if show_price_on_listing is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="show_price_on_listing" value="off" {% if show_price_on_listing is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{theme_options_show_document_icons_on_listing}}</td>
+                                <td>
+                                    {% set show_document_icons_on_listing = theme_options['show_document_icons_on_listing'] %}
+                                    <input type="radio" name="show_document_icons_on_listing" value="on" {% if show_document_icons_on_listing is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="show_document_icons_on_listing" value="off" {% if show_document_icons_on_listing is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                        </table>
+
+                        {# Sort By #}
+                        <table id="bt-sort-by-table" class="bt-theme-options-table">
+                            <tr>
+                                <td>{{theme_options_show_sort_by}}</td>
+                                <td>
+                                    {% set show_sort_by = theme_options['show_sort_by'] %}
+                                    <input type="radio" name="show_sort_by" value="on" {% if show_sort_by is sameas('on') %} checked {% endif %}> On
+                                    <input type="radio" name="show_sort_by" value="off" {% if show_sort_by is sameas('off') %} checked {% endif %}> Off
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{theme_options_default_sort_by}}</td>
+                                <td>
+                                    {% set default_sort_by = theme_options['default_sort_by'] %}
+                                    <select name="default_sort_by" id="bt-default-sort-by">
+                                        <option value="name_a_z" {% if default_sort_by is sameas('name_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_name_a_z}}</option>
+                                        <option value="name_z_a" {% if default_sort_by is sameas('name_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_name_z_a}}</option>
+                                        <option value="price_a_z" {% if default_sort_by is sameas('price_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_price_a_z}}</option>
+                                        <option value="price_z_a" {% if default_sort_by is sameas('price_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_price_z_a}}</option>
+                                        <option value="date_a_z" {% if default_sort_by is sameas('date_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_date_a_z}}</option>
+                                        <option value="date_z_a" {% if default_sort_by is sameas('date_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_date_z_a}}</option>
+                                        <option value="size_a_z" {% if default_sort_by is sameas('size_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_size_a_z}}</option>
+                                        <option value="size_z_a" {% if default_sort_by is sameas('size_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_size_z_a}}</option>
+                                        <option value="broker_a_z" {% if default_sort_by is sameas('broker_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_broker_a_z}}</option>
+                                        <option value="broker_z_a" {% if default_sort_by is sameas('broker_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_broker_z_a}}</option>
+                                        <option value="county_a_z" {% if default_sort_by is sameas('county_a_z') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_county_a_z}}</option>
+                                        <option value="county_z_a" {% if default_sort_by is sameas('county_z_a') %} selected="selected" {% endif %}>{{theme_options_default_sort_by_county_z_a}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <input type="submit" name="save_theme_options" class="button-primary" value="{{save_changes}}" />
+                </form>
+            {% elseif tab is sameas('theme_css') %}
+            {# Theme CSS #}
+                <form method="POST" id="saveThemeCSS" action="#">
+                    <strong id="bt-theme-css-sub-head">{{theme_css_heading}}</strong>
+                    <p id="bt-theme-css-sub-head-desc">{{theme_css_desc}}</p>
+                    <div id="bt-theme-css">
+                        <table id="bt-theme-css-table" class="bt-theme-css-table">
+                            <tr>
+                                <td>
+                                    <textarea rows="33" cols="100" name="theme-css-text">{{css_file_content}}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" name="save_theme_css" class="button-primary" value="{{save_css_changes}}" />
+                        <input type="submit" name="restore_theme_css" class="button-secondary" value="{{restore_css_changes}}" />
+                    </div>
+                </form>
+            {% elseif tab is sameas('map_options') %}
+            {# Map Options #}
+                <form method="POST" id="saveMapOptions" action="#">
+                    <strong id="bt-theme-css-sub-head">{{map_options_heading}}</strong>
+                    {# Not needed yet <p id="bt-theme-css-sub-head-desc">{{map_options_desc}}</p> #}
+                    <div id="bt-theme-css">
+
+                        {# Not needed yet <strong id="bt-theme-css-sub-head">{{map_options_markers_heading}}</strong> #}
+                        <p id="bt-theme-css-sub-head-desc">{{map_options_markers_desc}}</p>
+                        <table id="bt-theme-css-table" class="bt-theme-css-table">
+                            <tr>
+                                <td>
+                                    {{map_options_default_marker}}
+                                </td>
+                                <td>
+                                    <input type="text" name="map_options_markers[default]" value="{{map_options['markers']['default']}}" />
+                                </td>
+                            </tr>
+                            {% for property_type in property_types %}
+                            <tr>
+                                <td>
+                                    {{property_type}}
+                                </td>
+                                <td>
+                                    <input type="text" name="map_options_markers[{{property_type}}]" value="{{map_options['markers'][property_type]}}" />
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <input type="submit" name="save_map_options" class="button-primary" value="{{map_options_save_changes}}" />
+                    </div>
+                </form>
+            {# Fetch Settings (Default) #}
+            {% else %}
+                <form method="POST" id="fetchListings" action="#">
+                <p>{{ fetch_settings_desc }}</p>
+                <strong class="bt-fetch-settings-sub-head">{{fetch_schedule_heading}}</strong>
+                <p class="bt-fetch-settings-sub-head-desc">{{fetch_schedule_desc}}</p>
+                <table id="bt-fetch-schedule-table">
+                    {# Fetch Schedule Interval #}
+                        <tr>
+                    <td>{{fetch_schedule_internal}}</td>
+                    <td>
+                        <select name="fetch_schedule_interval" id="fetch-schedule-interval">
+                            {% set interval = attribute(fetch_schedule_options, 'interval') %}
+                            {% set daily = fetch_schedule_interval_daily %}
+                            <option value="{{daily|lower}}" {% if interval is sameas(daily|lower) %} selected="selected" {% endif %}>{{daily}}</option>
+                            {% set weekly = fetch_schedule_interval_weekly %}
+                            <option value="{{weekly|lower}}" {% if interval is sameas(weekly|lower) %} selected="selected" {% endif %}>{{weekly}}</option>
+                            {% set monthly = fetch_schedule_interval_monthly %}
+                            <option value="{{monthly|lower}}" {% if interval is sameas(monthly|lower) %} selected="selected" {% endif %}>{{monthly}}</option>
+                        </select>
+                    </td>
+                </tr>
+                    {# Fetch Schedule At #}
+                        <tr>
+                    <td>{{fetch_schedule_at}}</td>
+                    <td>
+                        {# 1-12 #}
+                                <select name="fetch_schedule_time" id="fetch-schedule-time">
+                        {% set time = attribute(fetch_schedule_options, 'at') %}
+                        {% for i in 1..12 %}
+                        <option value="{{i}}" {% if time is sameas(i) %} selected="selected" {% endif %}>{{i}}</option>
+                        {% endfor %}
+                    </select>
+                        {# AM/PM #}
+                                <select name="fetch_schedule_cycle" id="fetch-schedule-cycle">
+                        {% set cycle = attribute(fetch_schedule_options, 'at_cycle') %}
+                        <option value="{{fetch_schedule_am|lower}}" {% if cycle is sameas(fetch_schedule_am|lower) %} selected="selected" {% endif %}>{{fetch_schedule_am}}</option>
+                        <option value="{{fetch_schedule_pm|lower}}" {% if cycle is sameas(fetch_schedule_pm|lower) %} selected="selected" {% endif %}>{{fetch_schedule_pm}}</option>
+                    </select>
+                        {{fetch_schedule_est}}
+                    </td>
+                </tr>
+                    {# Fetch Schedule Every (Week Day Alphabetical) #}
+                        <tr id="bt-fetch-schedule-every-weekday-tr">
+                    <td>{{fetch_schedule_every}}</td>
+                    <td>
+                        <select name="fetch_schedule_every_weekday" id="fetch-schedule-weekday">
+                            {% for weekday in fetch_schedule_weekdays %}
+                            <option value="{{weekday|lower}}">{{weekday}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                    {# Fetch Schedule Every (Month Day Numerical) #}
+                        <tr id="bt-fetch-schedule-every-month-day-tr">
+                    <td>{{fetch_schedule_every}}</td>
+                    <td>
+                        <select name="fetch_schedule_every_month_day" id="fetch-schedule-month-day">
+                            {% set chosenMonthDay = attribute(fetch_schedule_options, 'every_month_day') %}
+                            {% for i in 1..current_month_last_day %}
+                            <option value="{{i}}" {% if chosenMonthDay is sameas(i) %} selected="selected" {% endif %}>{{i}}</option>
+                            {% endfor %}
+                        </select>
+                        {{day_of_every_month}}
+                    </td>
+                </tr>
+                </table>
+
+
+                {# Listings Filter #}
+                    <strong class="bt-fetch-settings-sub-head">{{listings_filter}}</strong>
+                <p class="bt-fetch-settings-sub-head-desc">{{listings_filter_desc}}</p>
+
+                <div id="bt-listings-filter-content">
+                    <div id="bt-listing-types-div">
+                        <strong>{{listing_types_label}}</strong>
+                        <p id="bt-listing-types">
+                            {% set listingTypes = attribute(filter_options, 'listing_types') %}
+                            {% for type in listing_types %}
+                            {% set value = type|lower|str_replace_spaces %}
+                            <input type="checkbox" name="listing_types[]" id="listing-types" value="{{value}}" {% if value in listingTypes %} checked="checked" {% endif %}/> {{type}}
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div id="bt-listing-statuses-div">
+                        <strong>{{listing_status_label}}</strong>
+                        <p id="bt-listing-statuses">
+                            {% set listingStatuses = attribute(filter_options, 'listing_statuses') %}
+                            {% for status in listing_statuses %}
+                            {% set value = status|lower|str_replace_spaces %}
+                            <input type="checkbox" name="listing_statuses[]" id="listing-statuses" value="{{value}}" {% if value in listingStatuses %} checked="checked" {% endif %} /> {{status}}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+
+                {# Fetch Listings #}
+                    <div id="fetch-listings-button-container">
+                <input type="submit" class="button-secondary" name="save_fetch_settings" value="{{save_settings_button_label}}" />
+                <input type="submit" id="fetchListingsSubmit" name="fetchListings" class="button-primary" value="{{fetch_listings_submit_button_label}}" />
+                <div id="loading" style=""></div>
+            </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>

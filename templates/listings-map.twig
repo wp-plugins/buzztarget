@@ -1,0 +1,161 @@
+{% set mapProperties = [] %}
+{% for property in listings %}
+    {% set propertyURLDashed = properties_url ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+    {% set mapProperties = mapProperties|merge([
+        {
+                propertyLat : property.Lat|e,
+                propertyLon : property.Lon,
+                propertyAddress : property.Property.Address.Address,
+                propertyCity : property.Property.Address.City,
+                propertyState : property.Property.Address.State,
+                propertyZip : property.Property.Address.Zip,
+                propertyType: property.ListingType,
+                propertyImage : property.ListingImages.0.AttachmentPath,
+                propertyName : property.Property.PropertyName,
+                propertyStatus : property.Status,
+                propertyDetails : propertyURLDashed,
+                propertyIcon : property.PropertyMapIcon
+            }
+        ])
+    %}
+{% endfor %}
+<div class="clearfix">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+    <script>
+        var properties = {{ mapProperties|json_encode()|raw }} ;
+        function initialize()
+        {
+            var mapOptions,
+                    map,
+                    markers = [],
+                    propertyWindow = new google.maps.InfoWindow({
+                        content: ''
+                    });
+            var mapInitialized = false;
+
+            if (properties.length > 0)
+            {
+                for (var i = 0; i < properties.length; i++)
+                {
+                    var propertyWindowContent = '<div class="bt-gm-property-window">' +
+                            '<p>';
+                    var propertyType;
+                    if (properties[i].propertyType === 'ForSale')
+                    {
+                        propertyType = 'For Sale'
+                    }
+                    else if (properties[i].propertyType === 'ForLease')
+                    {
+                        propertyType = 'For Lease'
+                    }
+                    propertyWindowContent = propertyWindowContent + propertyType +
+                            '</p>' +
+                            '<div class="bt-gm-property">' +
+                            '<div class="bt-gm-property-image">' +
+                            '<img src="' + properties[i].propertyImage + '" />' +
+                            '</div>' +
+                            '<div class="bt-gm-property-details">' +
+                            '<p>' +
+                            '<a href="' + properties[i].propertyDetails + '" class="bt-gm-link">' +
+                            properties[i].propertyName +
+                            '</a>' +
+                            '</p>' +
+                            '<p>' +
+                            properties[i].propertyAddress +
+                            '</p>' +
+                            '<p>' +
+                            properties[i].propertyCity + ', ' +
+                            properties[i].propertyState + ' ' +
+                            properties[i].propertyZip +
+                            '</p>' +
+                            '<p>' +
+                            'Status: ' + properties[i].propertyStatus +
+                            ' | <a href="' + properties[i].propertyDetails + '" class="bt-gm-link">Details</a>' +
+                            '</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                    var lat = properties[i].propertyLat;
+                    var lon = properties[i].propertyLon;
+                    var property_icon = properties[i].propertyIcon;
+                    if ( lat == undefined || lon == undefined){
+                        property_address = properties[i].propertyCity + ', ' + properties[i].propertyState + ' ' + properties[i].propertyZip;
+                        property_fullAddress = properties[i].propertyAddress;
+                        var geocoder = new google.maps.Geocoder();
+                        geocoder.geocode({
+                            "address": property_address
+                        }, function(results) {
+                            if(results && results[0]){
+                                var lat = results[0].geometry.location['k'];
+                                var lon = results[0].geometry.location['A'];
+                                if (!mapInitialized )
+                                {
+                                    mapOptions = {
+                                        zoom: 10,
+                                        center: new google.maps.LatLng(lat, lon),
+                                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                                    };
+                                    map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                                    mapInitialized = true;
+                                }
+                                var marker = new google.maps.Marker({
+                                    position: new google.maps.LatLng(lat, lon),
+                                    map: map,
+                                    title: property_fullAddress + "\n" + property_address,
+                                    icon: property_icon
+                                });
+                                google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
+                                    return function () {
+                                        propertyWindow.setContent(propertyWindowContent);
+                                        propertyWindow.open(map, marker);
+                                    }
+                                })(marker, propertyWindowContent));
+                            }
+                        });
+                    }
+                    else
+                    {
+                        if (!mapInitialized )
+                        {
+                            mapOptions = {
+                                zoom: 10,
+                                center: new google.maps.LatLng(lat, lon),
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };
+                            map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                            mapInitialized = true;
+                        }
+
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(lat, lon),
+                            map: map,
+                            title: properties[i].propertyAddress + "\n" +
+                                    properties[i].propertyCity + ', ' +
+                                    properties[i].propertyState + ' ' +
+                                    properties[i].propertyZip,
+                            icon: property_icon
+                        });
+                        google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
+                            return function () {
+                                propertyWindow.setContent(propertyWindowContent);
+                                propertyWindow.open(map, marker);
+                            }
+                        })(marker, propertyWindowContent));
+                    }
+                }
+            }
+            else{
+                mapOptions = {
+                    zoom: 3,
+                    center: new google.maps.LatLng(0, 0),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+            }
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    <div id="bt-map-canvas" class="map" style="height: {{height}}px; width: {{width}}px; margin:0px; padding: 0px;"></div>
+</div>

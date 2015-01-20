@@ -1,0 +1,306 @@
+<div class="section content">
+    <div class="search">
+        {# Any search result messages will be displayed here #}
+
+        {% set mapProperties = [] %}
+        {% for key, property in all_properties %}
+        {% set propertyURLDashed = properties_url ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+        {% set mapProperties = mapProperties|merge([key,
+            {
+                    propertyLat : property.Lat|e,
+                    propertyLon : property.Lon,
+                    propertyAddress : property.Property.Address.Address,
+                    propertyCity : property.Property.Address.City,
+                    propertyState : property.Property.Address.State,
+                    propertyZip : property.Property.Address.Zip,
+                    propertyType: property.ListingType,
+                    propertyImage : property.ListingImages.0.AttachmentPath,
+                    propertyName : property.Property.PropertyName,
+                    propertyStatus : property.Status,
+                    propertyDetails : propertyURLDashed,
+                    propertyIcon : property.PropertyMapIcon
+                }
+            ])
+        %}
+        {% endfor %}
+        <div class="clearfix">
+            <div class="search-map">
+                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+                <script>
+                    var properties = {{ mapProperties|json_encode()|raw }} ;
+                    function initialize()
+                    {
+                        var mapOptions,
+                                map,
+                                markers = [],
+                                propertyWindow = new google.maps.InfoWindow({
+                                    content: ''
+                                });
+                        var mapInitialized = false;
+                        var latlngbounds = new google.maps.LatLngBounds();
+
+                        if (properties.length > 0)
+                        {
+                            for (var i = 0; i < properties.length; i++)
+                            {
+                                var propertyWindowContent = '<div class="bt-gm-property-window">' +
+                                        '<p>';
+                                var propertyType;
+                                if (properties[i].propertyType === 'ForSale')
+                                {
+                                    propertyType = 'For Sale'
+                                }
+                                else if (properties[i].propertyType === 'ForLease')
+                                {
+                                    propertyType = 'For Lease'
+                                }
+                                propertyWindowContent = propertyWindowContent + propertyType +
+                                        '</p>' +
+                                        '<div class="bt-gm-property">' +
+                                        '<div class="bt-gm-property-image">' +
+                                        '<img src="' + properties[i].propertyImage + '" />' +
+                                        '</div>' +
+                                        '<div class="bt-gm-property-details">' +
+                                        '<p>' +
+                                        '<a href="' + properties[i].propertyDetails + '" class="bt-gm-link">' +
+                                        properties[i].propertyName +
+                                        '</a>' +
+                                        '</p>' +
+                                        '<p>' +
+                                        properties[i].propertyAddress +
+                                        '</p>' +
+                                        '<p>' +
+                                        properties[i].propertyCity + ', ' +
+                                        properties[i].propertyState + ' ' +
+                                        properties[i].propertyZip +
+                                        '</p>' +
+                                        '<p>' +
+                                        'Status: ' + properties[i].propertyStatus +
+                                        ' | <a href="' + properties[i].propertyDetails + '" class="bt-gm-link">Details</a>' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+
+                                var lat = properties[i].propertyLat;
+                                var lon = properties[i].propertyLon;
+                                var property_icon = properties[i].propertyIcon;
+
+                                if ( lat == undefined || lon == undefined){
+                                    property_address = properties[i].propertyCity + ', ' + properties[i].propertyState + ' ' + properties[i].propertyZip;
+                                    property_fullAddress = properties[i].propertyAddress;
+                                    var geocoder = new google.maps.Geocoder();
+                                    geocoder.geocode({
+                                        "address": property_address
+                                    }, function(results) {
+                                        if(results && results[0]){
+                                            var lat = results[0].geometry.location['k'];
+                                            var lon = results[0].geometry.location['A'];
+                                            if (!mapInitialized )
+                                            {
+                                                mapOptions = {
+                                                    zoom: 10,
+                                                    center: new google.maps.LatLng(lat, lon),
+                                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                };
+                                                map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                                                mapInitialized = true;
+                                            }
+                                            var marker = new google.maps.Marker({
+                                                position: new google.maps.LatLng(lat, lon),
+                                                map: map,
+                                                title: property_fullAddress + "\n" + property_address,
+                                                icon: property_icon
+                                            });
+                                            google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
+                                                return function () {
+                                                    propertyWindow.setContent(propertyWindowContent);
+                                                    propertyWindow.open(map, marker);
+                                                }
+                                            })(marker, propertyWindowContent));
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    if (!mapInitialized )
+                                    {
+                                        mapOptions = {
+                                            zoom: 10,
+                                            center: new google.maps.LatLng(lat, lon),
+                                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                                        };
+                                        map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                                        mapInitialized = true;
+                                    }
+
+                                    latlngbounds.extend(new google.maps.LatLng(lat,lon));
+
+                                    var marker = new google.maps.Marker({
+                                        position: new google.maps.LatLng(lat, lon),
+                                        map: map,
+                                        title: properties[i].propertyAddress + "\n" +
+                                                properties[i].propertyCity + ', ' +
+                                                properties[i].propertyState + ' ' +
+                                                properties[i].propertyZip,
+                                        icon: property_icon
+                                    });
+                                    google.maps.event.addListener(marker, 'click', (function(marker, propertyWindowContent) {
+                                        return function () {
+                                            propertyWindow.setContent(propertyWindowContent);
+                                            propertyWindow.open(map, marker);
+                                        }
+                                    })(marker, propertyWindowContent));
+
+                                }
+                            }
+
+                            // map: an instance of GMap3
+                            // latlng: an array of instances of GLatLng
+                            // var latlngbounds = new google.maps.LatLngBounds();
+
+                            // latlng.forEach(function(n){
+                            //    latlngbounds.extend(n);
+                            // // });
+                            // 
+
+                            map.setCenter(latlngbounds.getCenter());
+                            map.fitBounds(latlngbounds);
+
+                        }
+                        else{
+                            mapOptions = {
+                                zoom: 3,
+                                center: new google.maps.LatLng(0, 0),
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };
+                            map = new google.maps.Map(document.getElementById('bt-map-canvas'), mapOptions);
+                        }
+                    }
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                </script>
+                <div id="bt-map-canvas" class="map" style="margin:0px; padding: 0px;"></div>
+            </div>
+            {% if show_filter_form is sameas('on') %}
+            {% include 'advanced-search-form.twig' %}
+            {% endif %}
+        </div>
+    </div>
+    {% if show_map_legend is sameas(true) %}
+        <div class="clearfix theme-bg search-map-legend" style="">
+            {% for key, marker in map_options.markers %}
+                {% if marker is not sameas('') %}
+                    <div class='info-holder'>
+                        <img src='{{marker}}' /> - {{key}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+<div class="section content sort">
+    <div class="clearfix">
+        {% if show_sort_by is sameas('on') %}
+        <div class="select-group">
+            <label for="sortBy">Sort By:</label>
+            <select name="sortBy" id="sortBy">
+                <option {% if default_sort_by is sameas('name_a_z') %} selected="selected"{% endif %} value="name_a_z">Name A to Z</option>
+                <option {% if default_sort_by is sameas('name_z_a') %} selected="selected"{% endif %} value="name_z_a">Name Z to A</option>
+                <option {% if default_sort_by is sameas('price_a_z') %} selected="selected"{% endif %} value="price_a_z">Price A to Z</option>
+                <option {% if default_sort_by is sameas('price_z_a') %} selected="selected"{% endif %} value="price_z_a">Price Z to A</option>
+                <option {% if default_sort_by is sameas('date_a_z') %} selected="selected"{% endif %} value="date_a_z">Date A to Z</option>
+                <option {% if default_sort_by is sameas('date_z_a') %} selected="selected"{% endif %} value="date_z_a">Date Z to A</option>
+                <option {% if default_sort_by is sameas('size_a_z') %} selected="selected"{% endif %} value="size_a_z">Size A to Z</option>
+                <option {% if default_sort_by is sameas('size_z_a') %} selected="selected"{% endif %} value="size_z_a">Size Z to A</option>
+                <option {% if default_sort_by is sameas('broker_a_z') %} selected="selected"{% endif %} value="broker_a_z">Broker A to Z</option>
+                <option {% if default_sort_by is sameas('broker_z_a') %} selected="selected"{% endif %} value="broker_z_a">Broker Z to A</option>
+                <option {% if default_sort_by is sameas('county_a_z') %} selected="selected"{% endif %} value="county_a_z">County A to Z</option>
+                <option {% if default_sort_by is sameas('county_z_a') %} selected="selected"{% endif %} value="county_z_a">County Z to A</option>
+            </select>
+        </div>
+        {% endif %}
+        {% if allow_listing_per_page_change is sameas('on') %}
+        <div class="select-group pull-right">
+            <label for="listCount">Listings Per Page:</label>
+            <select name="limit_per_page" id="listCount">
+                <option {% if listing_per_page is sameas('9') %} selected="selected"{% endif %} value="9">9</option>
+                <option {% if listing_per_page is sameas('12') %} selected="selected"{% endif %} value="12">12</option>
+                <option {% if listing_per_page is sameas('60') %} selected="selected"{% endif %} value="60">60</option>
+            </select>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="section content">
+    <div class="clearfix">
+        <div class="list-view">
+
+            {% if trans.search_error %}
+            <div id="bt-search-error">
+                <p>{{trans.search_error}}</p>
+            </div>
+            {% endif %}
+
+            {% for property in listings %}
+                {# URL to property page #}
+                {% set propertyURLDashed = properties_url ~ '/' ~ property.ListingId ~ '-' ~ property.Property.PropertyName|trim|replace(' ', '-') %}
+            <div class="list-item">
+                    <div class="image">
+                        <a href="{{propertyURLDashed}}">
+                            {% if property.ListingImages.0.AttachmentPath is defined %}
+                            <img src="{{property.ListingImages.0.AttachmentPath}}" alt="{{property.ListingImages.0.AttachmentPath}}">
+                            {% else %}
+                            <img src="http://placehold.it/200x200">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="item-info">
+                        <div class="clearfix">
+                            <div class="main-info">
+                                {% if property.ListingType is sameas('ForLease') %}
+                                    <h4>For Lease</h4>
+                                {% elseif property.ListingType is sameas('ForSale') %}
+                                    <h4>For Sale</h4>
+                                {% endif %}
+                                <h3 class="theme-color">
+                                    <a href="{{propertyURLDashed}}">{{property.Property.PropertyName|trim}}</a>
+                                </h3>
+                                <p class="address"><i>{{ property.Property.Address.Address|trim }}</i></p>
+                                <p class="address">
+                                    <i>
+                                        {{ property.Property.Address.City|trim }},
+                                        {{ property.Property.Address.State|trim }}
+                                        {{ property.Property.Address.Zip|trim }}
+                                    </i>
+                                </p>
+                                <p class="broker-name">
+                                    {% set brokerList = '' %}
+                                    {% for broker in property.ListingAgents %}
+                                        {% set brokerList = brokerList ~ broker.FirstName ~ ' ' ~ broker.LastName ~ ', ' %}
+                                    {% endfor %}
+                                    {{ brokerList|trim|trim(',') }}
+                                </p>
+                            </div>
+                            <div class="price theme-color">
+                                {% if property.PropertyPriceIsUndisclosed == false %}
+                                    {% if show_price_on_listing is sameas('on') %}
+                                        {% if property.PropertyPrice is defined %}
+                                            {% if property.PropertyPrice > 0 %}
+                                            ${{ property.PropertyPrice|number_format(0, '.', ',') }}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="description">{{property.PropertyDescription|replace({'&nbsp;': ' ',' ':' '})|trim}} <a href="{{propertyURLDashed}}">Read More</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{# Pagination #}
+{% include 'pagination.twig' %}

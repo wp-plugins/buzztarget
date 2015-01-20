@@ -1,0 +1,173 @@
+/*
+	This file contains the CSS for individual property / listing pages
+*/
+
+/* Listing container */
+div#bt-listing-container
+{
+	overflow: hidden;
+	width: 100%;
+}
+
+/* Container for images and details (left & right) */
+div#bt-listing-images-details-container
+{
+	overflow: hidden;
+	margin-bottom: 3%;
+	width: 100%;
+}
+
+/* Container for main image and thumbnails */
+div#bt-listing-images-container
+{
+	float: right;
+}
+
+/* Listing image container */
+div#bt-listing-image-container
+{
+	margin-right: 1%;
+}
+
+div#bt-listing-image
+{
+	position: relative;
+}
+
+div#bt-listing-image-enlarge-photo
+{
+	position: absolute;
+	left: 0px;
+	background-color: #2b2b2b;
+	width: 420px;
+	text-align: right;
+	top: 274px;
+	color: white;
+	margin-right: 1px;
+	bottom: 0;
+}
+
+div#bt-listing-image-enlarge-photo a
+{
+	margin-right: 4px;
+}
+
+/* Listing image */
+div#bt-listing-image-container img
+{
+	max-width: 420px !important;
+	height: 293px !important;
+}
+
+/* Thumbnail images container */
+div#bt-listing-thumbnails-container
+{
+	clear: both;
+	max-width: 350px !important;
+}
+
+/* Individual thumbnail images */
+div#bt-listing-thumbnails-container img
+{
+	margin-right: 10px;
+	padding: 0px;
+	width: 80px !important;
+	height: 60px !important;
+	display: inline-block; 
+	float: left; 
+	margin-top: 5px;
+}
+
+/* Every fourth thumbnail image */
+div#bt-listing-thumbnails-container img:nth-child(4n+4)
+{
+	margin-right: 0px;
+}
+
+/* Listing details container */
+div#bt-listing-details-container
+{
+	float: left;
+	width: 46%;
+}
+
+
+div#bt-listing-main-details-container
+{
+	clear: both;
+}
+
+div#bt-listing-main-details-container h2
+{
+	margin-bottom: 0px;
+}
+
+div#bt-listing-main-details-container p
+{
+	white-space: pre-line;
+}
+
+table.bt-listing-detail
+{
+
+}
+
+td.bt-no-border
+{
+	border: 0px !important;
+	padding-bottom: 0px !important;
+}
+
+table.bt-listing-detail
+{
+	width: 95%;
+}
+
+table.bt-listing-detail td:nth-child(2n)
+{
+	text-align:right;
+}
+
+table.bt-listing-detail td
+{
+	padding: 5px 0px 5px 0px;
+	border-top: 1px solid;
+}
+
+p.bt-no-margin
+{
+	margin: 0px;
+}
+
+p.bt-address
+{
+	font-weight: bold;
+}
+
+hr.bt-listing-detail
+{
+	margin: 0px;
+	border-top: 1px solid;
+	width: 50%;
+}
+
+table.bt-spaces-to-lease
+{
+	width: 50%;
+	height: 100%;
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px;
+	margin-top: 1%;
+}
+
+table.bt-spaces-to-lease th
+{
+	font-weight: bold;
+}
+
+table.bt-spaces-to-lease th,
+table.bt-spaces-to-lease td
+{
+	padding: 4px 0px 4px 4px;
+}

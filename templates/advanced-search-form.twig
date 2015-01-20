@@ -1,0 +1,127 @@
+{% set advancedSearchStatus = theme_options['advanced_search']['status'] %}
+{# Advanced Search #}
+{% if advancedSearchStatus is sameas('on') %}
+    <div class="search-filter theme-bg">
+        <form id="adv_search_form" method="POST" action="{{ url }}?search=true">
+            <h4 class="title info" {% if theme_color %} style="background-color:{{theme_color}}" {% endif %}>Filter By:</h4>
+            <div class="clearfix">
+                {% if show_listing_type is sameas('on') %}
+                    <div class="input-group half">
+                        <input type="checkbox"  id="forLease" name="listing_types[]" {% if 'forlease' in saved.listing_types %} checked="checked" {% endif %} value="forlease" />
+                        <label for="forLease">For Lease</label>
+                    </div>
+                    <div class="input-group half">
+                        <input type="checkbox" id="forSale"  name="listing_types[]" {% if 'forsale' in saved.listing_types %} checked="checked" {% endif %} value="forsale" />
+                        <label for="forSale">For Sale</label>
+                    </div>
+                {% endif %}
+                {% if show_street is sameas('on') %}
+                    <div class="input-group">
+                        <input type="text" placeholder="Street" id="street" name="address_line_1" value="{{ saved.address_line_1 }}" />
+                    </div>
+                {% endif %}
+                {% if show_city is sameas('on') %}
+                    <div class="input-group">
+                        <input type="text" placeholder="City (separated by commas)" id="city" name="address_line_2" value="{{ saved.address_line_2 }}" />
+                    </div>
+                {% endif %}
+                {% if show_county is sameas('on') %}
+                {% if county_list is not empty%}
+                    <div class="input-group">
+                        <select name="county" id="county">
+                            <option value="">Select county</option>
+                            {% for key, county in county_list %}
+                            <option {% if county is sameas(saved.county) %} selected="selected" {% endif %} value="{{county}}">{{county}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+                {% endif %}
+                {% if show_zip is sameas('on') %}
+                    <div class="input-group">
+                        <input type="text" placeholder="ZIP & State" id="zip" name="address_zip_state" value="{{ saved.address_zip_state }}" />
+                    </div>
+                {% endif %}
+            </div>
+            {% if show_property_type is sameas('on') %}
+            {% if property_type_list is not empty%}
+                <div class="clearfix">
+                    <div class="input-group">
+                        <select name="property_type" id="propertyType">
+                            <option value="">Select property type</option>
+                            {% for key, type in property_type_list %}
+                            <option {% if type is sameas(saved.property_type) %} selected="selected" {% endif %} value="{{type}}">{{type}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
+            {% if show_broker is sameas('on') %}
+            {% if broker_list is not empty%}
+            <div class="clearfix">
+                <div class="input-group">
+                    <select name="broker" id="broker">
+                        <option value="">Select broker</option>
+                        {% for key, broker in broker_list %}
+                            <option {% if broker is sameas(saved.broker) %} selected="selected" {% endif %} value="{{broker}}">{{broker}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if show_keyword is sameas('on') %}
+            <div class="clearfix">
+                <div class="input-group">
+                    <input type="text" placeholder="Keyword" name="keyword" id="keyword" value="{{ saved.keyword }}" />
+                </div>
+            </div>
+            {% endif %}
+            {% if show_size_range is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group half">
+                        <input type="text" placeholder="Size From" id="sizeFrom" name="size_from" value="{{ saved.size_from }}" />
+                    </div>
+                    <div class="input-group half">
+                        <input type="text" placeholder="Size To" id="sizeTo" name="size_to" value="{{ saved.size_to }}" />
+                    </div>
+                </div>
+            {% endif %}
+            {% if show_total_size_range is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group half">
+                        <input type="text" placeholder="Lot Size From" id="totalSizeFrom" name="total_size_from" value="{{ saved.total_size_from }}" />
+                    </div>
+                    <div class="input-group half">
+                        <input type="text" placeholder="Lot Size To" id="totalSizeTo" name="total_size_to" value="{{ saved.total_size_to }}" />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="input-group">
+                        <label>Search total lot size by:</label>
+                        <input type="radio"  id="byAcres" name="total_size_by" {% if selected_total_size_by is sameas('acres') %} checked="checked" {% endif %} value="acres" />
+                        <label for="byAcres">Acres</label>
+                        <input type="radio" id="bySF"  name="total_size_by" {% if selected_total_size_by != 'acres' %} checked="checked" {% endif %} value="sf" />
+                        <label for="bySF">SF</label>
+                    </div>
+                </div>
+            {% endif %}
+            {% if show_price_range is sameas('on') %}
+                <div class="clearfix">
+                    <div class="input-group half">
+                        <input type="text" placeholder="Price From" id="priceFrom" name="price_from" value="{{ saved.price_from }}" />
+                    </div>
+                    <div class="input-group half">
+                        <input type="text" placeholder="Price To" id="priceTo" name="price_to" value="{{ saved.price_to }}" />
+                    </div>
+                </div>
+            {% endif %}
+            <div class="clearfix">
+                <div class="input-group">
+                    <input type="submit" class="btn" name="advanced_search_submit" value="Search" />
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}
