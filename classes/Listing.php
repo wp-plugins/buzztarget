@@ -16,7 +16,9 @@ class Listing implements \ArrayAccess {
         return $this->attributes;
     }
 
-    public function getMapIcon(array $map_options) {
+    public function getMapIcon($map_options) {
+        if(!is_array($map_options))
+            return '';
         $this->attributes['PropertyMapIcon'] = (isset($map_options['markers'][$this->attributes['PropertyTypes'][0]])
             && strlen($map_options['markers'][$this->attributes['PropertyTypes'][0]]) > 0) ? $map_options['markers'][$this->attributes['PropertyTypes'][0]] : $map_options['markers']['default'];
 
