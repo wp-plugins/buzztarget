@@ -20,7 +20,7 @@ class Listing implements \ArrayAccess {
         $this->attributes['PropertyMapIcon'] = (isset($map_options['markers'][$this->attributes['PropertyTypes'][0]])
             && strlen($map_options['markers'][$this->attributes['PropertyTypes'][0]]) > 0) ? $map_options['markers'][$this->attributes['PropertyTypes'][0]] : $map_options['markers']['default'];
 
-        return $this->attributes['PropertyMapIcon'];
+        return trim($this->attributes['PropertyMapIcon']);
     }
 
     public function getSize($type, $format = false, $units = "SF") {
