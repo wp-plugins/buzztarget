@@ -758,7 +758,7 @@ if($property){
             <?php } ?>
         </ul>
         <?php } ?>
-        <h4 class="title info theme-color">For More Information Contact:</h4>
+        <h4 class="title info theme-color">Contact Listing Broker(s):</h4>
         <ul class="broker-list">
             <?php foreach($property['ListingAgents'] as $broker){ ?>
             <li>
