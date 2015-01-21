@@ -197,7 +197,7 @@ foreach($properties as $listing) {
 $filter_values = Listings::getSearchParameters();
 
 $selected_total_size_by = $theme_options['show_size_in_acres'];
-if($search_criteria && $search_criteria['total_size_by'])
+if(isset($search_criteria) && $search_criteria['total_size_by'])
     $selected_total_size_by = $search_criteria['total_size_by'];
 
 $vars = array(
