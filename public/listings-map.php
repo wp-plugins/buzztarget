@@ -15,7 +15,7 @@ foreach ($listings as $listing) {
 
 $vars = array(
     'listings' => $listings,
-    'property_url' => site_url() . '/property',
+    'properties_url' => site_url() . '/property',
     'map_options' => $map_options,
     'width' => $widgetWidth,
     'height' => $widgetHeight
