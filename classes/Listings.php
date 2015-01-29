@@ -117,7 +117,7 @@ class Listings implements \Iterator, \ArrayAccess
                             break;
                         case 'address_line_2': // city
                             if (!isset($listing['Property']['Address']['City'])
-                                || strripos(str_replace(array(',',' '), array("",""), $value), str_replace(array(',',' '), array("",""), $listing['Property']['Address']['City'])) === false){
+                                || strripos(strtolower(str_replace(array(',',' '), array("",""), $listing['Property']['Address']['City'])), strtolower(str_replace(array(',',' '), array("",""), $value))) === false){
                                 $matched = false;
                             }
                             break;
