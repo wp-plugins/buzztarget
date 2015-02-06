@@ -237,57 +237,57 @@ if($property){
                         <td><?php echo $property->getSize('GrossLeasableArea', true, 'SF'); ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['TotalLotSize'])){ ?>
+                        <?php if (isset($property['TotalLotSize']) && $property['TotalLotSize'] != 0){ ?>
                     <tr>
                         <td>Total Lot Size <?php echo ($theme_options['show_size_in_acres'] == 'acres') ? 'Acres' : 'SF'; ?>:</td>
                         <td><?php echo $property->getSize('TotalLotSize', true, $theme_options['show_size_in_acres']); ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['Occupancy'])){ ?>
+                        <?php if (isset($property['Occupancy']) && $property['Occupancy'] != 0){ ?>
                     <tr>
                         <td>Occupancy:</td>
                         <td><?php echo $property['Occupancy'] . '%'; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['YearBuild'])){ ?>
+                        <?php if (isset($property['YearBuild']) && ($property['YearBuild'] != 0 && strlen($property['YearBuild']) > 0 )){ ?>
                     <tr>
                         <td>Year Built:</td>
                         <td><?php echo $property['YearBuild']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['YearRenovated'])){ ?>
+                        <?php if (isset($property['YearRenovated']) && ($property['YearRenovated'] != 0 && strlen($property['YearRenovated']) > 0 )){ ?>
                     <tr>
                         <td>Year Renovated:</td>
                         <td><?php echo $property['YearRenovated']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['ParkingSpace'])){ ?>
+                        <?php if (isset($property['ParkingSpace']) && ($property['ParkingSpace'] != 0 && strlen($property['ParkingSpace']) > 0 )){ ?>
                     <tr>
                         <td>Parking Space:</td>
                         <td><?php echo $property['ParkingSpace']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['Zoning'])){ ?>
+                        <?php if (isset($property['Zoning']) && ($property['Zoning'] != 0 && strlen($property['Zoning']) > 0 )){ ?>
                     <tr>
                         <td>Zoning:</td>
                         <td><?php echo $property['Zoning']; ?></td>
                     </tr>
                         <?php } ?>
-                        <?php if (isset($property['County'])){ ?>
+                        <?php if (isset($property['County']) && ($property['County'] != 0 && strlen($property['County']) > 0 )){ ?>
                     <tr>
                         <td>County:</td>
                         <td><?php echo $property['County']; ?></td>
                     </tr>
                         <?php } ?>
 
-                        <?php if (isset($property['Utilities'])){ ?>
+                        <?php if (isset($property['Utilities']) && ($property['Utilities'] != 0 && strlen($property['Utilities']) > 0 )){ ?>
                     <tr>
                         <td>Utilities:</td>
                         <td><?php echo ($property['Utilities']) ? 'Yes' : 'No'; ?></td>
                     </tr>
                         <?php } ?>
 
-                        <?php if (isset($property['Divisible'])){ ?>
+                        <?php if (isset($property['Divisible']) && ($property['Divisible'] != 0 && strlen($property['Divisible']) > 0 )){ ?>
                     <tr>
                         <td>Divisible:</td>
                         <td><?php echo ($property['Divisible']) ? 'Yes' : 'No';; ?></td>
@@ -473,7 +473,7 @@ if($property){
                 <?php if (count($propertyDocuments) > 0) {?>
                     <a class="attachment-clip" href="<?php echo $propertyDocuments[0]['AttachmentPath']?>" target='_blank'><img width='16' src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/paperclip_16_black.png" title="Listing Attachment"></a>
                 <?php } ?>
-				
+
 				<span class='st_sharethis' displayText=''></span>
 
                 <a class="print-page" href="javascript:window.print();"><img src="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" alt="<?php echo plugin_dir_url(dirname(__FILE__))?>static/images/print_16_gray.png" title="Print"></a>
@@ -497,7 +497,7 @@ if($property){
                         <?php echo $property['Property']['Address']['Zip']; ?>
                     </td>
                 </tr>
-                    <?php if (isset($property['County'])){ ?>
+                    <?php if (isset($property['County']) && ($property['County'] != 0 && strlen($property['County']) > 0 )){ ?>
                 <tr>
                     <td>County: </td>
                     <td><?php echo $property['County'] ?></td>
@@ -566,51 +566,51 @@ if($property){
                 <td><?php echo $property->getSize('TotalLotSize', true, $theme_options['show_size_in_acres']); ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['Occupancy'])){ ?>
+                <?php if (isset($property['Occupancy']) && ($property['Occupancy'] != 0 && strlen($property['Occupancy']) > 0 )){ ?>
             <tr>
                 <td>Occupancy:</td>
                 <td><?php echo $property['Occupancy'] . '%'; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['YearBuild'])){ ?>
+                <?php if (isset($property['YearBuild']) && ($property['YearBuild'] != 0 && strlen($property['YearBuild']) > 0 )){ ?>
             <tr>
                 <td>Year Built:</td>
                 <td><?php echo $property['YearBuild']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['YearRenovated'])){ ?>
+                <?php if (isset($property['YearRenovated']) && ($property['YearRenovated'] != 0 && strlen($property['YearRenovated']) > 0 )){ ?>
             <tr>
                 <td>Year Renovated:</td>
                 <td><?php echo $property['YearRenovated']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['ParkingSpace'])){ ?>
+                <?php if (isset($property['ParkingSpace']) && ($property['ParkingSpace'] != 0 && strlen($property['ParkingSpace']) > 0 )){ ?>
             <tr>
                 <td>Parking Space:</td>
                 <td><?php echo $property['ParkingSpace']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['Zoning'])){ ?>
+                <?php if (isset($property['Zoning']) && ($property['Zoning'] != 0 && strlen($property['Zoning']) > 0 )){ ?>
             <tr>
                 <td>Zoning:</td>
                 <td><?php echo $property['Zoning']; ?></td>
             </tr>
                 <?php } ?>
-                <?php if (isset($property['County'])){ ?>
+                <?php if (isset($property['County']) && ($property['County'] != 0 && strlen($property['County']) > 0 )){ ?>
             <tr>
                 <td>County:</td>
                 <td><?php echo $property['County']; ?></td>
             </tr>
                 <?php } ?>
 
-                <?php if (isset($property['Utilities'])){ ?>
+                <?php if (isset($property['Utilities']) && ($property['Utilities'] != 0 && strlen($property['Utilities']) > 0 )){ ?>
             <tr>
                 <td>Utilities:</td>
                 <td><?php echo ($property['Utilities']) ? 'Yes' : 'No'; ?></td>
             </tr>
                 <?php } ?>
 
-                <?php if (isset($property['Divisible'])){ ?>
+                <?php if (isset($property['Divisible']) && ($property['Divisible'] != 0 && strlen($property['Divisible']) > 0 )){ ?>
             <tr>
                 <td>Divisible:</td>
                 <td><?php echo ($property['Divisible']) ? 'Yes' : 'No'; ?></td>
